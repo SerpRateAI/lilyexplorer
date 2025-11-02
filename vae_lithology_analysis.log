@@ -1,0 +1,154 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+2025-10-15 10:23:23,999 - INFO - ================================================================================
+2025-10-15 10:23:24,000 - INFO - VAE Lithology Analysis
+2025-10-15 10:23:24,000 - INFO - ================================================================================
+2025-10-15 10:23:24,220 - INFO - Using device: cuda
+2025-10-15 10:23:24,221 - INFO - 
+Loading preprocessed data...
+2025-10-15 10:23:24,221 - INFO - Loading MAD dataset (porosity, grain density)...
+2025-10-15 10:23:24,372 - INFO - MAD dataset: 26476 rows
+2025-10-15 10:23:24,372 - INFO - Loading PWC dataset (P-wave velocity)...
+2025-10-15 10:23:24,494 - INFO - PWC dataset: 28445 rows
+2025-10-15 10:23:24,495 - INFO - Loading TCON dataset (thermal conductivity)...
+2025-10-15 10:23:24,600 - INFO - TCON dataset: 30330 rows
+2025-10-15 10:23:24,623 - INFO - Filtering to 212 specified boreholes...
+2025-10-15 10:23:24,645 - INFO - After filtering - MAD: 19819, PWC: 22386, TCON: 20833
+2025-10-15 10:23:24,653 - INFO - Merging datasets on Borehole_ID and depth (resolution: 0.05m)...
+2025-10-15 10:23:24,666 - INFO - Merged dataset: 187 rows
+2025-10-15 10:23:24,666 - INFO - After removing missing values: 166 rows (dropped 21)
+2025-10-15 10:23:24,667 - INFO - After outlier filtering: 151 rows (dropped 15)
+2025-10-15 10:23:24,674 - INFO - Total unique boreholes: 21
+2025-10-15 10:23:24,676 - INFO - Borehole split - Train: 14, Val: 2, Test: 5
+2025-10-15 10:23:24,677 - INFO - Sample split - Train: 69, Val: 14, Test: 68
+2025-10-15 10:23:24,679 - INFO - Feature statistics (before normalization):
+2025-10-15 10:23:24,679 - INFO -   Porosity (vol%): mean=45.186, std=18.171
+2025-10-15 10:23:24,679 - INFO -   Grain density (g/cm^3): mean=2.711, std=0.076
+2025-10-15 10:23:24,679 - INFO -   P_wave_velocity: mean=1995.290, std=658.094
+2025-10-15 10:23:24,679 - INFO -   Thermal conductivity mean (W/(m*K)): mean=1.565, std=0.840
+2025-10-15 10:23:24,681 - INFO - 
+Plotting training history...
+2025-10-15 10:23:26,656 - INFO - Saved training history plot
+2025-10-15 10:23:26,657 - INFO - 
+================================================================================
+2025-10-15 10:23:26,657 - INFO - Analyzing VAE with latent_dim=2
+2025-10-15 10:23:26,657 - INFO - ================================================================================
+2025-10-15 10:23:27,576 - INFO - Loaded model from /home/utig5/johna/bhai/ml_models/checkpoints/vae_lithology_latent2_best.pth
+2025-10-15 10:23:27,576 - INFO - Best validation loss: 0.5759
+2025-10-15 10:23:27,576 - INFO - 
+Extracting latent representations...
+2025-10-15 10:23:27,691 - INFO - Latent representations shape: (151, 2)
+2025-10-15 10:23:27,691 - INFO - 
+Evaluating reconstruction quality...
+2025-10-15 10:23:27,725 - INFO - 
+Reconstruction quality (test set):
+2025-10-15 10:23:27,743 - INFO -                             Feature           MSE        MAE  MAPE (%)  Mean_Original  Std_Original
+                    Porosity (vol%)    774.070496  25.346395 32.313102      74.494125     11.496660
+             Grain density (g/cm^3)      0.007507   0.068252  2.614510       2.665088      0.072587
+                    P_wave_velocity 235261.062500 477.284912 30.770370    1555.264648     42.268265
+Thermal conductivity mean (W/(m*K))      0.571574   0.734172 77.754956       1.004029      0.158501
+2025-10-15 10:23:28,707 - INFO - Saved reconstruction quality plot: /home/utig5/johna/bhai/vae_outputs/reconstruction_quality_latent2.png
+2025-10-15 10:23:28,707 - INFO - 
+Generating latent space visualizations...
+2025-10-15 10:23:29,863 - INFO - Saved latent space plot: /home/utig5/johna/bhai/vae_outputs/latent_space_2d.png
+2025-10-15 10:23:29,863 - INFO - 
+Performing clustering analysis...
+2025-10-15 10:23:36,382 - INFO - Best silhouette score: 0.772 with 20 clusters
+2025-10-15 10:23:36,393 - INFO - 
+Cluster statistics (n_clusters=20):
+2025-10-15 10:23:36,395 - INFO -  Cluster  Size  Size_Pct              Top_Lithology    Top_Pct       Entropy  N_Lithologies                                                                    Top_3
+       1    24 15.894040           nannofossil ooze 100.000000 -1.442695e-10              1                                                    nannofossil ooze (24)
+       0    20 13.245033           nannofossil ooze  20.000000  3.484184e+00             13                              nannofossil ooze (4), mudstone (3), mud (2)
+       2    17 11.258278           nannofossil ooze  52.941176  2.173973e+00              7                           nannofossil ooze (9), clayey silt (2), mud (2)
+       5    14  9.271523           nannofossil ooze  57.142857  1.753434e+00              5                          nannofossil ooze (8), clay (3), clayey silt (1)
+       8    13  8.609272           nannofossil ooze  53.846154  1.881095e+00              5                     nannofossil ooze (7), nannofossil chalk (2), mud (2)
+      12     9  5.960265           nannofossil ooze  88.888889  5.032583e-01              2                                  nannofossil ooze (8), volcanic rock (1)
+      10     9  5.960265                        mud  77.777778  9.864267e-01              3                         mud (7), nannofossil ooze (1), volcanic rock (1)
+      11     6  3.973510           nannofossil ooze  66.666667  1.251629e+00              3                          nannofossil ooze (4), mud (1), lapillistone (1)
+      13     5  3.311258           nannofossil ooze  40.000000  1.921928e+00              4 nannofossil ooze (2), medium to coarse sandstone (1), very fine sand (1)
+      17     5  3.311258           nannofossil ooze  80.000000  7.219281e-01              2                                   nannofossil ooze (4), lapilli tuff (1)
+       6     4  2.649007                clayey silt  75.000000  8.112781e-01              2                                       clayey silt (3), volcanic rock (1)
+       9     4  2.649007           nannofossil ooze  50.000000  1.500000e+00              3                nannofossil ooze (2), clayey silt (1), very fine sand (1)
+       7     3  1.986755                diatom ooze 100.000000 -1.442695e-10              1                                                          diatom ooze (3)
+       4     3  1.986755                clayey silt  33.333333  1.584963e+00              3                  clayey silt (1), nannofossil ooze (1), lapillistone (1)
+       3     3  1.986755                clayey silt  66.666667  9.182958e-01              2                                    clayey silt (2), nannofossil ooze (1)
+      15     3  1.986755                       clay 100.000000 -1.442695e-10              1                                                                 clay (3)
+      16     3  1.986755 medium to coarse sandstone  33.333333  1.584963e+00              3 medium to coarse sandstone (1), very fine sand (1), nannofossil ooze (1)
+      19     3  1.986755           nannofossil ooze 100.000000 -1.442695e-10              1                                                     nannofossil ooze (3)
+      14     2  1.324503           radiolarian ooze 100.000000 -1.442695e-10              1                                                     radiolarian ooze (2)
+      18     1  0.662252                clayey silt 100.000000 -1.442695e-10              1                                                          clayey silt (1)
+2025-10-15 10:23:36,404 - INFO - 
+Clustering performance metrics:
+2025-10-15 10:23:36,404 - INFO -   Adjusted Rand Index: 0.104
+2025-10-15 10:23:36,404 - INFO -   Normalized Mutual Information: 0.410
+2025-10-15 10:23:36,404 - INFO -   Silhouette Score: 0.772
+2025-10-15 10:23:37,530 - INFO - Saved cluster visualization: /home/utig5/johna/bhai/vae_outputs/cluster_visualization_latent2.png
+2025-10-15 10:23:38,397 - INFO - Saved contingency heatmap: /home/utig5/johna/bhai/vae_outputs/contingency_heatmap_latent2.png
+2025-10-15 10:23:38,414 - INFO - 
+================================================================================
+2025-10-15 10:23:38,414 - INFO - Analyzing VAE with latent_dim=8
+2025-10-15 10:23:38,414 - INFO - ================================================================================
+2025-10-15 10:23:38,735 - INFO - Loaded model from /home/utig5/johna/bhai/ml_models/checkpoints/vae_lithology_latent8_best.pth
+2025-10-15 10:23:38,735 - INFO - Best validation loss: 0.4921
+2025-10-15 10:23:38,736 - INFO - 
+Extracting latent representations...
+2025-10-15 10:23:38,760 - INFO - Latent representations shape: (151, 8)
+2025-10-15 10:23:38,760 - INFO - 
+Evaluating reconstruction quality...
+2025-10-15 10:23:38,766 - INFO - 
+Reconstruction quality (test set):
+2025-10-15 10:23:38,768 - INFO -                             Feature           MSE        MAE  MAPE (%)  Mean_Original  Std_Original
+                    Porosity (vol%)    970.393372  28.646500 36.773986      74.494125     11.496660
+             Grain density (g/cm^3)      0.007119   0.071588  2.725784       2.665088      0.072587
+                    P_wave_velocity 204588.171875 440.087891 28.393859    1555.264648     42.268265
+Thermal conductivity mean (W/(m*K))      0.336349   0.531096 57.176816       1.004029      0.158501
+2025-10-15 10:23:39,524 - INFO - Saved reconstruction quality plot: /home/utig5/johna/bhai/vae_outputs/reconstruction_quality_latent8.png
+2025-10-15 10:23:39,525 - INFO - 
+Generating latent space visualizations...
+2025-10-15 10:23:40,541 - INFO - Saved latent space plot: /home/utig5/johna/bhai/vae_outputs/latent_space_8d_pca.png
+2025-10-15 10:23:40,541 - INFO - 
+Performing clustering analysis...
+2025-10-15 10:23:45,970 - INFO - Best silhouette score: 0.737 with 20 clusters
+2025-10-15 10:23:45,980 - INFO - 
+Cluster statistics (n_clusters=20):
+2025-10-15 10:23:45,982 - INFO -  Cluster  Size  Size_Pct     Top_Lithology    Top_Pct       Entropy  N_Lithologies                                                                 Top_3
+       4    24 15.894040  nannofossil ooze 100.000000 -1.442695e-10              1                                                 nannofossil ooze (24)
+       9    15  9.933775  nannofossil ooze  60.000000  9.709506e-01              2                                         nannofossil ooze (9), mud (6)
+       0    14  9.271523  nannofossil ooze  50.000000  2.064043e+00              6                        nannofossil ooze (7), clayey silt (3), mud (1)
+      10    11  7.284768  nannofossil ooze  72.727273  1.277613e+00              4                  nannofossil ooze (8), clayey silt (1), siltstone (1)
+       5     9  5.960265  nannofossil ooze  77.777778  9.864267e-01              3 nannofossil ooze (7), clayey silt (1), medium to coarse sandstone (1)
+      15     9  5.960265          mudstone  33.333333  2.419382e+00              6                   mudstone (3), nannofossil ooze (2), clayey silt (1)
+       7     8  5.298013  nannofossil ooze  75.000000  1.061278e+00              3           nannofossil ooze (6), very fine sand (1), volcanic rock (1)
+       2     8  5.298013       clayey silt  25.000000  2.500000e+00              6                 clayey silt (2), lapillistone (2), very fine sand (1)
+      11     8  5.298013    very fine sand  25.000000  2.500000e+00              6             very fine sand (2), nannofossil ooze (2), clayey silt (1)
+      13     6  3.973510  nannofossil ooze  83.333333  6.500224e-01              2                              nannofossil ooze (5), very fine sand (1)
+      14     6  3.973510  nannofossil ooze 100.000000 -1.442695e-10              1                                                  nannofossil ooze (6)
+      19     6  3.973510              clay  50.000000  1.792481e+00              4                                 clay (3), mud (1), very fine sand (1)
+      12     5  3.311258       diatom ooze  60.000000  9.709506e-01              2                                 diatom ooze (3), radiolarian ooze (2)
+       3     4  2.649007  nannofossil ooze  50.000000  1.500000e+00              3                        nannofossil ooze (2), clayey silt (1), mud (1)
+       6     4  2.649007       clayey silt  25.000000  2.000000e+00              4                  clayey silt (1), basalt (1), volcaniclastic rock (1)
+      17     4  2.649007       clayey silt  25.000000  2.000000e+00              4           clayey silt (1), calcareous ooze (1), nannofossil chalk (1)
+       1     3  1.986755 nannofossil chalk  66.666667  9.182958e-01              2                              nannofossil chalk (2), volcanic rock (1)
+      16     3  1.986755              clay 100.000000 -1.442695e-10              1                                                              clay (3)
+      18     3  1.986755               mud  66.666667  9.182958e-01              2                                             mud (2), lapilli tuff (1)
+       8     1  0.662252   sandy siltstone 100.000000 -1.442695e-10              1                                                   sandy siltstone (1)
+2025-10-15 10:23:45,987 - INFO - 
+Clustering performance metrics:
+2025-10-15 10:23:45,987 - INFO -   Adjusted Rand Index: 0.131
+2025-10-15 10:23:45,987 - INFO -   Normalized Mutual Information: 0.455
+2025-10-15 10:23:45,987 - INFO -   Silhouette Score: 0.737
+2025-10-15 10:23:47,059 - INFO - Saved cluster visualization: /home/utig5/johna/bhai/vae_outputs/cluster_visualization_latent8.png
+2025-10-15 10:23:47,836 - INFO - Saved contingency heatmap: /home/utig5/johna/bhai/vae_outputs/contingency_heatmap_latent8.png
+2025-10-15 10:23:47,838 - INFO - 
+================================================================================
+2025-10-15 10:23:47,838 - INFO - Analysis completed successfully!
+2025-10-15 10:23:47,838 - INFO - ================================================================================
+2025-10-15 10:23:47,838 - INFO - Output directory: /home/utig5/johna/bhai/vae_outputs
+2025-10-15 10:23:47,838 - INFO - Log file: /home/utig5/johna/bhai/ml_models/logs/vae_lithology_analysis_20251015_102323.log
+UMAP not available: initialization of _internal failed without raising an exception. Will use PCA for dimensionality reduction.

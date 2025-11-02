@@ -1,0 +1,92 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/home/utig5/johna/bhai/create_vae_gra_v2_9_dataset.py:36: DtypeWarning: Columns (0,5,6,20,22) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(gra_path, usecols=cols)
+/home/utig5/johna/bhai/create_vae_gra_v2_9_dataset.py:54: DtypeWarning: Columns (0) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(mad_path, usecols=cols)
+/home/utig5/johna/bhai/create_vae_gra_v2_9_dataset.py:72: DtypeWarning: Columns (0,5,6) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(ms_path, usecols=cols)
+/home/utig5/johna/bhai/create_vae_gra_v2_9_dataset.py:90: DtypeWarning: Columns (0,5) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(ngr_path, usecols=cols)
+/home/utig5/johna/bhai/create_vae_gra_v2_9_dataset.py:109: DtypeWarning: Columns (0,5) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(rgb_path, usecols=cols)
+================================================================================
+CREATE VAE GRA v2.9 DATASET WITH POROSITY
+================================================================================
+Loading GRA data...
+  Loaded 4,134,647 GRA measurements
+Loading MAD data...
+  Loaded 26,476 MAD measurements
+Loading MS data...
+  Loaded 4,081,560 MS measurements
+Loading NGR data...
+  Loaded 822,161 NGR measurements
+Loading RGB data...
+  Loaded 10,789,797 RGB measurements
+
+Binning measurements to 0.2m intervals...
+Aggregating GRA measurements...
+Aggregating MAD measurements...
+Aggregating MS measurements...
+Aggregating NGR measurements...
+Aggregating RGB measurements...
+
+Merging measurements...
+  Starting with GRA: 423,244 bins
+  After MAD merge: 25,516 bins
+  After MS merge: 25,503 bins
+  After NGR merge: 24,394 bins
+  After RGB merge: 14,862 bins
+
+Computing porosity (ρ_fluid = 1.024 g/cm³)...
+  Porosity range: 0.000 - 1.000
+  Porosity mean: 0.571
+  Porosity std: 0.134
+
+Removing outliers...
+  Removed 24 outliers (0.2%)
+  Remaining: 14,838 samples
+
+================================================================================
+DATASET SUMMARY
+================================================================================
+Total samples: 14,838
+Unique boreholes: 197
+Unique principal lithologies: 124
+
+Top 10 lithologies:
+Principal
+clay                         2110
+nannofossil ooze             1697
+silty clay                    837
+packstone                     739
+claystone                     700
+wackestone                    695
+interbedded silt and clay     675
+mudstone                      653
+nannofossil chalk             599
+mud                           523
+Name: count, dtype: int64
+
+Feature statistics:
+       Bulk density (GRA)  Grain density (g/cm^3)  ...             G             B
+count        14838.000000            14838.000000  ...  14838.000000  14838.000000
+mean             1.751328                2.718961  ...     72.423149     65.672530
+std              0.244328                0.119719  ...     45.442743     41.427780
+min              0.507800                1.503000  ...      5.987500      5.215000
+25%              1.619280                2.678000  ...     36.537632     34.229451
+50%              1.777250                2.732000  ...     55.910000     50.102500
+75%              1.906800                2.777000  ...     98.949375     88.140000
+max              4.097500                3.988000  ...    237.500000    226.570000
+
+[8 rows x 8 columns]
+
+Dataset saved to: /home/utig5/johna/bhai/vae_training_data_v2_9_20cm_porosity.csv
+File size: 2.6 MB
+Time elapsed: 52.2s
+
+================================================================================
+DATASET CREATION COMPLETE
+================================================================================

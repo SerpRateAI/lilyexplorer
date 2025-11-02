@@ -1,0 +1,82 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+Warning: UMAP not available, will use PCA only for 8D visualization
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+====================================================================================================
+TRAINING FINAL v2.6.7 MODEL ON ALL DATA
+====================================================================================================
+β schedule: 1e-10 → 0.75 over 50 epochs
+Cross-validation: ARI = 0.196 ± 0.037
+
+Total samples: 238,506
+Total boreholes: 296
+Unique lithologies: 139
+
+Device: cuda
+
+Model parameters: 2,010
+
+Starting training on ALL data (no validation split)...
+β schedule: 1e-10 → 0.75 over 50 epochs
+
+Epoch   1: Loss=0.8338, Recon=0.8338, KL=55.4096, β=0.000000
+Epoch   5: Loss=0.5526, Recon=0.1424, KL=6.8366, β=0.060000
+Epoch  10: Loss=0.9691, Recon=0.2866, KL=5.0561, β=0.135000
+Epoch  15: Loss=1.3039, Recon=0.4245, KL=4.1877, β=0.210000
+Epoch  20: Loss=1.5892, Recon=0.5532, KL=3.6350, β=0.285000
+Epoch  25: Loss=1.8380, Recon=0.6761, KL=3.2275, β=0.360000
+Epoch  30: Loss=2.0627, Recon=0.7915, KL=2.9222, β=0.435000
+Epoch  35: Loss=2.2613, Recon=0.8981, KL=2.6729, β=0.510000
+Epoch  40: Loss=2.4519, Recon=1.0042, KL=2.4748, β=0.585000
+Epoch  45: Loss=2.6282, Recon=1.1071, KL=2.3048, β=0.660000
+Epoch  50: Loss=2.7896, Recon=1.2085, KL=2.1511, β=0.735000
+Epoch  55: Loss=2.8242, Recon=1.2354, KL=2.1184, β=0.750000
+Epoch  60: Loss=2.8194, Recon=1.2345, KL=2.1132, β=0.750000
+Epoch  65: Loss=2.8160, Recon=1.2366, KL=2.1058, β=0.750000
+Epoch  70: Loss=2.8139, Recon=1.2402, KL=2.0983, β=0.750000
+Epoch  75: Loss=2.8105, Recon=1.2394, KL=2.0948, β=0.750000
+Epoch  80: Loss=2.8042, Recon=1.2426, KL=2.0821, β=0.750000
+Epoch  85: Loss=2.8022, Recon=1.2479, KL=2.0724, β=0.750000
+Epoch  90: Loss=2.7955, Recon=1.2455, KL=2.0667, β=0.750000
+Epoch  95: Loss=2.7885, Recon=1.2380, KL=2.0672, β=0.750000
+Epoch 100: Loss=2.7848, Recon=1.2438, KL=2.0546, β=0.750000
+
+Training complete!
+Total training time: 580.2s (9.7 min)
+
+✓ Model saved to: /home/utig5/johna/bhai/ml_models/checkpoints/vae_gra_v2_6_7_final.pth
+
+====================================================================================================
+FINAL MODEL ANALYSIS
+====================================================================================================
+Latent space dimensionality:
+  Collapsed dims: 6/10
+  Effective dims: 4
+
+Per-dimension std devs:
+  Dim 0: 0.9856 ✓
+  Dim 1: 0.8075 ✓
+  Dim 2: 0.0078 ✗
+  Dim 3: 0.2832 ✓
+  Dim 4: 0.0155 ✗
+  Dim 5: 0.0053 ✗
+  Dim 6: 0.0259 ✗
+  Dim 7: 0.0173 ✗
+  Dim 8: 0.3600 ✓
+  Dim 9: 0.0096 ✗
+
+====================================================================================================
+v2.6.7 FINAL MODEL - PRODUCTION READY
+====================================================================================================
+Checkpoint: /home/utig5/johna/bhai/ml_models/checkpoints/vae_gra_v2_6_7_final.pth
+Training samples: 238,506
+Cross-validated performance: ARI = 0.196 ± 0.037
+Latent dims: 4/10 active
+
+This is the gold standard unsupervised lithology model.
+====================================================================================================

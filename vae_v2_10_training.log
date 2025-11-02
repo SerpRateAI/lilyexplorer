@@ -1,0 +1,75 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+================================================================================
+VAE GRA v2.10 - VampPrior Training
+================================================================================
+
+Loading data...
+Train: 169,018, Val: 37,093, Test: 32,395
+
+Initializing VampPrior VAE...
+Parameters: 2,402
+  Model (encoder/decoder): 2,102
+  Pseudo-inputs (K=50): 300 (50 × 6 features)
+
+Training with β annealing (0.001→0.5 over 50 epochs)...
+Device: cpu
+Epoch   0: β=0.001, Train Loss=2.574, Val Loss=1.305
+Epoch   5: β=0.051, Train Loss=0.989, Val Loss=8.113
+Epoch  10: β=0.101, Train Loss=1.215, Val Loss=10.181
+Early stopping at epoch 10
+
+Training completed in 87.7s
+
+================================================================================
+Clustering Evaluation
+================================================================================
+k=10: ARI=0.238, Silhouette=0.372
+k=12: ARI=0.261, Silhouette=0.360
+k=15: ARI=0.269, Silhouette=0.353
+k=20: ARI=0.229, Silhouette=0.340
+
+Model saved: /home/utig5/johna/bhai/ml_models/checkpoints/vae_gra_v2_10_vampprior_K50.pth
+
+================================================================================
+Synthetic Generation Demo
+================================================================================
+Generated 10 synthetic lithology samples:
+     GRA       MS       NGR       R        G        B
+1:  1.780    10.91   29.70    55.7    54.3    47.6
+2:  1.634    19.05   20.28    62.5    60.4    52.8
+3:  1.585    24.94   26.80    66.1    64.0    56.8
+4:  1.693    16.64   29.02    52.1    50.5    44.6
+5:  1.548     8.94   24.84    59.2    57.1    49.4
+...
+
+================================================================================
+Missing Data Imputation Demo
+================================================================================
+Given GRA + MS, predict NGR + RGB:
+
+True values:
+     GRA       MS       NGR       R        G        B
+1:  1.267    65.90   24.88    32.6    27.9    24.7
+2:  1.314    78.81   17.17    33.6    30.7    28.8
+3:  1.362   146.19   19.26    32.1    28.8    27.5
+4:  1.432   209.50   21.04    30.7    27.8    27.0
+5:  1.407   124.12   19.38    31.5    28.5    27.6
+
+Imputed values:
+     GRA       MS       NGR       R        G        B
+1:  1.267    65.90    0.36    -0.6    -0.6    -0.7
+2:  1.314    78.81    0.30    -0.6    -0.6    -0.7
+3:  1.362   146.19    0.15    -0.6    -0.6    -0.7
+4:  1.432   209.50    0.05    -0.6    -0.6    -0.7
+5:  1.407   124.12    0.17    -0.6    -0.6    -0.7
+
+================================================================================
+VampPrior VAE v2.10 Complete!
+================================================================================

@@ -1,0 +1,26 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+================================================================================
+VAE v2.9 - 12D Engineered Features (Quick Training)
+================================================================================
+Loaded 238,506 samples
+Train: 174,184, Val: 33,729, Test: 30,593
+Parameters: 7,004
+
+Training with β annealing...
+Epoch   0: β=0.001, Val Loss=1.611
+Epoch   5: β=0.051, Val Loss=1.147
+Epoch  10: β=0.101, Val Loss=1.609
+Early stop at epoch 12
+
+================================================================================
+v2.9 Results (12D Engineered)
+================================================================================
+k=10: ARI=0.195
+k=12: ARI=0.186
+k=15: ARI=0.189
+k=20: ARI=0.220

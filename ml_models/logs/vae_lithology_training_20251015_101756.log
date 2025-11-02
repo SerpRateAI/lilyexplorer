@@ -1,0 +1,17 @@
+2025-10-15 10:17:56,983 - INFO - ================================================================================
+2025-10-15 10:17:56,983 - INFO - VAE Lithology Model Training
+2025-10-15 10:17:56,983 - INFO - ================================================================================
+2025-10-15 10:17:56,983 - INFO - Target boreholes: 212
+2025-10-15 10:17:56,983 - INFO - 
+================================================================================
+2025-10-15 10:17:56,983 - INFO - STEP 1: Loading and merging datasets
+2025-10-15 10:17:56,983 - INFO - ================================================================================
+2025-10-15 10:17:56,983 - INFO - Loading MAD dataset (porosity, grain density)...
+2025-10-15 10:17:57,103 - INFO - MAD dataset: 26476 rows
+2025-10-15 10:17:57,103 - INFO - Loading PWC dataset (P-wave velocity)...
+2025-10-15 10:17:57,218 - INFO - PWC dataset: 28445 rows
+2025-10-15 10:17:57,218 - INFO - Loading TCON dataset (thermal conductivity)...
+2025-10-15 10:17:57,321 - INFO - TCON dataset: 30330 rows
+2025-10-15 10:17:57,343 - INFO - Filtering to 212 specified boreholes...
+2025-10-15 10:17:57,363 - INFO - After filtering - MAD: 19819, PWC: 22386, TCON: 20833
+2025-10-15 10:17:57,384 - INFO - Merging datasets on Borehole_ID and depth (tolerance: 0.1m)...

@@ -1,0 +1,312 @@
+feature,importance
+Offset (cm),18.303827068825324
+Site,16.010451737293952
+Lithology Type,4.321814463625572
+Full Lithology,4.251024805202449
+NGR_NGR total counts (cps)_min,3.778232129954827
+Core,3.5371113440206066
+Latitude (DD),3.4120976575392934
+MS_Magnetic susceptibility (instr. units)_min,3.091485989834198
+Sect,3.055956063265847
+Water Depth (mbsl),2.7918174475905597
+NGR_Error (cps)_min,2.39394070793067
+Degree of Consolidation,2.1457203877178075
+MS_Magnetic susceptibility (instr. units)_mean,2.082099290742926
+Type,2.019758915409295
+Longitude (DD),1.9185356702453362
+Exp,1.696633423066037
+NGR_NGR total counts (cps)_mean,1.480668472855175
+MS_Magnetic susceptibility (instr. units)_count,1.4010131751679276
+NGR_Error (cps)_mean,1.3636883359025744
+PWL_P-wave velocity xy (m/s)_mean,1.343265862257268
+PWL_Depth CSF-B (m)_mean,1.23859129064603
+Simplified Lithology,1.2304312718879271
+Depth CSF-B (m),1.152131675026106
+Lithology Subtype,1.1499030657718337
+Principal,1.1369636943687362
+NGR_Depth CSF-A (m)_max,1.120108918089664
+PWL_Depth CSF-A (m)_mean,1.0677786503365878
+NGR_Depth CSF-B (m)_max,0.7235773604379617
+MS_Magnetic susceptibility (instr. units)_std,0.5939358553804208
+Expanded Core Type,0.5751875397157098
+NGR_NGR total counts (cps)_std,0.5371282348287351
+NGR_Depth CSF-B (m)_mean,0.5209752885047727
+NGR_Offset (cm)_mean,0.47293395008046496
+NGR_Offset (cm)_max,0.4291328174591151
+NGR_Depth CSF-B (m)_min,0.4260143228350905
+Depth CSF-A (m),0.4236081259519372
+NGR_Offset (cm)_std,0.4176043125846027
+NGR_Depth CSF-A (m)_std,0.39899650887311566
+Hole,0.3633711774022675
+NGR_Error (cps)_std,0.34755586736449745
+NGR_NGR total counts (cps)_max,0.3282534073987126
+NGR_Error (cps)_max,0.32769170619414617
+NGR_Depth CSF-A (m)_mean,0.32068356877748155
+PWL_P-wave velocity xy (m/s)_std,0.30006366332885254
+NGR_Depth CSF-B (m)_std,0.2873859271621471
+PWL_Caliper separation (mm)_mean,0.2794920396578141
+Prefix,0.27083874508597255
+PWL_Depth CSF-B (m)_std,0.27004756062997426
+MS_Magnetic susceptibility (instr. units)_max,0.2535512243501705
+ICP_MnO (wt%),0.23555259970982828
+PWL_Depth CSF-A (m)_std,0.20646886176508594
+PWL_Offset (cm)_mean,0.19278836995332113
+NGR_Depth CSF-A (m)_min,0.1917979848249704
+PWL_Offset (cm)_std,0.17798737082193705
+MAD_Moisture dry (wt%)_mean,0.16854400461085947
+NGR_Offset (cm)_min,0.1444037706139017
+CARB_Inorganic carbon (wt%),0.11293176568907279
+Suffix,0.10973593731660887
+A/W,0.10467313175349628
+MAD_Mass dried sample (g)_mean,0.09376500137887656
+CARB_Comments,0.0901130489996817
+MAD_Moisture wet (wt%)_mean,0.06483042036017043
+RGB_R_mean,0.060859620168805716
+ICP_Ba (ppm),0.045607083850058024
+PWC_Depth CSF-B (m),0.04472322234440918
+PWL_Caliper separation (mm)_std,0.04363960836648081
+MAD_Offset (cm)_std,0.04232616968892167
+MAD_Mass porewater (g)_std,0.041829221920497074
+ICP_MgO (wt%),0.03786410734457104
+PWC_Depth CSF-A (m),0.03534959579046842
+MAD_Moisture dry (wt%)_std,0.03070031100084284
+ICP_CaO (wt%),0.029714558239018557
+RGB_B_std,0.025368601866524006
+RGB_Depth CSF-A (m)_mean,0.025082771389688837
+ICP_Sr (ppm),0.024878295269075472
+MAD_Mass wet sample (g)_std,0.01971548459218907
+MAD_Depth CSF-B (m)_mean,0.017479663208715367
+MAD_Depth CSF-B (m)_std,0.017384616518182718
+RGB_G_std,0.017053577666035668
+ICP_K2O (wt%),0.016049353900613603
+RGB_Depth CSF-B (m)_std,0.01436956482656868
+CARB_Top depth CSF-A (m),0.013910259155623151
+RGB_Depth CSF-B (m)_mean,0.013886093516014357
+RGB_G_mean,0.013080230990436325
+CARB_Calcium carbonate (wt%),0.012153662984199013
+MAD_Moisture wet (wt%)_std,0.011833957110655428
+MAD_Offset (cm)_mean,0.010562215968920678
+PWC_Caliper separation (mm),0.010054255117612305
+MAD_Mass porewater (g)_mean,0.009999367367988326
+ICP_Fe2O3t (wt%),0.008335362504762344
+ICP_Top depth CSF-B (m),0.007575947524572923
+MAD_Mass wet sample (g)_mean,0.007099784626785416
+ICP_TiO2 (wt%),0.007011364969885156
+RGB_R_std,0.003997425345632743
+ICP_Al2O3 (wt%),0.00376960177032646
+PWC_Sonic traveltime (microsecond),0.003530126104040863
+ICP_Zr (ppm),0.003297740658559443
+ICP_Cr (ppm),0.002904648333092377
+PWC_Offset (cm),0.002727995849234018
+SRM_Depth CSF-A (m)_mean,0.0020794957355018094
+ICP_K (ppm) 769.9 nm ,0.0016737346308956106
+ICP_Na (ppm) 589.6 nm ,0.001062200230624358
+SRM_Depth CSF-B (m)_mean,0.0009605564693763453
+SRM_Inclination raw (deg)_mean,0.0008980743171315822
+CARB_Sulfur (wt%),0.0007492397616996397
+ICP_V (ppm) 292.4 nm ,0.00017824453361048358
+MAD_Mass dried sample (g)_std,9.485199737363315e-11
+ICP_SiO2 250.7 nm ,0.0
+ICP_S (ppm),0.0
+ICP_SiO2 (wt%) 251.6 nm ,0.0
+ICP_Rb (ppm),0.0
+ICP_SiO2 (wt%) 288.2 nm ,0.0
+ICP_P2O5 213.6 nm ,0.0
+ICP_SiO2 (wt%),0.0
+ICP_Sc (ppm),0.0
+ICP_SiO2 (wt%) 250.7 nm ,0.0
+ICP_Sc 361.4 nm ,0.0
+ICP_Sc (ppm) 357.3 nm ,0.0
+ICP_P2O5 (wt%) 214.9 nm ,0.0
+ICP_Sc (ppm) 361.383 nm ,0.0
+ICP_Sc (ppm) 361.4 nm ,0.0
+ICP_Sc 357.3 nm ,0.0
+ICP_SiO2 (wt%) 221.667 nm ,0.0
+ICP_Ni (ppm),0.0
+ICP_P2O5 (wt%) 213.6 nm ,0.0
+ICP_P2O5 (wt%) 177.434 nm ,0.0
+ICP_MgO 285.2 nm ,0.0
+ICP_Mn (ppm) 257.6 nm ,0.0
+ICP_MnO (wt%) 257.6 nm ,0.0
+ICP_MnO (wt%) 259.372 nm ,0.0
+ICP_MnO (wt%) 259.4 nm ,0.0
+ICP_MnO 257.6 nm ,0.0
+ICP_MnO 259.4 nm ,0.0
+ICP_Mo (ppm) 202.032 nm ,0.0
+ICP_Na2O (wt%),0.0
+ICP_Na2O (wt%) 588.995 nm ,0.0
+ICP_Na2O (wt%) 589 nm ,0.0
+ICP_Na2O (wt%) 589.6 nm ,0.0
+ICP_Na2O 589 nm ,0.0
+ICP_Na2O 589.6 nm ,0.0
+ICP_Nb (ppm),0.0
+ICP_Nb (ppm) 309.4 nm ,0.0
+ICP_Ni (ppm) 221.6 nm ,0.0
+ICP_Ni (ppm) 231.604 nm ,0.0
+ICP_Ni (ppm) 232 nm ,0.0
+ICP_Ni 231.6 nm ,0.0
+ICP_Ni 361.9 nm ,0.0
+ICP_P (ppm) 214.9 nm ,0.0
+ICP_P2O5 (wt%),0.0
+ICP_SiO2 251.6 nm ,0.0
+ICP_V 310.2 nm ,0.0
+ICP_Sr (ppm) 407.771 nm ,0.0
+ICP_Sr (ppm) 407.8 nm ,0.0
+PWC_Test comments,0.0
+ICP_MgO (wt%) 285.2 nm ,0.0
+ICP_Zn (ppm) 213.9 nm ,0.0
+ICP_Zn 206.2 nm ,0.0
+ICP_Zn 213.9 nm ,0.0
+ICP_Zr (ppm) 327.307 nm ,0.0
+ICP_Zr (ppm) 339.2 nm ,0.0
+ICP_Zr (ppm) 343.8 nm ,0.0
+ICP_Zr 273.5 nm ,0.0
+ICP_Zr 339.2 nm ,0.0
+ICP_Zr 343.8 nm ,0.0
+ICP_Comments,0.0
+PWC_P-wave velocity x (m/s),0.0
+PWC_P-wave velocity y (m/s),0.0
+PWC_P-wave velocity z (m/s),0.0
+PWC_P-wave velocity unknown (m/s),0.0
+PWC_P-wave velocity x [manual] (m/s),0.0
+PWC_P-wave velocity y [manual] (m/s),0.0
+PWC_P-wave velocity z [manual] (m/s),0.0
+PWC_Instrument group,0.0
+PWC_Instrument,0.0
+PWC_Sonic traveltime [manual] (microsecond),0.0
+PWC_P-wave velocity unknown [manual] (m/s),0.0
+PWC_Sample comments,0.0
+ICP_Zn (ppm) 213.857 nm ,0.0
+ICP_Zn (ppm) 206.2 nm ,0.0
+ICP_V (ppm),0.0
+ICP_Sr (ppm) 421.6 nm ,0.0
+ICP_Sr (ppm) 460.7 nm ,0.0
+ICP_Sr 407.8 nm ,0.0
+ICP_Sr 421.6 nm ,0.0
+ICP_TiO2 (wt%) 334.9 nm ,0.0
+ICP_TiO2 (wt%) 334.941 nm ,0.0
+ICP_TiO2 (wt%) 336.1 nm ,0.0
+ICP_TiO2 (wt%) 337.3 nm ,0.0
+ICP_TiO2 336.1 nm ,0.0
+ICP_TiO2 337.3 nm ,0.0
+ICP_V (ppm) 292.401 nm ,0.0
+ICP_Zn (ppm) 202.5 nm ,0.0
+ICP_V (ppm) 309.3 nm ,0.0
+ICP_V (ppm) 310.2 nm ,0.0
+ICP_Y (ppm),0.0
+ICP_Y (ppm) 360.1 nm ,0.0
+ICP_Y (ppm) 371 nm ,0.0
+ICP_Y (ppm) 371.029 nm ,0.0
+ICP_Y (ppm) 377.4 nm ,0.0
+ICP_Y 360.1 nm ,0.0
+ICP_Y 371 nm ,0.0
+ICP_Zn (ppm),0.0
+ICP_MgO 280.3 nm ,0.0
+ICP_Ce (ppm),0.0
+ICP_MgO (wt%) 280.3 nm ,0.0
+SRM_Magnetic moment y (Am^2)_std,0.0
+SRM_Magnetic moment z (Am^2)_std,0.0
+SRM_Inclination raw (deg)_std,0.0
+CARB_Top offset on section (cm),0.0
+CARB_Bottom offset on section (cm),0.0
+CARB_Top depth CSF-B (m),0.0
+CARB_Total carbon (wt%),0.0
+CARB_Hydrogen (wt%),0.0
+CARB_Nitrogen (wt%),0.0
+CARB_Organic carbon (wt%) by difference (CHNS-COUL),0.0
+"CARB_Organic carbon (wt%), CHNS with treated sample (wt%)",0.0
+CARB_Sample treatment method (CHNS organic carbon),0.0
+CARB_Sample comments,0.0
+ICP_Top offset on section (cm),0.0
+ICP_Bottom offset on section (cm),0.0
+ICP_Top depth CSF-A (m),0.0
+ICP_Al (ppm) 308.2 nm ,0.0
+ICP_Al2O3 (wt%) 308.2 nm ,0.0
+ICP_Al2O3 (wt%) 309.3 nm ,0.0
+ICP_Al2O3 (wt%) 394.4 nm ,0.0
+ICP_Al2O3 (wt%) 396.152 nm ,0.0
+ICP_Al2O3 (wt%) 396.2 nm ,0.0
+ICP_Al2O3 308.2 nm ,0.0
+ICP_Al2O3 396.2 nm ,0.0
+SRM_Magnetic moment z (Am^2)_mean,0.0
+SRM_Magnetic moment y (Am^2)_mean,0.0
+ICP_Ba (ppm) 455.4 nm ,0.0
+SRM_Magnetic moment x (Am^2)_std,0.0
+MAD_Depth CSF-A (m)_mean,0.0
+MAD_Depth CSF-A (m)_std,0.0
+MAD_Container number_mean,0.0
+MAD_Container number_std,0.0
+MAD_Mass salt (g)_mean,0.0
+MAD_Mass salt (g)_std,0.0
+RGB_Offset (cm)_mean,0.0
+RGB_Offset (cm)_std,0.0
+RGB_Depth CSF-A (m)_std,0.0
+RGB_B_mean,0.0
+RGB_Test comments_mean,0.0
+RGB_Test comments_std,0.0
+RGB_Latitude (DD)_mean,0.0
+RGB_Latitude (DD)_std,0.0
+RGB_Longitude (DD)_mean,0.0
+RGB_Longitude (DD)_std,0.0
+SRM_Offset (cm)_mean,0.0
+SRM_Offset (cm)_std,0.0
+SRM_Depth CSF-A (m)_std,0.0
+SRM_Depth CSF-B (m)_std,0.0
+SRM_Demag level (mT)_mean,0.0
+SRM_Demag level (mT)_std,0.0
+SRM_Magnetic moment x (Am^2)_mean,0.0
+ICP_Ba (ppm) 233.5 nm ,0.0
+ICP_Ba (ppm) 455.403 nm ,0.0
+ICP_MgO (wt%) 279.6 nm ,0.0
+ICP_Cu (ppm) 327.4 nm ,0.0
+ICP_Cu 324.8 nm ,0.0
+ICP_Fe (ppm) 238.2 nm ,0.0
+ICP_Fe2O3 (wt%),0.0
+ICP_Fe2O3 (wt%) 239.563 nm ,0.0
+ICP_Fe2O3t (wt%) 238.2 nm ,0.0
+ICP_Fe2O3t (wt%) 239.6 nm ,0.0
+ICP_Fe2O3t (wt%) 259.9 nm ,0.0
+ICP_Fe2O3t 238.2 nm ,0.0
+ICP_Fe2O3t 239.6 nm ,0.0
+ICP_Fe2O3t 259.9 nm ,0.0
+ICP_Ga (ppm),0.0
+ICP_Ge (ppm),0.0
+ICP_Ge (ppm) 219.9 nm ,0.0
+ICP_Ge (ppm) 303.9 nm ,0.0
+ICP_K2O (wt%) 766.491 nm ,0.0
+ICP_K2O (wt%) 766.5 nm ,0.0
+ICP_K2O (wt%) 769.9 nm ,0.0
+ICP_K2O 766.5 nm ,0.0
+ICP_K2O 769.9 nm ,0.0
+ICP_La (ppm),0.0
+ICP_LOI (wt%),0.0
+ICP_Mg (ppm) 285.2 nm ,0.0
+ICP_MgO (wt%) 202.582 nm ,0.0
+ICP_Cu 224.7 nm ,0.0
+ICP_Cu (ppm) 327.395 nm ,0.0
+ICP_Ba (ppm) 493.4 nm ,0.0
+ICP_Cu (ppm) 324.8 nm ,0.0
+ICP_Ba 455.4 nm ,0.0
+ICP_Ba 493.4 nm ,0.0
+ICP_CaO (wt%) 315.9 nm ,0.0
+ICP_CaO (wt%) 317.9 nm ,0.0
+ICP_CaO (wt%) 317.933 nm ,0.0
+ICP_CaO (wt%) 393.4 nm ,0.0
+ICP_CaO (wt%) 396.8 nm ,0.0
+ICP_CaO (wt%) 422.7 nm ,0.0
+ICP_CaO 315.9 nm ,0.0
+ICP_CaO 317.9 nm ,0.0
+ICP_Co (ppm),0.0
+ICP_Co (ppm) 228.6 nm ,0.0
+ICP_Co (ppm) 228.615 nm ,0.0
+ICP_Co 228.6 nm ,0.0
+ICP_Cr (ppm) 205.6 nm ,0.0
+ICP_Cr (ppm) 206.1 nm ,0.0
+ICP_Cr (ppm) 267.7 nm ,0.0
+ICP_Cr (ppm) 267.716 nm ,0.0
+ICP_Cr (ppm) 283.6 nm ,0.0
+ICP_Cr 205.6 nm ,0.0
+ICP_Cr 267.7 nm ,0.0
+ICP_Cu (ppm),0.0
+ICP_Cu (ppm) 224.7 nm ,0.0
+PWC_Result comments,0.0

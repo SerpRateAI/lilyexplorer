@@ -1,0 +1,86 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+================================================================================
+VAE GRA v2.6.2 Clustering Evaluation
+================================================================================
+
+Using device: cpu
+
+Loading v2.6.2 model...
+Model loaded
+
+Loading v2.6 dataset...
+Dataset: 238,506 samples
+Lithologies: 139
+
+Scaling data...
+
+Extracting latent representations...
+Latent shape: (238506, 8)
+
+Using 50K sample subset for clustering evaluation...
+Subset size: 50,000 samples
+
+================================================================================
+Clustering Performance (v2.6.2)
+================================================================================
+
+k=10 clusters:
+  ARI: 0.1245
+  Silhouette: 0.3243
+
+k=12 clusters:
+  ARI: 0.1254
+  Silhouette: 0.3008
+
+k=15 clusters:
+  ARI: 0.1219
+  Silhouette: 0.3041
+
+k=20 clusters:
+  ARI: 0.1183
+  Silhouette: 0.2848
+
+Average ARI: 0.1225
+Average Silhouette: 0.3035
+
+================================================================================
+Comparison: v2.6.2 (Transfer Learning) vs v2.6 (Baseline)
+================================================================================
+
+k     v2.6.2 ARI      v2.6 ARI        Δ ARI           v2.6.2 Sil      v2.6 Sil        Δ Sil          
+------------------------------------------------------------------------------------------
+10    0.1245          0.2380          -0.1135 (-47.7%)  0.3243          0.4280          -0.1037 (-24.2%)
+12    0.1254          0.2580          -0.1326 (-51.4%)  0.3008          0.4090          -0.1082 (-26.4%)
+15    0.1219          0.2370          -0.1151 (-48.6%)  0.3041          0.3920          -0.0879 (-22.4%)
+20    0.1183          0.2370          -0.1187 (-50.1%)  0.2848          0.3790          -0.0942 (-24.8%)
+
+Avg   0.1225          0.2425          -0.1200 (-49.5%)  0.3035          0.4020          -0.0985 (-24.5%)
+
+================================================================================
+Summary
+================================================================================
+
+v2.6.2 Training Strategy:
+  Stage 1: Pre-train on GRA+MS+NGR (403K samples, 524 boreholes)
+  Stage 2: Fine-tune with RGB (239K samples, 296 boreholes)
+
+v2.6.2 Performance:
+  Average ARI: 0.1225
+  Best ARI: 0.1254 (k=12)
+  Average Silhouette: 0.3035
+
+v2.6 Performance (baseline):
+  Average ARI: 0.2425
+  Best ARI: 0.2580 (k=12)
+  Average Silhouette: 0.4020
+
+✗ Transfer learning DEGRADES performance by -49.5%
+  Pre-trained physical property representations may interfere with RGB learning.
+  Training from scratch (v2.6) may be better for this dataset.
+
+Results saved to: vae_v2_6_2_clustering_results.csv

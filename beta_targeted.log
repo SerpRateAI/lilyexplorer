@@ -1,0 +1,96 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+Warning: UMAP not available, will use PCA only for 8D visualization
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+================================================================================
+VAE TARGETED β TESTING
+Testing β=[0.005, 0.05] with 50 epochs
+================================================================================
+
+Loading data...
+Train: 206 boreholes, 174,636 samples
+Test:  45 boreholes, 30,593 samples
+
+================================================================================
+Training with β=0.005
+================================================================================
+
+Starting training (50 epochs)...
+
+Training VAE with latent dim=8, beta=0.005
+============================================================
+Epoch   0: Train Loss=1.6399, Val Loss=0.4375, Recon=1.5620, KL=15.5882
+Epoch   5: Train Loss=0.5330, Val Loss=0.1921, Recon=0.4480, KL=16.9925
+Epoch  10: Train Loss=0.4591, Val Loss=0.1663, Recon=0.3825, KL=15.3317
+Epoch  15: Train Loss=0.4200, Val Loss=0.1518, Recon=0.3509, KL=13.8175
+Epoch  20: Train Loss=0.4045, Val Loss=0.1481, Recon=0.3357, KL=13.7674
+Early stopping at epoch 23
+Training completed in 181.3s
+
+Evaluating on test set...
+Checkpoint saved: /home/utig5/johna/bhai/ml_models/checkpoints/vae_gra_v2_5_beta0.005_latent8.pth
+
+Results for β=0.005:
+  k=10: ARI=0.198
+  k=12: ARI=0.209
+  k=15: ARI=0.211
+  k=20: ARI=0.205
+  Training time: 181.3s
+
+================================================================================
+Training with β=0.05
+================================================================================
+
+Starting training (50 epochs)...
+
+Training VAE with latent dim=8, beta=0.05
+============================================================
+Epoch   0: Train Loss=2.0717, Val Loss=0.9632, Recon=1.6780, KL=7.8729
+Epoch   5: Train Loss=0.9123, Val Loss=0.5799, Recon=0.5594, KL=7.0584
+Epoch  10: Train Loss=0.8553, Val Loss=0.5600, Recon=0.5071, KL=6.9646
+Epoch  15: Train Loss=0.8292, Val Loss=0.5681, Recon=0.4768, KL=7.0469
+Epoch  20: Train Loss=0.8148, Val Loss=0.5587, Recon=0.4564, KL=7.1678
+Early stopping at epoch 22
+Training completed in 180.4s
+
+Evaluating on test set...
+Checkpoint saved: /home/utig5/johna/bhai/ml_models/checkpoints/vae_gra_v2_5_beta0.05_latent8.pth
+
+Results for β=0.05:
+  k=10: ARI=0.237
+  k=12: ARI=0.234
+  k=15: ARI=0.245
+  k=20: ARI=0.253
+  Training time: 180.4s
+
+================================================================================
+SUMMARY: β TESTING RESULTS
+================================================================================
+
+ beta  ari_k10  ari_k12  ari_k15  ari_k20
+0.005 0.197885 0.208722 0.211207 0.204905
+0.010 0.175000 0.194000 0.195000 0.212000
+0.050 0.237384 0.234489 0.245452 0.252875
+1.000 0.192000 0.167000 0.179000 0.166000
+
+Optimal β for each k:
+  k=10: β=0.05 (ARI=0.237)
+  k=12: β=0.05 (ARI=0.234)
+  k=15: β=0.05 (ARI=0.245)
+  k=20: β=0.05 (ARI=0.253)
+
+================================================================================
+RECOMMENDATION
+================================================================================
+
+Best overall β: 0.05
+Average ARI across k=[10,12,15,20]: 0.243
+
+================================================================================
+
+Results saved to: beta_targeted_results.csv

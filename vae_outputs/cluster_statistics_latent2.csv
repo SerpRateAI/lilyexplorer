@@ -1,0 +1,21 @@
+Cluster,Size,Size_Pct,Top_Lithology,Top_Pct,Entropy,N_Lithologies,Top_3
+1,24,15.894039735099339,nannofossil ooze,100.0,-1.4426951601859516e-10,1,nannofossil ooze (24)
+0,20,13.245033112582782,nannofossil ooze,20.0,3.484183717903685,13,"nannofossil ooze (4), mudstone (3), mud (2)"
+2,17,11.258278145695364,nannofossil ooze,52.94117647058824,2.173973133594523,7,"nannofossil ooze (9), clayey silt (2), mud (2)"
+5,14,9.271523178807946,nannofossil ooze,57.14285714285714,1.7534343854674375,5,"nannofossil ooze (8), clay (3), clayey silt (1)"
+8,13,8.609271523178808,nannofossil ooze,53.84615384615385,1.881094759388727,5,"nannofossil ooze (7), nannofossil chalk (2), mud (2)"
+12,9,5.960264900662252,nannofossil ooze,88.88888888888889,0.5032583344871068,2,"nannofossil ooze (8), volcanic rock (1)"
+10,9,5.960264900662252,mud,77.77777777777779,0.9864267282980339,3,"mud (7), nannofossil ooze (1), volcanic rock (1)"
+11,6,3.9735099337748347,nannofossil ooze,66.66666666666666,1.2516291669550144,3,"nannofossil ooze (4), mud (1), lapillistone (1)"
+13,5,3.3112582781456954,nannofossil ooze,40.0,1.9219280943102843,4,"nannofossil ooze (2), medium to coarse sandstone (1), very fine sand (1)"
+17,5,3.3112582781456954,nannofossil ooze,80.0,0.7219280945988233,2,"nannofossil ooze (4), lapilli tuff (1)"
+6,4,2.6490066225165565,clayey silt,75.0,0.8112781241705938,2,"clayey silt (3), volcanic rock (1)"
+9,4,2.6490066225165565,nannofossil ooze,50.0,1.4999999995671913,3,"nannofossil ooze (2), clayey silt (1), very fine sand (1)"
+7,3,1.9867549668874174,diatom ooze,100.0,-1.4426951601859516e-10,1,diatom ooze (3)
+4,3,1.9867549668874174,clayey silt,33.33333333333333,1.5849625002883474,3,"clayey silt (1), nannofossil ooze (1), lapillistone (1)"
+3,3,1.9867549668874174,clayey silt,66.66666666666666,0.9182958337659504,2,"clayey silt (2), nannofossil ooze (1)"
+15,3,1.9867549668874174,clay,100.0,-1.4426951601859516e-10,1,clay (3)
+16,3,1.9867549668874174,medium to coarse sandstone,33.33333333333333,1.5849625002883474,3,"medium to coarse sandstone (1), very fine sand (1), nannofossil ooze (1)"
+19,3,1.9867549668874174,nannofossil ooze,100.0,-1.4426951601859516e-10,1,nannofossil ooze (3)
+14,2,1.3245033112582782,radiolarian ooze,100.0,-1.4426951601859516e-10,1,radiolarian ooze (2)
+18,1,0.6622516556291391,clayey silt,100.0,-1.4426951601859516e-10,1,clayey silt (1)

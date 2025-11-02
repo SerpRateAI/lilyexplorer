@@ -1,0 +1,142 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+Warning: UMAP not available, will use PCA only for 8D visualization
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+====================================================================================================
+CROSS-VALIDATION: v2.6.6 (β: 0.001→0.5 over 50 epochs)
+====================================================================================================
+
+Total boreholes: 296
+K-fold CV: 5 folds
+Each fold: ~59 boreholes in test set
+
+Device: cuda
+
+====================================================================================================
+FOLD 1/5
+====================================================================================================
+Train: 160,838 samples (201 boreholes)
+Val:   33,331 samples (35 boreholes)
+Test:  44,337 samples (60 boreholes)
+
+Results:
+  Training time: 55.3s
+  Collapsed dims: 6/10
+  Effective dim: 4
+  Best clustering: k=18.0, ARI=0.1756, Sil=0.1692
+
+  Results for all k:
+    k=10: ARI=0.1662, Sil=0.2171
+    k=12: ARI=0.1701, Sil=0.1966
+    k=15: ARI=0.1664, Sil=0.1889
+    k=18: ARI=0.1756, Sil=0.1692
+
+====================================================================================================
+FOLD 2/5
+====================================================================================================
+Train: 160,179 samples (202 boreholes)
+Val:   28,341 samples (35 boreholes)
+Test:  49,986 samples (59 boreholes)
+
+Results:
+  Training time: 52.8s
+  Collapsed dims: 6/10
+  Effective dim: 4
+  Best clustering: k=10.0, ARI=0.1541, Sil=0.1673
+
+  Results for all k:
+    k=10: ARI=0.1541, Sil=0.1673
+    k=12: ARI=0.1521, Sil=0.1529
+    k=15: ARI=0.1360, Sil=0.1513
+    k=18: ARI=0.1502, Sil=0.1425
+
+====================================================================================================
+FOLD 3/5
+====================================================================================================
+Train: 157,236 samples (202 boreholes)
+Val:   29,184 samples (35 boreholes)
+Test:  52,086 samples (59 boreholes)
+
+Results:
+  Training time: 54.2s
+  Collapsed dims: 6/10
+  Effective dim: 4
+  Best clustering: k=12.0, ARI=0.1896, Sil=0.1837
+
+  Results for all k:
+    k=10: ARI=0.1678, Sil=0.1753
+    k=12: ARI=0.1896, Sil=0.1837
+    k=15: ARI=0.1832, Sil=0.1773
+    k=18: ARI=0.1783, Sil=0.1883
+
+====================================================================================================
+FOLD 4/5
+====================================================================================================
+Train: 157,977 samples (202 boreholes)
+Val:   30,839 samples (35 boreholes)
+Test:  49,690 samples (59 boreholes)
+
+Results:
+  Training time: 52.4s
+  Collapsed dims: 6/10
+  Effective dim: 4
+  Best clustering: k=10.0, ARI=0.2450, Sil=0.1992
+
+  Results for all k:
+    k=10: ARI=0.2450, Sil=0.1992
+    k=12: ARI=0.2264, Sil=0.1844
+    k=15: ARI=0.2318, Sil=0.1753
+    k=18: ARI=0.2303, Sil=0.1783
+
+====================================================================================================
+FOLD 5/5
+====================================================================================================
+Train: 174,262 samples (202 boreholes)
+Val:   21,837 samples (35 boreholes)
+Test:  42,407 samples (59 boreholes)
+
+Results:
+  Training time: 59.3s
+  Collapsed dims: 6/10
+  Effective dim: 4
+  Best clustering: k=15.0, ARI=0.1667, Sil=0.1569
+
+  Results for all k:
+    k=10: ARI=0.1408, Sil=0.1483
+    k=12: ARI=0.1565, Sil=0.1501
+    k=15: ARI=0.1667, Sil=0.1569
+    k=18: ARI=0.1636, Sil=0.1279
+
+====================================================================================================
+CROSS-VALIDATION SUMMARY
+====================================================================================================
+
+ fold  train_samples  test_samples  train_time  collapsed_dims  effective_dim  best_k  best_ari  best_sil
+    1         160838         44337   55.348565               6              4    18.0  0.175557  0.169215
+    2         160179         49986   52.775091               6              4    10.0  0.154130  0.167263
+    3         157236         52086   54.241348               6              4    12.0  0.189615  0.183698
+    4         157977         49690   52.411552               6              4    10.0  0.245037  0.199236
+    5         174262         42407   59.256519               6              4    15.0  0.166744  0.156873
+
+ARI Statistics:
+  Mean: 0.1862
+  Std:  0.0353
+  Min:  0.1541
+  Max:  0.2450
+  95% CI: [0.1170, 0.2555]
+
+====================================================================================================
+COMPARISON TO ORIGINAL v2.6.6
+====================================================================================================
+Original v2.6.6 (single split): ARI = 0.286
+Cross-validated mean:           ARI = 0.1862 ± 0.0353
+
+⚠️  Original v2.6.6 result is outside 95% CI - may be lucky/unlucky split
+====================================================================================================
+
+Results saved to: v2_6_6_cross_validation.csv

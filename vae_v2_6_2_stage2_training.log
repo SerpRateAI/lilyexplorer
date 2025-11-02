@@ -1,0 +1,96 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+================================================================================
+VAE GRA v2.6.2 - Stage 2: Fine-tuning with RGB Features
+================================================================================
+
+Using device: cpu
+
+Loading Stage 1 pre-trained model...
+Stage 1 model loaded:
+  Training epochs: 21
+  Training time: 257.3s
+
+Expanding model from 3D to 6D...
+Model expansion complete:
+  Transferred: GRA/MS/NGR encoding/decoding pathways
+  Initialized: RGB input (fc1[:, 3:]) and output (fc5[3:, :]) weights
+
+Loading v2.6 dataset (GRA + MS + NGR + RGB)...
+Dataset: 238,506 samples from 296 boreholes
+Features: 6D (GRA, MS, NGR, RGB)
+Lithologies: 139
+
+Splitting data by borehole...
+Train: 169,018 samples (207 boreholes)
+Val:   37,093 samples (44 boreholes)
+Test:  32,395 samples (45 boreholes)
+
+Applying distribution-aware scaling (6D)...
+
+Creating DataLoaders...
+
+================================================================================
+Fine-tuning with RGB features
+================================================================================
+
+Model architecture:
+  Input: 6D (GRA, MS, NGR, R, G, B)
+  Encoder: 6 → 32 → 16 → 8
+  Decoder: 8 → 16 → 32 → 6
+  Parameters: 2,102
+
+Fine-tuning strategy:
+  - Lower learning rate (5e-4 vs 1e-3) to preserve pre-trained knowledge
+  - Shorter β annealing (25 epochs vs 50) since physical properties are pre-trained
+  - β range: 0.001 → 0.5 (same target as Stage 1)
+
+Epoch   1/100 | β=0.0010 | Train Loss: 1.0649 (Recon: 1.0574, KL: 7.4426) | Val Loss: 0.2276 (Recon: 0.2173, KL: 10.3188)
+Epoch   2/100 | β=0.0210 | Train Loss: 0.4165 (Recon: 0.2254, KL: 9.1161) | Val Loss: 0.3187 (Recon: 0.1464, KL: 8.2190)
+Epoch   3/100 | β=0.0409 | Train Loss: 0.5072 (Recon: 0.1918, KL: 7.7084) | Val Loss: 0.4292 (Recon: 0.1487, KL: 6.8536)
+Epoch   4/100 | β=0.0609 | Train Loss: 0.6182 (Recon: 0.2066, KL: 6.7613) | Val Loss: 0.5457 (Recon: 0.1744, KL: 6.0992)
+Epoch   5/100 | β=0.0808 | Train Loss: 0.7316 (Recon: 0.2382, KL: 6.1036) | Val Loss: 0.6571 (Recon: 0.2111, KL: 5.5169)
+Epoch   6/100 | β=0.1008 | Train Loss: 0.8366 (Recon: 0.2711, KL: 5.6101) | Val Loss: 0.7559 (Recon: 0.2449, KL: 5.0690)
+Epoch   7/100 | β=0.1208 | Train Loss: 0.9362 (Recon: 0.3075, KL: 5.2058) | Val Loss: 0.8471 (Recon: 0.2823, KL: 4.6772)
+Epoch   8/100 | β=0.1407 | Train Loss: 1.0317 (Recon: 0.3434, KL: 4.8911) | Val Loss: 0.9369 (Recon: 0.3185, KL: 4.3946)
+Epoch   9/100 | β=0.1607 | Train Loss: 1.1214 (Recon: 0.3794, KL: 4.6180) | Val Loss: 1.0187 (Recon: 0.3516, KL: 4.1516)
+Epoch  10/100 | β=0.1806 | Train Loss: 1.2060 (Recon: 0.4134, KL: 4.3874) | Val Loss: 1.0927 (Recon: 0.3783, KL: 3.9546)
+Epoch  11/100 | β=0.2006 | Train Loss: 1.2846 (Recon: 0.4451, KL: 4.1846) | Val Loss: 1.1712 (Recon: 0.4202, KL: 3.7435)
+Epoch  12/100 | β=0.2206 | Train Loss: 1.3642 (Recon: 0.4798, KL: 4.0098) | Val Loss: 1.2433 (Recon: 0.4490, KL: 3.6013)
+Epoch  13/100 | β=0.2405 | Train Loss: 1.4401 (Recon: 0.5140, KL: 3.8504) | Val Loss: 1.3160 (Recon: 0.4786, KL: 3.4819)
+Epoch  14/100 | β=0.2605 | Train Loss: 1.5122 (Recon: 0.5436, KL: 3.7187) | Val Loss: 1.3756 (Recon: 0.5125, KL: 3.3134)
+Epoch  15/100 | β=0.2804 | Train Loss: 1.5848 (Recon: 0.5764, KL: 3.5957) | Val Loss: 1.4453 (Recon: 0.5552, KL: 3.1738)
+Epoch  16/100 | β=0.3004 | Train Loss: 1.6537 (Recon: 0.6100, KL: 3.4742) | Val Loss: 1.4969 (Recon: 0.5689, KL: 3.0894)
+Epoch  17/100 | β=0.3204 | Train Loss: 1.7191 (Recon: 0.6387, KL: 3.3724) | Val Loss: 1.5582 (Recon: 0.5913, KL: 3.0181)
+Epoch  18/100 | β=0.3403 | Train Loss: 1.7838 (Recon: 0.6688, KL: 3.2761) | Val Loss: 1.6166 (Recon: 0.6284, KL: 2.9036)
+Epoch  19/100 | β=0.3603 | Train Loss: 1.8456 (Recon: 0.6988, KL: 3.1832) | Val Loss: 1.6739 (Recon: 0.6514, KL: 2.8381)
+Epoch  20/100 | β=0.3802 | Train Loss: 1.9074 (Recon: 0.7262, KL: 3.1064) | Val Loss: 1.7267 (Recon: 0.6749, KL: 2.7661)
+Epoch  21/100 | β=0.4002 | Train Loss: 1.9661 (Recon: 0.7539, KL: 3.0290) | Val Loss: 1.7819 (Recon: 0.7230, KL: 2.6459)
+Early stopping at epoch 21
+
+Fine-tuning completed in 148.4 seconds (21 epochs)
+
+Saving Stage 2 fine-tuned model...
+Saved: ml_models/checkpoints/vae_gra_v2_6_2_stage2.pth
+
+================================================================================
+Stage 2 Test Set Evaluation
+================================================================================
+
+Test Loss: 2.4300
+  Reconstruction: 0.8299
+  KL Divergence: 3.2001
+
+================================================================================
+Stage 2 Fine-tuning Complete
+================================================================================
+
+Total training time: 405.7s
+  Stage 1 (physical properties): 257.3s
+  Stage 2 (RGB fine-tuning): 148.4s
+
+Next step: Evaluate clustering performance and compare to v2.6

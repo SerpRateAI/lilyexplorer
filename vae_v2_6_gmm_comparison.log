@@ -1,0 +1,221 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+Warning: UMAP not available, will use PCA only for 8D visualization
+================================================================================
+VAE GRA v2.6: GMM vs K-MEANS COMPARISON
+================================================================================
+
+Testing Gaussian Mixture Models with different covariance types
+Comparing to K-Means baseline
+
+Loading data...
+Train: 206 boreholes, 174,636 samples
+Val:   45 boreholes, 33,277 samples
+Test:  45 boreholes, 30,593 samples
+
+Device: cuda
+
+================================================================================
+Training VAE with β annealing: 0.001→0.5 over 50 epochs
+================================================================================
+
+Epoch   0: β=0.0010, Train Loss=1.5858, Val Loss=0.3315, Recon=1.5674, KL=18.4018
+Epoch   5: β=0.0509, Train Loss=0.9204, Val Loss=0.5954, Recon=0.5540, KL=7.1995
+Epoch  10: β=0.1008, Train Loss=1.1702, Val Loss=0.9047, Recon=0.6026, KL=5.6300
+Epoch  15: β=0.1507, Train Loss=1.4109, Val Loss=1.1794, Recon=0.6800, KL=4.8499
+Early stopping at epoch 15
+
+Training completed in 107.9s
+Epochs trained: 16
+
+Extracting latent representations...
+Latent shape: (30593, 8)
+
+================================================================================
+Testing: K-Means
+================================================================================
+
+k= 5: ARI=0.1449, Sil=0.2975
+k= 6: ARI=0.1776, Sil=0.3066
+k= 7: ARI=0.1997, Sil=0.3216
+k= 8: ARI=0.1972, Sil=0.3340
+k= 9: ARI=0.2208, Sil=0.3297
+k=10: ARI=0.2354, Sil=0.3320
+k=11: ARI=0.2272, Sil=0.3288
+k=12: ARI=0.2579, Sil=0.3300
+k=13: ARI=0.2460, Sil=0.3235
+k=14: ARI=0.2521, Sil=0.3122
+k=15: ARI=0.2358, Sil=0.3117
+k=16: ARI=0.2426, Sil=0.3106
+k=17: ARI=0.2311, Sil=0.3040
+k=18: ARI=0.2312, Sil=0.3061
+k=19: ARI=0.2389, Sil=0.3085
+k=20: ARI=0.2433, Sil=0.2969
+
+K-Means completed in 174.3s
+
+================================================================================
+Testing: GMM (full)
+================================================================================
+
+k= 5: ARI=0.1433, Sil=0.2283, BIC=-1105747, AIC=-1107612
+k= 6: ARI=0.1593, Sil=0.2322, BIC=-1126177, AIC=-1128417
+k= 7: ARI=0.1728, Sil=0.2638, BIC=-1141722, AIC=-1144337
+k= 8: ARI=0.2401, Sil=0.2687, BIC=-1155434, AIC=-1158424
+k= 9: ARI=0.2477, Sil=0.2426, BIC=-1170358, AIC=-1173722
+k=10: ARI=0.2496, Sil=0.2516, BIC=-1176971, AIC=-1180710
+k=11: ARI=0.2443, Sil=0.2574, BIC=-1180540, AIC=-1184655
+k=12: ARI=0.2643, Sil=0.2628, BIC=-1185183, AIC=-1189672
+k=13: ARI=0.2640, Sil=0.2349, BIC=-1188252, AIC=-1193116
+k=14: ARI=0.2363, Sil=0.2126, BIC=-1192486, AIC=-1197724
+k=15: ARI=0.2535, Sil=0.2444, BIC=-1196245, AIC=-1201859
+k=16: ARI=0.2546, Sil=0.2360, BIC=-1199230, AIC=-1205218
+k=17: ARI=0.2570, Sil=0.2178, BIC=-1200754, AIC=-1207117
+k=18: ARI=0.2661, Sil=0.2455, BIC=-1204443, AIC=-1211181
+k=19: ARI=0.2611, Sil=0.2318, BIC=-1206401, AIC=-1213513
+k=20: ARI=0.2560, Sil=0.2291, BIC=-1209438, AIC=-1216925
+
+GMM (full) completed in 204.6s
+
+================================================================================
+Testing: GMM (tied)
+================================================================================
+
+k= 5: ARI=0.1383, Sil=0.2933, BIC=-984219, AIC=-984885
+k= 6: ARI=0.1869, Sil=0.2919, BIC=-993516, AIC=-994257
+k= 7: ARI=0.1555, Sil=0.2912, BIC=-1013424, AIC=-1014240
+k= 8: ARI=0.1944, Sil=0.2751, BIC=-1021867, AIC=-1022759
+k= 9: ARI=0.2121, Sil=0.2925, BIC=-1030830, AIC=-1031796
+k=10: ARI=0.2109, Sil=0.2886, BIC=-1040059, AIC=-1041100
+k=11: ARI=0.2027, Sil=0.2766, BIC=-1045242, AIC=-1046358
+k=12: ARI=0.2290, Sil=0.2857, BIC=-1049582, AIC=-1050773
+k=13: ARI=0.2338, Sil=0.2772, BIC=-1054319, AIC=-1055585
+k=14: ARI=0.2431, Sil=0.2577, BIC=-1057007, AIC=-1058348
+k=15: ARI=0.2546, Sil=0.2676, BIC=-1059546, AIC=-1060962
+k=16: ARI=0.2408, Sil=0.2411, BIC=-1065578, AIC=-1067068
+k=17: ARI=0.2528, Sil=0.2553, BIC=-1069207, AIC=-1070773
+k=18: ARI=0.2660, Sil=0.2700, BIC=-1072035, AIC=-1073676
+k=19: ARI=0.2643, Sil=0.2703, BIC=-1076452, AIC=-1078167
+k=20: ARI=0.2443, Sil=0.2543, BIC=-1081010, AIC=-1082801
+
+GMM (tied) completed in 155.0s
+
+================================================================================
+Testing: GMM (diag)
+================================================================================
+
+k= 5: ARI=0.1259, Sil=0.1783, BIC=-599237, AIC=-599937
+k= 6: ARI=0.1534, Sil=0.1823, BIC=-630495, AIC=-631336
+k= 7: ARI=0.2562, Sil=0.2445, BIC=-646458, AIC=-647441
+k= 8: ARI=0.2279, Sil=0.2493, BIC=-672467, AIC=-673591
+k= 9: ARI=0.2307, Sil=0.2541, BIC=-679102, AIC=-680368
+k=10: ARI=0.2280, Sil=0.2118, BIC=-692867, AIC=-694275
+k=11: ARI=0.2442, Sil=0.2391, BIC=-701943, AIC=-703493
+k=12: ARI=0.2509, Sil=0.2590, BIC=-711933, AIC=-713624
+k=13: ARI=0.2351, Sil=0.2533, BIC=-720021, AIC=-721853
+k=14: ARI=0.2416, Sil=0.2687, BIC=-725946, AIC=-727920
+k=15: ARI=0.2455, Sil=0.2568, BIC=-738093, AIC=-740208
+k=16: ARI=0.2454, Sil=0.2408, BIC=-747541, AIC=-749798
+k=17: ARI=0.2472, Sil=0.2409, BIC=-753510, AIC=-755909
+k=18: ARI=0.2485, Sil=0.2353, BIC=-756966, AIC=-759507
+k=19: ARI=0.2458, Sil=0.2181, BIC=-765439, AIC=-768121
+k=20: ARI=0.2399, Sil=0.2167, BIC=-771225, AIC=-774049
+
+GMM (diag) completed in 120.3s
+
+================================================================================
+Testing: GMM (spherical)
+================================================================================
+
+k= 5: ARI=0.1532, Sil=0.2167, BIC=322543, AIC=322135
+k= 6: ARI=0.1625, Sil=0.2374, BIC=292751, AIC=292259
+k= 7: ARI=0.1824, Sil=0.2876, BIC=272018, AIC=271444
+k= 8: ARI=0.2095, Sil=0.2902, BIC=253538, AIC=252880
+k= 9: ARI=0.2181, Sil=0.3063, BIC=242932, AIC=242191
+k=10: ARI=0.2311, Sil=0.2701, BIC=224356, AIC=223531
+k=11: ARI=0.2329, Sil=0.2798, BIC=212325, AIC=211418
+k=12: ARI=0.2393, Sil=0.2801, BIC=198958, AIC=197967
+k=13: ARI=0.2421, Sil=0.2702, BIC=188562, AIC=187488
+k=14: ARI=0.2358, Sil=0.2683, BIC=178497, AIC=177340
+k=15: ARI=0.2298, Sil=0.2601, BIC=171589, AIC=170348
+k=16: ARI=0.2362, Sil=0.2657, BIC=165025, AIC=163701
+k=17: ARI=0.2356, Sil=0.2529, BIC=159101, AIC=157693
+k=18: ARI=0.2372, Sil=0.2579, BIC=152350, AIC=150860
+k=19: ARI=0.2203, Sil=0.2523, BIC=147144, AIC=145570
+k=20: ARI=0.2318, Sil=0.2633, BIC=141230, AIC=139573
+
+GMM (spherical) completed in 113.8s
+
+================================================================================
+RESULTS SUMMARY
+================================================================================
+
+K-Means:
+  Best k=12: ARI=0.2579, Silhouette=0.3300
+  Top 3 k values: [12, 14, 13]
+
+GMM (full):
+  Best k=18: ARI=0.2661, Silhouette=0.2455
+  Top 3 k values: [18, 12, 13]
+
+GMM (tied):
+  Best k=18: ARI=0.2660, Silhouette=0.2700
+  Top 3 k values: [18, 19, 15]
+
+GMM (diag):
+  Best k=7: ARI=0.2562, Silhouette=0.2445
+  Top 3 k values: [7, 12, 18]
+
+GMM (spherical):
+  Best k=13: ARI=0.2421, Silhouette=0.2702
+  Top 3 k values: [13, 12, 18]
+
+================================================================================
+BEST OVERALL
+================================================================================
+
+Method: GMM (full)
+k = 18
+ARI = 0.2661
+Silhouette = 0.2455
+BIC = -1204443
+AIC = -1211181
+
+================================================================================
+COMPARISON AT k=12
+================================================================================
+
+         method      ari  silhouette
+     GMM (full) 0.264273    0.262785
+        K-Means 0.257875    0.329975
+     GMM (diag) 0.250918    0.258998
+GMM (spherical) 0.239298    0.280106
+     GMM (tied) 0.228989    0.285654
+
+K-Means best ARI: 0.2579
+Overall best ARI: 0.2661
+Improvement: +3.2%
+
+Results saved to: vae_v2_6_gmm_comparison_results.csv
+Model saved to: /home/utig5/johna/bhai/ml_models/checkpoints/vae_gra_v2_6_gmm_comparison.pth
+
+================================================================================
+KEY FINDINGS
+================================================================================
+
+GMM Advantages:
+  - 'full': Most flexible, each cluster has its own covariance
+  - 'tied': Moderate flexibility, shared covariance across clusters
+  - 'diag': Axes-aligned ellipses
+  - 'spherical': Similar to K-Means but probabilistic
+
+Use BIC/AIC to select k automatically (lower is better)
+ARI measures alignment with true lithology labels
+Silhouette measures cluster separation quality
+================================================================================

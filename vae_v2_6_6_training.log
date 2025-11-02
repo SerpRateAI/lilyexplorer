@@ -1,0 +1,102 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+Warning: UMAP not available, will use PCA only for 8D visualization
+====================================================================================================
+VAE GRA v2.6.6: latent_dim=10 with β annealing
+====================================================================================================
+
+Loading data...
+Train: 174,636 samples from 206 boreholes
+Val:   33,277 samples from 45 boreholes
+Test:  30,593 samples from 45 boreholes
+
+Device: cuda
+
+====================================================================================================
+Training VAE with latent_dim=10
+====================================================================================================
+
+Model parameters: 2,202
+
+Epoch   1: β=0.0010, Train=1.4820, Val=0.4006
+Epoch   2: β=0.0110, Train=0.9128, Val=0.4115
+Epoch   3: β=0.0210, Train=0.8986, Val=0.4636
+Epoch   4: β=0.0309, Train=0.9113, Val=0.5019
+Epoch   5: β=0.0409, Train=0.9479, Val=0.5700
+Epoch  10: β=0.0908, Train=1.1217, Val=0.8385
+Early stopping at epoch 16
+
+Training completed in 108.5s
+
+Model saved to: ml_models/checkpoints/vae_gra_v2_6_6_latent10.pth
+
+Latent shape: (30593, 10)
+
+====================================================================================================
+LATENT SPACE ANALYSIS
+====================================================================================================
+Latent std per dimension: [0.01645342 0.00855117 0.02041334 1.0923995  0.0183808  0.01316335
+ 0.84888166 0.8575543  0.9427206  0.01493647]
+Collapsed dimensions: 6/10
+Effective dimensionality: 4
+Utilization: 40.0%
+
+====================================================================================================
+CLUSTERING EVALUATION
+====================================================================================================
+
+K-Means clustering:
+  k=10: ARI=0.2178, Silhouette=0.3385
+  k=12: ARI=0.2332, Silhouette=0.3335
+  k=15: ARI=0.2370, Silhouette=0.3106
+  k=18: ARI=0.2448, Silhouette=0.3096
+  k=20: ARI=0.2374, Silhouette=0.2986
+
+GMM clustering (full covariance):
+  k=10: ARI=0.2343, Silhouette=0.2772
+  k=12: ARI=0.2477, Silhouette=0.2429
+  k=15: ARI=0.2317, Silhouette=0.2349
+  k=18: ARI=0.2857, Silhouette=0.2489
+  k=20: ARI=0.2693, Silhouette=0.2322
+
+====================================================================================================
+RESULTS SUMMARY
+====================================================================================================
+
+ method  k      ARI  Silhouette
+K-Means 10 0.217807    0.338470
+K-Means 12 0.233211    0.333515
+K-Means 15 0.237017    0.310630
+K-Means 18 0.244754    0.309573
+K-Means 20 0.237367    0.298632
+    GMM 10 0.234291    0.277186
+    GMM 12 0.247676    0.242928
+    GMM 15 0.231663    0.234871
+    GMM 18 0.285738    0.248926
+    GMM 20 0.269327    0.232238
+
+BEST RESULTS:
+----------------------------------------------------------------------------------------------------
+K-Means: k=18, ARI=0.2448, Silhouette=0.3096
+GMM:     k=18, ARI=0.2857, Silhouette=0.2489
+
+====================================================================================================
+COMPARISON TO v2.6 BASELINE
+====================================================================================================
+
+v2.6 (latent_dim=8):
+  K-Means (k=12): ARI=0.2579
+  GMM (k=18):     ARI=0.2662
+
+v2.6.6 (latent_dim=10):
+  K-Means (k=12): ARI=0.2332 (-9.6%)
+  GMM (k=18):     ARI=0.2857 (+7.3%)
+
+✓ Confirmed: latent_dim=10 improves GMM ARI by 7.3%
+====================================================================================================

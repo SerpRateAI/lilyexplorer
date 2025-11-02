@@ -1,0 +1,26 @@
+{
+  "n_samples_train": 69,
+  "n_samples_val": 14,
+  "n_samples_test": 68,
+  "n_boreholes_train": 14,
+  "n_boreholes_val": 2,
+  "n_boreholes_test": 5,
+  "feature_names": [
+    "Porosity (vol%)",
+    "Grain density (g/cm^3)",
+    "P_wave_velocity",
+    "Thermal conductivity mean (W/(m*K))"
+  ],
+  "scaler_mean": [
+    45.1855072463768,
+    2.710652173913044,
+    1995.2898550724638,
+    1.564971014492754
+  ],
+  "scaler_std": [
+    18.17096166775735,
+    0.07606325096554852,
+    658.0937138993899,
+    0.8400625403049516
+  ]
+}

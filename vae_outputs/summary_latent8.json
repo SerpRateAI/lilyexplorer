@@ -1,0 +1,55 @@
+{
+  "latent_dim": 8,
+  "n_samples": 151,
+  "n_clusters": 20,
+  "silhouette_score": 0.7374783158302307,
+  "adjusted_rand_index": 0.13143188865530925,
+  "normalized_mutual_info": 0.4545264435269054,
+  "n_lithologies": 18,
+  "top_10_lithologies": {
+    "nannofossil ooze": 79,
+    "mud": 14,
+    "clayey silt": 12,
+    "very fine sand": 6,
+    "clay": 6,
+    "lapillistone": 4,
+    "volcanic rock": 4,
+    "medium to coarse sandstone": 3,
+    "calcareous ooze": 3,
+    "basalt": 3
+  },
+  "reconstruction_metrics": [
+    {
+      "Feature": "Porosity (vol%)",
+      "MSE": 970.3933715820312,
+      "MAE": 28.646499633789062,
+      "MAPE (%)": 36.773985624313354,
+      "Mean_Original": 74.49412536621094,
+      "Std_Original": 11.496660232543945
+    },
+    {
+      "Feature": "Grain density (g/cm^3)",
+      "MSE": 0.007118868641555309,
+      "MAE": 0.07158780097961426,
+      "MAPE (%)": 2.725784294307232,
+      "Mean_Original": 2.665088176727295,
+      "Std_Original": 0.07258699089288712
+    },
+    {
+      "Feature": "P_wave_velocity",
+      "MSE": 204588.171875,
+      "MAE": 440.087890625,
+      "MAPE (%)": 28.393858671188354,
+      "Mean_Original": 1555.2646484375,
+      "Std_Original": 42.26826477050781
+    },
+    {
+      "Feature": "Thermal conductivity mean (W/(m*K))",
+      "MSE": 0.3363490104675293,
+      "MAE": 0.5310959815979004,
+      "MAPE (%)": 57.17681646347046,
+      "Mean_Original": 1.0040292739868164,
+      "Std_Original": 0.15850123763084412
+    }
+  ]
+}

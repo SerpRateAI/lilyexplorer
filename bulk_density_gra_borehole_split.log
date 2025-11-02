@@ -1,0 +1,160 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+Loading datasets...
+Using GRA bulk density as target (4M samples)
+CRITICAL: Will split by BOREHOLE to test generalization
+
+  Loading GRA (contains target bulk density - 4M samples!)...
+    GRA shape: (4134647, 32)
+    Unique boreholes: 534
+
+  Loading and aggregating other datasets by section...
+  Loading MAD (moisture and density - will aggregate)...
+    MAD aggregated shape: (24496, 27)
+  Loading MS (magnetic susceptibility)...
+    MS aggregated shape: (66514, 12)
+  Loading NGR (natural gamma radiation)...
+    NGR aggregated shape: (64451, 27)
+  Loading RGB (color data)...
+    RGB aggregated shape: (45808, 27)
+  Loading SRM (remanent magnetization)...
+    SRM aggregated shape: (55633, 23)
+  Loading PWL (P-wave logger)...
+    PWL aggregated shape: (34861, 17)
+  Loading smaller datasets (no aggregation)...
+  Loading CARB (carbonate content)...
+    CARB shape: (14713, 34)
+  Loading ICP (inductively coupled plasma)...
+    ICP shape: (3189, 187)
+  Loading PWC (P-wave velocity)...
+    PWC shape: (28445, 41)
+
+Merging datasets on core identification fields...
+  Merging MAD...
+  Merging MS...
+  Merging NGR...
+  Merging RGB...
+  Merging SRM...
+  Merging PWL...
+  Merging CARB...
+  Merging ICP...
+  Merging PWC...
+
+Merged dataset shape: (4240634, 329)
+Rows before removing missing targets: 4240634
+Rows after removing missing targets: 4240634
+
+Total features: 311
+Categorical features: 28
+Numerical features: 283
+
+Dataset info:
+  Total samples: 4,240,634
+  Total boreholes: 534
+  Features: 311
+  Categorical features: 28
+
+Sampling 20.0% of data for tractable training...
+  Sampled size: 848,126
+  Sampled boreholes: 534
+
+Splitting by borehole (no borehole appears in multiple splits)...
+
+Data splits (BY BOREHOLE):
+  Train: 625,986 samples from 373 boreholes (73.8%)
+  Validation: 89,433 samples from 80 boreholes (10.5%)
+  Test: 132,707 samples from 81 boreholes (15.6%)
+
+Borehole overlap check:
+  Train ∩ Val: 0 (should be 0)
+  Train ∩ Test: 0 (should be 0)
+  Val ∩ Test: 0 (should be 0)
+
+Training CatBoost model with early stopping...
+0:	learn: 0.3344106	test: 0.4326060	best: 0.4326060 (0)	total: 233ms	remaining: 7m 45s
+100:	learn: 0.2509672	test: 0.3544134	best: 0.3544134 (100)	total: 25.6s	remaining: 8m
+200:	learn: 0.2445761	test: 0.3515708	best: 0.3515708 (200)	total: 50.3s	remaining: 7m 30s
+300:	learn: 0.2410914	test: 0.3502996	best: 0.3502756 (289)	total: 1m 14s	remaining: 7m
+400:	learn: 0.2384786	test: 0.3505335	best: 0.3502422 (308)	total: 1m 39s	remaining: 6m 37s
+Stopped by overfitting detector  (100 iterations wait)
+
+bestTest = 0.3502422418
+bestIteration = 308
+
+Shrink model to first 309 iterations.
+
+======================================================================
+MODEL EVALUATION - GRA BULK DENSITY PREDICTION (BOREHOLE-SPLIT)
+======================================================================
+
+Train Set:
+  RMSE: 0.2383 g/cm³
+  MAE:  0.1109 g/cm³
+  R²:   0.5208
+
+Validation Set:
+  RMSE: 0.3500 g/cm³
+  MAE:  0.1657 g/cm³
+  R²:   0.3656
+
+Test Set:
+  RMSE: 0.2785 g/cm³
+  MAE:  0.1476 g/cm³
+  R²:   0.3365
+
+======================================================================
+TOP 30 MOST IMPORTANT FEATURES
+======================================================================
+                                        feature  importance
+                                    Offset (cm)   18.303827
+                                           Site   16.010452
+                                 Lithology Type    4.321814
+                                 Full Lithology    4.251025
+                 NGR_NGR total counts (cps)_min    3.778232
+                                           Core    3.537111
+                                  Latitude (DD)    3.412098
+  MS_Magnetic susceptibility (instr. units)_min    3.091486
+                                           Sect    3.055956
+                             Water Depth (mbsl)    2.791817
+                            NGR_Error (cps)_min    2.393941
+                        Degree of Consolidation    2.145720
+ MS_Magnetic susceptibility (instr. units)_mean    2.082099
+                                           Type    2.019759
+                                 Longitude (DD)    1.918536
+                                            Exp    1.696633
+                NGR_NGR total counts (cps)_mean    1.480668
+MS_Magnetic susceptibility (instr. units)_count    1.401013
+                           NGR_Error (cps)_mean    1.363688
+              PWL_P-wave velocity xy (m/s)_mean    1.343266
+                       PWL_Depth CSF-B (m)_mean    1.238591
+                           Simplified Lithology    1.230431
+                                Depth CSF-B (m)    1.152132
+                              Lithology Subtype    1.149903
+                                      Principal    1.136964
+                        NGR_Depth CSF-A (m)_max    1.120109
+                       PWL_Depth CSF-A (m)_mean    1.067779
+                        NGR_Depth CSF-B (m)_max    0.723577
+  MS_Magnetic susceptibility (instr. units)_std    0.593936
+                             Expanded Core Type    0.575188
+
+Saving model...
+Model saved to: bulk_density_gra_model_borehole_split.cbm
+Feature importance saved to: feature_importance_gra_borehole_split.csv
+
+======================================================================
+DONE!
+======================================================================
+
+Summary:
+  - Predicting GRA bulk density (4M total measurements)
+  - Used 311 features from 9 datasets
+  - Trained on 625,986 samples from 373 boreholes (20% sample)
+  - Test R²: 0.3365
+  - Test set has 81 UNSEEN boreholes
+  - Early stopping at iteration 309
+
+Note: Proper borehole-based split ensures model generalizes to new boreholes!

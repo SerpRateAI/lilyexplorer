@@ -1,0 +1,86 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+================================================================================
+VaDE (Variational Deep Embedding) v2.4
+Cluster-Aware Representation Learning
+================================================================================
+Using device: cpu
+
+Loading data...
+Loaded 238,506 samples from 296 boreholes
+After removing NaN: 238,506 samples
+Found 139 unique lithologies
+
+Train: 206 boreholes, 174,636 samples
+Val:   45 boreholes, 33,277 samples
+Test:  45 boreholes, 30,593 samples
+
+================================================================================
+Training VaDE with n_clusters=10
+================================================================================
+
+Model parameters: 2,272
+
+Pre-training VAE (standard Gaussian prior)...
+  Epoch  0: Loss=5.082
+  Epoch  5: Loss=3.581
+  Epoch 10: Loss=3.521
+  Epoch 15: Loss=3.480
+Pre-training complete.
+
+Initializing GMM parameters with K-Means...
+Initialized 10 clusters
+
+Training VaDE with 10 clusters, latent_dim=8
+============================================================
+Epoch   0: Train=30834.478, Val=8975.950
+Epoch   5: Train=238.290, Val=142.552
+Epoch  10: Train=22.300, Val=0.975
+Epoch  15: Train=-13.880, Val=-21.594
+Epoch  20: Train=-23.502, Val=-27.376
+Epoch  25: Train=-27.234, Val=-29.730
+Epoch  30: Train=-29.905, Val=-31.872
+Epoch  35: Train=-32.102, Val=-34.087
+Epoch  40: Train=-33.586, Val=-35.853
+Epoch  45: Train=-36.923, Val=-37.096
+Epoch  50: Train=-39.435, Val=-39.024
+Epoch  55: Train=-11.202, Val=-16.303
+Epoch  60: Train=-25.309, Val=-27.312
+
+Early stopping at epoch 62
+Best validation loss: -42.083
+
+Training completed in 394.2 seconds
+✓ Saved checkpoint to /home/utig5/johna/bhai/ml_models/checkpoints/vade_gra_v2_4_k10.pth
+
+============================================================
+RESULTS (n_clusters=10)
+============================================================
+ARI:          0.000
+Avg Purity:   0.164
+
+High-purity clusters (>70%):
+
+================================================================================
+Training VaDE with n_clusters=15
+================================================================================
+
+Model parameters: 2,357
+
+Pre-training VAE (standard Gaussian prior)...
+  Epoch  0: Loss=5.161
+  Epoch  5: Loss=3.599
+  Epoch 10: Loss=3.516
+  Epoch 15: Loss=3.467
+Pre-training complete.
+
+Initializing GMM parameters with K-Means...
+Initialized 15 clusters
+
+Training VaDE with 15 clusters, latent_dim=8
+============================================================
+Epoch   0: Train=85473.159, Val=29084.945

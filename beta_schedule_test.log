@@ -1,0 +1,121 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+Warning: UMAP not available, will use PCA only for 8D visualization
+====================================================================================================
+TESTING β ANNEALING SCHEDULES FOR CLUSTERING
+====================================================================================================
+
+Loading data...
+Train: 169,018 samples
+Val:   37,093 samples
+Test:  32,395 samples
+
+Device: cuda
+
+====================================================================================================
+TRAINING: v2.6.6 baseline
+  β: 0.0010 → 0.5000 over 50 epochs
+====================================================================================================
+  Epoch 10: β=0.0908, Val Loss=0.6982
+  Early stopping at epoch 11
+
+Evaluating clustering...
+
+Results:
+  Collapsed dims: 6/10
+  Effective dim: 4
+  Best clustering: k=15, ARI=0.2470, Sil=0.2452
+  Training time: 63.2s
+
+====================================================================================================
+TRAINING: Lower start
+  β: 0.0001 → 0.5000 over 50 epochs
+====================================================================================================
+  Epoch 10: β=0.0901, Val Loss=0.6850
+  Early stopping at epoch 11
+
+Evaluating clustering...
+
+Results:
+  Collapsed dims: 6/10
+  Effective dim: 4
+  Best clustering: k=10, ARI=0.2582, Sil=0.3092
+  Training time: 59.2s
+
+====================================================================================================
+TRAINING: Higher end
+  β: 0.0010 → 1.0000 over 50 epochs
+====================================================================================================
+  Epoch 10: β=0.1808, Val Loss=1.1123
+  Early stopping at epoch 11
+
+Evaluating clustering...
+
+Results:
+  Collapsed dims: 6/10
+  Effective dim: 4
+  Best clustering: k=12, ARI=0.2490, Sil=0.3036
+  Training time: 56.7s
+
+====================================================================================================
+TRAINING: Slower anneal
+  β: 0.0001 → 1.0000 over 75 epochs
+====================================================================================================
+  Epoch 10: β=0.1201, Val Loss=0.8438
+  Early stopping at epoch 11
+
+Evaluating clustering...
+
+Results:
+  Collapsed dims: 6/10
+  Effective dim: 4
+  Best clustering: k=12, ARI=0.2381, Sil=0.2630
+  Training time: 56.9s
+
+====================================================================================================
+TRAINING: Very slow
+  β: 0.0001 → 0.5000 over 100 epochs
+====================================================================================================
+  Epoch 10: β=0.0451, Val Loss=0.4183
+  Early stopping at epoch 11
+
+Evaluating clustering...
+
+Results:
+  Collapsed dims: 6/10
+  Effective dim: 4
+  Best clustering: k=12, ARI=0.2224, Sil=0.2839
+  Training time: 56.9s
+
+====================================================================================================
+RESULTS SUMMARY
+====================================================================================================
+
+       schedule  beta_start  beta_end  anneal_epochs  train_time  collapsed_dims  effective_dim  best_k  best_ari  best_sil
+v2.6.6 baseline      0.0010       0.5             50   63.188823               6              4      15  0.246969  0.245194
+    Lower start      0.0001       0.5             50   59.186998               6              4      10  0.258229  0.309208
+     Higher end      0.0010       1.0             50   56.661699               6              4      12  0.249036  0.303609
+  Slower anneal      0.0001       1.0             75   56.919298               6              4      12  0.238108  0.263050
+      Very slow      0.0001       0.5            100   56.936319               6              4      12  0.222442  0.283896
+
+====================================================================================================
+COMPARISON TO v2.6.6 BASELINE
+====================================================================================================
+v2.6.6 baseline: GMM ARI = 0.2470
+
+🎯 Lower start: ARI = 0.2582 (+4.6%)
+✓ Higher end: ARI = 0.2490 (+0.8%)
+✗ Slower anneal: ARI = 0.2381 (-3.6%)
+✗ Very slow: ARI = 0.2224 (-9.9%)
+
+🏆 Winner: Lower start (+4.6% improvement)
+   β: 0.0001 → 0.5000 over 50 epochs
+====================================================================================================
+
+Results saved to: beta_schedule_comparison.csv

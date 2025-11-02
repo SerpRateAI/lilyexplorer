@@ -1,0 +1,173 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+Warning: UMAP not available, will use PCA only for 8D visualization
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+================================================================================
+PROPER β HYPERPARAMETER TUNING (Using Validation Set)
+================================================================================
+
+Loading data...
+Train: 206 boreholes, 174,636 samples
+Val:   45 boreholes, 33,277 samples
+Test:  45 boreholes, 30,593 samples
+
+================================================================================
+STEP 1: Train models and evaluate on VALIDATION set
+================================================================================
+
+Training β=0.001...
+
+Training VAE with latent dim=8, beta=0.001
+============================================================
+Epoch   0: Train Loss=1.5658, Val Loss=0.3362, Recon=1.5474, KL=18.3580
+Epoch   5: Train Loss=0.4606, Val Loss=0.1282, Recon=0.4300, KL=30.6400
+Epoch  10: Train Loss=0.3976, Val Loss=0.1115, Recon=0.3678, KL=29.8285
+Epoch  15: Train Loss=0.3684, Val Loss=0.0996, Recon=0.3410, KL=27.3234
+Epoch  20: Train Loss=0.3508, Val Loss=0.0919, Recon=0.3286, KL=22.1706
+Epoch  25: Train Loss=0.3466, Val Loss=0.1028, Recon=0.3266, KL=20.0125
+Epoch  30: Train Loss=0.3391, Val Loss=0.0811, Recon=0.3196, KL=19.4444
+Epoch  35: Train Loss=0.3318, Val Loss=0.0739, Recon=0.3126, KL=19.1650
+Epoch  40: Train Loss=0.3316, Val Loss=0.0785, Recon=0.3125, KL=19.0990
+Epoch  45: Train Loss=0.3337, Val Loss=0.0770, Recon=0.3147, KL=18.9815
+Early stopping at epoch 45
+  Val ARI: k=10:0.173 | k=15:0.186 | k=20:0.203 | Time: 356s
+Training β=0.005...
+
+Training VAE with latent dim=8, beta=0.005
+============================================================
+Epoch   0: Train Loss=1.7047, Val Loss=0.5296, Recon=1.6298, KL=14.9933
+Epoch   5: Train Loss=0.5233, Val Loss=0.1826, Recon=0.4455, KL=15.5416
+Epoch  10: Train Loss=0.4588, Val Loss=0.1475, Recon=0.3911, KL=13.5432
+Epoch  15: Train Loss=0.4259, Val Loss=0.1496, Recon=0.3599, KL=13.1910
+Epoch  20: Train Loss=0.4063, Val Loss=0.1362, Recon=0.3396, KL=13.3331
+Epoch  25: Train Loss=0.3974, Val Loss=0.1397, Recon=0.3300, KL=13.4734
+Epoch  30: Train Loss=0.3869, Val Loss=0.1405, Recon=0.3189, KL=13.6076
+Early stopping at epoch 33
+  Val ARI: k=10:0.174 | k=15:0.180 | k=20:0.191 | Time: 248s
+Training β=0.01...
+
+Training VAE with latent dim=8, beta=0.01
+============================================================
+Epoch   0: Train Loss=1.8828, Val Loss=0.5388, Recon=1.7573, KL=12.5483
+Epoch   5: Train Loss=0.5967, Val Loss=0.2538, Recon=0.4715, KL=12.5202
+Epoch  10: Train Loss=0.5091, Val Loss=0.2317, Recon=0.3906, KL=11.8497
+Epoch  15: Train Loss=0.4811, Val Loss=0.2202, Recon=0.3644, KL=11.6649
+Early stopping at epoch 19
+  Val ARI: k=10:0.202 | k=15:0.225 | k=20:0.204 | Time: 108s
+Training β=0.05...
+
+Training VAE with latent dim=8, beta=0.05
+============================================================
+Epoch   0: Train Loss=2.1712, Val Loss=0.9823, Recon=1.7925, KL=7.5733
+Epoch   5: Train Loss=0.9181, Val Loss=0.5804, Recon=0.5678, KL=7.0057
+Epoch  10: Train Loss=0.8651, Val Loss=0.5755, Recon=0.5183, KL=6.9359
+Epoch  15: Train Loss=0.8381, Val Loss=0.5639, Recon=0.4875, KL=7.0111
+Epoch  20: Train Loss=0.8242, Val Loss=0.5750, Recon=0.4688, KL=7.1071
+Epoch  25: Train Loss=0.8134, Val Loss=0.5604, Recon=0.4552, KL=7.1646
+Early stopping at epoch 28
+  Val ARI: k=10:0.220 | k=15:0.243 | k=20:0.226 | Time: 157s
+Training β=0.1...
+
+Training VAE with latent dim=8, beta=0.1
+============================================================
+Epoch   0: Train Loss=2.4537, Val Loss=1.3853, Recon=1.8967, KL=5.5702
+Epoch   5: Train Loss=1.2187, Val Loss=0.9331, Recon=0.6731, KL=5.4560
+Epoch  10: Train Loss=1.1615, Val Loss=0.9111, Recon=0.6143, KL=5.4713
+Epoch  15: Train Loss=1.1396, Val Loss=0.9000, Recon=0.5871, KL=5.5244
+Epoch  20: Train Loss=1.1331, Val Loss=0.9078, Recon=0.5784, KL=5.5470
+Epoch  25: Train Loss=1.1339, Val Loss=0.8953, Recon=0.5768, KL=5.5710
+Epoch  30: Train Loss=1.1316, Val Loss=0.9093, Recon=0.5737, KL=5.5784
+Epoch  35: Train Loss=1.1303, Val Loss=0.8975, Recon=0.5712, KL=5.5916
+Early stopping at epoch 36
+  Val ARI: k=10:0.230 | k=15:0.238 | k=20:0.235 | Time: 201s
+Training β=0.5...
+
+Training VAE with latent dim=8, beta=0.5
+============================================================
+Epoch   0: Train Loss=3.8335, Val Loss=2.8811, Recon=2.7441, KL=2.1788
+Epoch   5: Train Loss=2.6114, Val Loss=2.4878, Recon=1.3602, KL=2.5024
+Epoch  10: Train Loss=2.5659, Val Loss=2.4716, Recon=1.2967, KL=2.5384
+Epoch  15: Train Loss=2.5480, Val Loss=2.4794, Recon=1.2661, KL=2.5638
+Epoch  20: Train Loss=2.5360, Val Loss=2.4676, Recon=1.2544, KL=2.5631
+Epoch  25: Train Loss=2.5378, Val Loss=2.4882, Recon=1.2515, KL=2.5726
+Early stopping at epoch 29
+  Val ARI: k=10:0.264 | k=15:0.247 | k=20:0.248 | Time: 164s
+Training β=1.0...
+
+Training VAE with latent dim=8, beta=1.0
+============================================================
+Epoch   0: Train Loss=4.7219, Val Loss=3.9504, Recon=3.4810, KL=1.2409
+Epoch   5: Train Loss=3.5635, Val Loss=3.6892, Recon=2.0840, KL=1.4795
+Epoch  10: Train Loss=3.5186, Val Loss=3.6634, Recon=2.0073, KL=1.5113
+Epoch  15: Train Loss=3.5071, Val Loss=3.6842, Recon=1.9793, KL=1.5278
+Epoch  20: Train Loss=3.4905, Val Loss=3.6793, Recon=1.9580, KL=1.5325
+Early stopping at epoch 20
+  Val ARI: k=10:0.173 | k=15:0.176 | k=20:0.181 | Time: 114s
+
+================================================================================
+STEP 2: Select best β based on VALIDATION performance
+================================================================================
+
+ beta  val_ari_k10  val_ari_k15  val_ari_k20  avg_val_ari
+0.001     0.173493     0.185530     0.202765     0.193206
+0.005     0.174064     0.180065     0.191047     0.179890
+0.010     0.202075     0.225372     0.204453     0.211565
+0.050     0.220084     0.243143     0.225863     0.225787
+0.100     0.230067     0.238035     0.235146     0.231835
+0.500     0.263636     0.246540     0.247870     0.255099
+1.000     0.172721     0.176014     0.181089     0.179013
+
+Selected β: 0.5 (best average validation ARI)
+
+================================================================================
+STEP 3: Evaluate selected β on TEST set (unbiased estimate)
+================================================================================
+
+Loading model with β=0.5...
+
+Test set performance (β=0.5):
+================================================================================
+k=10: ARI = 0.230
+k=12: ARI = 0.241
+k=15: ARI = 0.224
+k=20: ARI = 0.231
+
+Average test ARI: 0.232
+
+================================================================================
+COMPARISON TO BASELINE
+================================================================================
+
+v2.1 (β=1.0) - Test Set:
+  k=10: ARI = 0.192
+  k=12: ARI = 0.167
+  k=15: ARI = 0.179
+  k=20: ARI = 0.166
+  Average: 0.176
+
+v2.5 (β=0.5) - Test Set:
+  k=10: ARI = 0.230 (+19.8% vs v2.1)
+  k=12: ARI = 0.241 (+44.3% vs v2.1)
+  k=15: ARI = 0.224 (+25.3% vs v2.1)
+  k=20: ARI = 0.231 (+39.1% vs v2.1)
+  Average: 0.232 (+31.6% vs v2.1)
+
+================================================================================
+CONCLUSION
+================================================================================
+
+Optimal β selected from validation: 0.5
+Unbiased test set performance: ARI = 0.232 (avg)
+Improvement over v2.1 baseline: +31.6%
+
+This is the CORRECT estimate (no test set leakage).
+================================================================================
+
+Results saved:
+  - beta_validation_selection.csv (β selection on validation)
+  - beta_final_test_performance.csv (final unbiased test performance)

@@ -1,0 +1,64 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+================================================================================
+VAE GRA v2.6.1 - RSC Color + MSP (7 features)
+================================================================================
+
+WARNING: No GPU detected, using CPU
+
+Loading data...
+Dataset: 345,269 samples, 484 boreholes
+Features: 7
+
+Train: 229,135, Val: 54,029, Test: 62,105
+
+Applying distribution-aware scaling...
+Done
+
+================================================================================
+Training VAE v2.6.1 with β annealing (0.001→0.5, 50 epochs)
+================================================================================
+Device: cpu
+Architecture: 7 → [32, 16] → 8 (latent) → [16, 32] → 7
+
+Epoch   0: β=0.0010, Train Loss=2.5037, Val Loss=0.8798, Recon=2.4897, KL=14.0658
+Epoch   5: β=0.0509, Train Loss=1.5170, Val Loss=1.0528, Recon=0.9630, KL=10.8846
+Epoch  10: β=0.1008, Train Loss=1.8014, Val Loss=1.3742, Recon=1.0252, KL=7.7005
+Epoch  15: β=0.1507, Train Loss=2.0457, Val Loss=1.6643, Recon=1.1001, KL=6.2746
+Early stopping at epoch 16
+
+Training completed in 114.6s (17 epochs)
+
+================================================================================
+Clustering Evaluation
+================================================================================
+k=10: ARI=0.126, Silhouette=0.230
+k=12: ARI=0.119, Silhouette=0.211
+k=15: ARI=0.139, Silhouette=0.242
+k=20: ARI=0.149, Silhouette=0.237
+
+Model saved: ml_models/checkpoints/vae_gra_v2_6_1_annealing.pth
+
+================================================================================
+Comparison: v2.6.1 vs v2.6
+================================================================================
+
+v2.6 (GRA+MS+NGR+RGB, 4 features):
+  - 238,506 samples, 296 boreholes
+  - ARI (k=12) = 0.258
+
+v2.6.1 (GRA+MS+NGR+RSC+MSP, 7 features):
+  - 345,269 samples, 484 boreholes
+  - ARI (k=12) = 0.119
+
+Improvements:
+  Samples: +44.8%
+  Boreholes: +63.5%
+  ARI (k=12): -54.0%
+
+✗ v2.6.1 is 54.0% worse than v2.6
+================================================================================

@@ -1,0 +1,122 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+Warning: UMAP not available, will use PCA only for 8D visualization
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+====================================================================================================
+FINE GRID SEARCH FOR OPTIMAL β_end
+====================================================================================================
+Testing: β: 1e-10 → [0.5, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9]
+
+Train: 174,636 samples (206 boreholes)
+Val:   33,277 samples (45 boreholes)
+Test:  30,593 samples (45 boreholes)
+
+Device: cuda
+
+====================================================================================================
+Testing β_end = 0.5
+====================================================================================================
+
+Results:
+  Training time: 51.0s
+  Collapsed dims: 4/8
+  Effective dim: 4
+  Best clustering: k=12, ARI=0.2605, Sil=0.2215
+
+====================================================================================================
+Testing β_end = 0.6
+====================================================================================================
+
+Results:
+  Training time: 49.6s
+  Collapsed dims: 4/8
+  Effective dim: 4
+  Best clustering: k=15, ARI=0.2801, Sil=0.1984
+
+====================================================================================================
+Testing β_end = 0.65
+====================================================================================================
+
+Results:
+  Training time: 49.6s
+  Collapsed dims: 4/8
+  Effective dim: 4
+  Best clustering: k=12, ARI=0.2722, Sil=0.2468
+
+====================================================================================================
+Testing β_end = 0.7
+====================================================================================================
+
+Results:
+  Training time: 50.8s
+  Collapsed dims: 4/8
+  Effective dim: 4
+  Best clustering: k=15, ARI=0.2362, Sil=0.2034
+
+====================================================================================================
+Testing β_end = 0.75
+====================================================================================================
+
+Results:
+  Training time: 49.8s
+  Collapsed dims: 4/8
+  Effective dim: 4
+  Best clustering: k=15, ARI=0.2922, Sil=0.2287
+
+====================================================================================================
+Testing β_end = 0.8
+====================================================================================================
+
+Results:
+  Training time: 49.8s
+  Collapsed dims: 4/8
+  Effective dim: 4
+  Best clustering: k=15, ARI=0.2611, Sil=0.2247
+
+====================================================================================================
+Testing β_end = 0.85
+====================================================================================================
+
+Results:
+  Training time: 50.1s
+  Collapsed dims: 4/8
+  Effective dim: 4
+  Best clustering: k=10, ARI=0.2314, Sil=0.2278
+
+====================================================================================================
+Testing β_end = 0.9
+====================================================================================================
+
+Results:
+  Training time: 49.6s
+  Collapsed dims: 4/8
+  Effective dim: 4
+  Best clustering: k=12, ARI=0.2660, Sil=0.2039
+
+====================================================================================================
+GRID SEARCH SUMMARY
+====================================================================================================
+
+ beta_end  best_ari  best_sil  train_time
+     0.50  0.260457  0.221506   50.951278
+     0.60  0.280069  0.198376   49.644745
+     0.65  0.272176  0.246850   49.592891
+     0.70  0.236172  0.203434   50.828534
+     0.75  0.292213  0.228734   49.837781
+     0.80  0.261079  0.224686   49.786689
+     0.85  0.231365  0.227756   50.117884
+     0.90  0.266037  0.203948   49.641743
+
+Optimal β_end: 0.75
+  ARI = 0.2922
+  Silhouette = 0.2287
+
+Plot saved to: beta_end_grid_search.png
+Results saved to: beta_end_grid_search.csv
+
+====================================================================================================

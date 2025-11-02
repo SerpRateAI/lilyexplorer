@@ -1,0 +1,287 @@
+================================================================================
+VAE GRA v2.6 MODEL ARCHITECTURE
+================================================================================
+
+BEST PERFORMING MODEL (ARI = 0.258 at k=12)
+
+================================================================================
+INPUT FEATURES (6D)
+================================================================================
+
+Raw measurements:
+1. Bulk density (GRA)                     - g/cm³
+2. Magnetic susceptibility (instr. units) - instrument units
+3. NGR total counts (cps)                 - counts per second
+4. R (red channel)                        - 0-255
+5. G (green channel)                      - 0-255
+6. B (blue channel)                       - 0-255
+
+Data sources:
+- GRA, MS, NGR: Multi-Sensor Core Logger (MSCL)
+- RGB: Section Half Imaging Logger (SHIL)
+
+Dataset size:
+- 238,506 samples
+- 296 boreholes
+- 139 unique lithologies
+- 20cm depth binning
+
+================================================================================
+PREPROCESSING (Distribution-Aware Scaling)
+================================================================================
+
+Feature-specific transformations BEFORE StandardScaler:
+
+1. GRA bulk density:
+   - Distribution: Gaussian
+   - Transform: None (direct StandardScaler)
+
+2. Magnetic susceptibility (MS):
+   - Distribution: Poisson/right-skewed
+   - Transform: sign(x) * log(|x| + 1)
+   - Handles negative values while normalizing skew
+
+3. NGR total counts:
+   - Distribution: Bimodal
+   - Transform: sign(x) * log(|x| + 1)
+   - Normalizes multiple modes
+
+4. R, G, B (RGB channels):
+   - Distribution: Log-normal
+   - Transform: log(x + 1)
+   - Normalizes exponential tails
+
+Final step: StandardScaler on all transformed features
+Result: 6D normalized feature vector
+
+================================================================================
+ENCODER ARCHITECTURE
+================================================================================
+
+Input: 6D feature vector
+
+Layer 1: Linear(6 → 32)
+         ReLU activation
+         BatchNorm1d(32)
+         Dropout(p=0.1)
+
+Layer 2: Linear(32 → 16)
+         ReLU activation
+         BatchNorm1d(16)
+         Dropout(p=0.1)
+
+Latent space projection:
+  - mu:     Linear(16 → 8)  [mean of latent distribution]
+  - logvar: Linear(16 → 8)  [log variance of latent distribution]
+
+Reparameterization trick:
+  z = μ + σ * ε
+  where σ = exp(0.5 * logvar)
+        ε ~ N(0, I)
+
+Output: 8D latent vector z
+
+================================================================================
+DECODER ARCHITECTURE
+================================================================================
+
+Input: 8D latent vector z
+
+Layer 1: Linear(8 → 16)
+         ReLU activation
+         BatchNorm1d(16)
+         Dropout(p=0.1)
+
+Layer 2: Linear(16 → 32)
+         ReLU activation
+         BatchNorm1d(32)
+         Dropout(p=0.1)
+
+Layer 3: Linear(32 → 6)
+         No activation (reconstruction in normalized space)
+
+Output: 6D reconstructed feature vector
+
+================================================================================
+LOSS FUNCTION
+================================================================================
+
+Total Loss = Reconstruction Loss + β * KL Divergence
+
+Reconstruction Loss:
+  MSE(x_reconstructed, x_original)
+  Sum reduction over batch
+
+KL Divergence:
+  -0.5 * Σ(1 + log(σ²) - μ² - σ²)
+  Measures distance from N(0,I) prior
+
+β (KL weight):
+  - Controls reconstruction vs regularization trade-off
+  - Uses ANNEALING schedule (key innovation)
+
+================================================================================
+β ANNEALING SCHEDULE (v2.6 Innovation)
+================================================================================
+
+Schedule: Linear annealing over first 50 epochs
+
+  if epoch < 50:
+      β = 0.001 + (0.5 - 0.001) * (epoch / 50)
+  else:
+      β = 0.5
+
+Epochs 0-50:  β increases linearly from 0.001 → 0.5
+Epochs 50+:   β fixed at 0.5
+
+Rationale:
+  - Early training (low β): Focus on reconstruction
+  - Prevents posterior collapse during initialization
+  - Gradually adds regularization for smooth convergence
+  - Curriculum learning: easy task → harder task
+
+================================================================================
+TRAINING CONFIGURATION
+================================================================================
+
+Optimizer: Adam
+  - Learning rate: 0.001
+  - Default β1=0.9, β2=0.999
+
+Scheduler: ReduceLROnPlateau
+  - Patience: 5 epochs
+  - Factor: 0.5 (halve learning rate)
+
+Early Stopping:
+  - Patience: 10 epochs
+  - Monitor: validation loss
+
+Batch size: 512
+
+Typical convergence: 16 epochs
+
+Data split:
+  - Train: 70% boreholes (174,636 samples)
+  - Val:   15% boreholes (33,277 samples)
+  - Test:  15% boreholes (30,593 samples)
+
+Split strategy: By borehole (prevents data leakage)
+
+================================================================================
+MODEL SIZE
+================================================================================
+
+Total parameters: 2,102
+
+Breakdown:
+  Encoder:
+    - Linear(6→32):    192 + 32 bias    = 224
+    - BatchNorm(32):   64 params        = 64
+    - Linear(32→16):   512 + 16 bias    = 528
+    - BatchNorm(16):   32 params        = 32
+    - fc_mu(16→8):     128 + 8 bias     = 136
+    - fc_logvar(16→8): 128 + 8 bias     = 136
+    
+  Decoder:
+    - Linear(8→16):    128 + 16 bias    = 144
+    - BatchNorm(16):   32 params        = 32
+    - Linear(16→32):   512 + 32 bias    = 544
+    - BatchNorm(32):   64 params        = 64
+    - Linear(32→6):    192 + 6 bias     = 198
+
+  Total: 2,102 parameters
+
+================================================================================
+PERFORMANCE
+================================================================================
+
+Clustering (K-Means on 8D latent space):
+  k=10: ARI = 0.238, Silhouette = 0.428
+  k=12: ARI = 0.258  ← BEST RESULT
+  k=15: ARI = 0.237
+  k=20: ARI = 0.237
+
+Improvements:
+  vs v2.1 (β=1.0):        +54.5%
+  vs v2.5 (β=0.5 fixed):  +7.1%
+
+High-purity clusters:
+  - 96.6% Gabbro
+  - 80.4% Nannofossil ooze
+
+Training efficiency:
+  - 16 epochs to convergence
+  - ~165 seconds training time
+  - 43% faster than fixed β=0.5
+
+================================================================================
+KEY DESIGN DECISIONS
+================================================================================
+
+1. Distribution-aware scaling (v2.1 innovation)
+   - Feature-specific transforms improve gradient flow
+   - +40% ARI over standard scaling alone
+
+2. β annealing (v2.6 innovation)
+   - Better training dynamics than fixed β
+   - +7% ARI over fixed β=0.5
+   - Curriculum learning benefit
+
+3. 6D input (raw features only)
+   - Engineered features degrade performance
+   - Model learns relevant patterns from raw data
+
+4. 8D latent space
+   - Optimal balance: expressiveness vs compression
+   - 2D too compressed, 16D+ shows no benefit
+
+5. Symmetric encoder/decoder ([32,16] hidden dims)
+   - Simple architecture works best
+   - Complex designs (dual encoders, VaDE) underperform
+
+6. Modest regularization (dropout=0.1)
+   - Prevents overfitting without over-constraining
+   - BatchNorm provides additional regularization
+
+================================================================================
+USAGE EXAMPLE
+================================================================================
+
+# Load model
+checkpoint = torch.load('vae_gra_v2_6_latent8.pth')
+model = VAE(input_dim=6, latent_dim=8, hidden_dims=[32, 16])
+model.load_state_dict(checkpoint['model_state_dict'])
+scaler = checkpoint['scaler']
+
+# Preprocess new data
+X_raw = ... # [N, 6] array of [GRA, MS, NGR, R, G, B]
+X_scaled = scaler.transform(X_raw)
+
+# Encode to latent space
+model.eval()
+with torch.no_grad():
+    mu, logvar = model.encode(torch.FloatTensor(X_scaled))
+    z = mu.numpy()  # [N, 8] latent vectors
+
+# Cluster
+from sklearn.cluster import KMeans
+kmeans = KMeans(n_clusters=12, random_state=42)
+clusters = kmeans.fit_predict(z)
+
+================================================================================
+WHY v2.6 IS BEST
+================================================================================
+
+Tested 9 model variants. v2.6 outperforms all:
+
+✗ v2.2 (18D spatial context):     -60% ARI (curse of dimensionality)
+✗ v3 (dual encoders):              -65% ARI (missing feature interactions)
+✗ v2.7 (VaDE GMM prior):           -4% ARI (over-constrained)
+✗ v2.8 (contrastive pseudo-labels): -44% ARI (circular dependency)
+✗ v2.9 (12D engineered features):  -28% ARI (redundant information)
+
+✓ v2.6 (β annealing on 6D raw):    BEST (simple, effective, robust)
+
+Principle: Follow the data, not architectural elegance.
+
+================================================================================

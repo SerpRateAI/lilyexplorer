@@ -1,0 +1,69 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+================================================================================
+CREATE VAE GRA v2.9 DATASET WITH ENGINEERED FEATURES
+================================================================================
+
+Loading v2 dataset...
+Loaded 238,506 samples from 296 boreholes
+
+Computing engineered features...
+  Computing per-borehole density contrast and depth normalization...
+
+Engineered feature statistics:
+       red_green_ratio  ...  depth_normalized_gra
+count    238506.000000  ...          2.385060e+05
+mean          1.013760  ...          3.191255e-16
+std           0.056986  ...          9.999853e-01
+min           0.747082  ...         -1.740355e+01
+25%           0.979868  ...         -3.691811e-01
+50%           1.005123  ...          1.611015e-01
+75%           1.036692  ...          5.694046e-01
+max           1.731927  ...          1.247360e+01
+
+[8 rows x 6 columns]
+
+================================================================================
+DATASET SUMMARY
+================================================================================
+Total samples: 238,506
+Unique boreholes: 296
+Unique principal lithologies: 139
+
+Original features (6D):
+       Bulk density (GRA)  ...              B
+count       238506.000000  ...  238506.000000
+mean             1.696278  ...      63.462839
+std              0.246598  ...      41.518231
+min              0.300000  ...       2.885000
+25%              1.566500  ...      33.333333
+50%              1.713417  ...      48.170000
+75%              1.848400  ...      83.323626
+max              3.947667  ...     239.040000
+
+[8 rows x 6 columns]
+
+Engineered features (6D):
+       red_green_ratio  ...  depth_normalized_gra
+count    238506.000000  ...          2.385060e+05
+mean          1.013760  ...          3.191255e-16
+std           0.056986  ...          9.999853e-01
+min           0.747082  ...         -1.740355e+01
+25%           0.979868  ...         -3.691811e-01
+50%           1.005123  ...          1.611015e-01
+75%           1.036692  ...          5.694046e-01
+max           1.731927  ...          1.247360e+01
+
+[8 rows x 6 columns]
+
+Total: 12D feature space
+
+Dataset saved to: /home/utig5/johna/bhai/vae_training_data_v2_9_engineered.csv
+File size: 47.2 MB
+Time elapsed: 7.3s
+
+================================================================================
+DATASET CREATION COMPLETE
+================================================================================

@@ -1,0 +1,104 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+================================================================================
+VAE GRA v2.6.1 DATASET CREATION - RSC Color + MSP
+================================================================================
+
+Target: ~341,000 samples from 484 boreholes
+Features: GRA, MS, NGR, RSC (L*a*b*), MSP
+
+1. Processing GRA data...
+Loading GRA_DataLITH.csv...
+  Loaded 4,134,647 rows
+  After removing NaN: 4,134,647 rows
+  After binning: 423,244 bins from 534 boreholes
+
+2. Processing MS data...
+Loading MS_DataLITH.csv...
+  Loaded 4,081,560 rows
+  After removing NaN: 4,081,560 rows
+  After binning: 422,925 bins from 534 boreholes
+
+3. Processing NGR data...
+Loading NGR_DataLITH.csv...
+  Loaded 822,161 rows
+  After removing NaN: 822,161 rows
+  After binning: 405,474 bins from 524 boreholes
+
+4. Processing RSC data...
+Loading RSC_DataLITH.csv...
+  Loaded 3,672,058 rows
+  After removing NaN: 3,672,040 rows
+  After binning: 420,564 bins from 535 boreholes
+
+5. Processing MSP data...
+Loading MSP_DataLITH.csv...
+  Loaded 3,052,070 rows
+  After removing NaN: 3,052,070 rows
+  After binning: 368,333 bins from 500 boreholes
+
+6. Merging datasets...
+  Starting with GRA: 423,244 bins
+  After merging MS: 422,834 bins
+  After merging NGR: 403,391 bins
+  After merging RSC: 396,922 bins
+  After merging MSP: 345,580 bins
+
+7. Final cleanup...
+  Removed 0 rows with NaN values
+
+8. Removing outliers...
+  GRA outliers: 311
+  RSC L* outliers: 0
+
+================================================================================
+FINAL DATASET STATISTICS
+================================================================================
+
+Total samples: 345,269
+Number of boreholes: 484
+Unique lithologies: 170
+
+Top 10 lithologies:
+  nannofossil ooze              :  55917 (16.20%)
+  clay                          :  46048 (13.34%)
+  silty clay                    :  26296 ( 7.62%)
+  mud                           :  24055 ( 6.97%)
+  wackestone                    :  14834 ( 4.30%)
+  packstone                     :  14239 ( 4.12%)
+  diatom ooze                   :  12281 ( 3.56%)
+  nannofossil chalk             :  12164 ( 3.52%)
+  mudstone                      :  10893 ( 3.15%)
+  claystone                     :  10276 ( 2.98%)
+
+Feature statistics:
+       Bulk density (GRA)  ...  MSP (instr. units)
+count       345269.000000  ...       345269.000000
+mean             1.699283  ...          110.708274
+std              0.251490  ...          338.292056
+min              0.300000  ...         -894.825000
+25%              1.562846  ...            7.887778
+50%              1.719875  ...           22.417500
+75%              1.860750  ...           62.134000
+max              3.998833  ...         9426.670000
+
+[8 rows x 7 columns]
+
+9. Saving dataset to /home/utig5/johna/bhai/vae_training_data_v2_6_1_20cm.csv...
+
+✓ Dataset creation complete in 514.3 seconds
+✓ Saved 345,269 samples to /home/utig5/johna/bhai/vae_training_data_v2_6_1_20cm.csv
+✓ Dataset size: 38.8 MB
+
+================================================================================
+COMPARISON TO v2.6
+================================================================================
+
+v2.6 (GRA+MS+NGR+RGB): 238,506 samples, 296 boreholes
+v2.6.1 (GRA+MS+NGR+RSC+MSP): 345,269 samples, 484 boreholes
+
+Improvement: +44.8% more samples, +63.5% more boreholes
+
+================================================================================

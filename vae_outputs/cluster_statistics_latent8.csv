@@ -1,0 +1,21 @@
+Cluster,Size,Size_Pct,Top_Lithology,Top_Pct,Entropy,N_Lithologies,Top_3
+4,24,15.894039735099339,nannofossil ooze,100.0,-1.4426951601859516e-10,1,nannofossil ooze (24)
+9,15,9.933774834437086,nannofossil ooze,60.0,0.9709505941661296,2,"nannofossil ooze (9), mud (6)"
+0,14,9.271523178807946,nannofossil ooze,50.0,2.06404263858008,6,"nannofossil ooze (7), clayey silt (3), mud (1)"
+10,11,7.28476821192053,nannofossil ooze,72.72727272727273,1.2776134362420375,4,"nannofossil ooze (8), clayey silt (1), siltstone (1)"
+5,9,5.960264900662252,nannofossil ooze,77.77777777777779,0.9864267282980339,3,"nannofossil ooze (7), clayey silt (1), medium to coarse sandstone (1)"
+15,9,5.960264900662252,mudstone,33.33333333333333,2.419381944780754,6,"mudstone (3), nannofossil ooze (2), clayey silt (1)"
+7,8,5.298013245033113,nannofossil ooze,75.0,1.0612781240263243,3,"nannofossil ooze (6), very fine sand (1), volcanic rock (1)"
+2,8,5.298013245033113,clayey silt,25.0,2.4999999991343826,6,"clayey silt (2), lapillistone (2), very fine sand (1)"
+11,8,5.298013245033113,very fine sand,25.0,2.4999999991343826,6,"very fine sand (2), nannofossil ooze (2), clayey silt (1)"
+13,6,3.9735099337748347,nannofossil ooze,83.33333333333334,0.6500224213598151,2,"nannofossil ooze (5), very fine sand (1)"
+14,6,3.9735099337748347,nannofossil ooze,100.0,-1.4426951601859516e-10,1,nannofossil ooze (6)
+19,6,3.9735099337748347,clay,50.0,1.7924812497834999,4,"clay (3), mud (1), very fine sand (1)"
+12,5,3.3112582781456954,diatom ooze,60.0,0.9709505941661296,2,"diatom ooze (3), radiolarian ooze (2)"
+3,4,2.6490066225165565,nannofossil ooze,50.0,1.4999999995671913,3,"nannofossil ooze (2), clayey silt (1), mud (1)"
+6,4,2.6490066225165565,clayey silt,25.0,1.9999999994229218,4,"clayey silt (1), basalt (1), volcaniclastic rock (1)"
+17,4,2.6490066225165565,clayey silt,25.0,1.9999999994229218,4,"clayey silt (1), calcareous ooze (1), nannofossil chalk (1)"
+1,3,1.9867549668874174,nannofossil chalk,66.66666666666666,0.9182958337659504,2,"nannofossil chalk (2), volcanic rock (1)"
+16,3,1.9867549668874174,clay,100.0,-1.4426951601859516e-10,1,clay (3)
+18,3,1.9867549668874174,mud,66.66666666666666,0.9182958337659504,2,"mud (2), lapilli tuff (1)"
+8,1,0.6622516556291391,sandy siltstone,100.0,-1.4426951601859516e-10,1,sandy siltstone (1)

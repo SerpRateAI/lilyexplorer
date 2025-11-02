@@ -1,0 +1,139 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+================================================================================
+MSCL Feature Overlap Analysis (50cm tolerance)
+================================================================================
+
+Loading datasets (this may take a few minutes)...
+
+Loading GRA... /home/utig5/johna/bhai/analyze_mscl_overlap_50cm.py:34: DtypeWarning: Columns (0) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(
+4,134,647 measurements → 174,168 unique 50cm bins
+Loading MS... /home/utig5/johna/bhai/analyze_mscl_overlap_50cm.py:34: DtypeWarning: Columns (0) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(
+4,081,560 measurements → 174,102 unique 50cm bins
+Loading MSP... /home/utig5/johna/bhai/analyze_mscl_overlap_50cm.py:34: DtypeWarning: Columns (0) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(
+3,052,070 measurements → 152,559 unique 50cm bins
+Loading NGR... /home/utig5/johna/bhai/analyze_mscl_overlap_50cm.py:34: DtypeWarning: Columns (0) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(
+822,161 measurements → 171,402 unique 50cm bins
+Loading RGB... /home/utig5/johna/bhai/analyze_mscl_overlap_50cm.py:34: DtypeWarning: Columns (0) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(
+10,789,797 measurements → 104,820 unique 50cm bins
+Loading RSC... /home/utig5/johna/bhai/analyze_mscl_overlap_50cm.py:34: DtypeWarning: Columns (0) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(
+3,672,058 measurements → 173,753 unique 50cm bins
+Loading PWL... /home/utig5/johna/bhai/analyze_mscl_overlap_50cm.py:76: FutureWarning: Downcasting object dtype arrays on .fillna, .ffill, .bfill is deprecated and will change in a future version. Call result.infer_objects(copy=False) instead. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
+  merged[name] = merged[name].fillna(False)
+1,365,181 measurements → 90,495 unique 50cm bins
+
+================================================================================
+Overlap Analysis
+================================================================================
+
+Computing overlaps...
+
+Total unique 50cm bins across all boreholes: 176,498
+
+================================================================================
+Coverage Statistics (% of bins with each measurement)
+================================================================================
+
+GRA   :    174,168 bins ( 98.7%)
+MS    :    174,102 bins ( 98.6%)
+MSP   :    152,559 bins ( 86.4%)
+NGR   :    171,402 bins ( 97.1%)
+RGB   :    104,820 bins ( 59.4%)
+RSC   :    173,753 bins ( 98.4%)
+PWL   :     90,495 bins ( 51.3%)
+
+================================================================================
+Pairwise Overlaps
+================================================================================
+
+GRA    ∩ MS    :    174,090 bins (100.0% of GRA, 100.0% of MS)
+GRA    ∩ MSP   :    150,653 bins ( 86.5% of GRA,  98.8% of MSP)
+GRA    ∩ NGR   :    171,098 bins ( 98.2% of GRA,  99.8% of NGR)
+GRA    ∩ RGB   :    103,261 bins ( 59.3% of GRA,  98.5% of RGB)
+GRA    ∩ RSC   :    171,800 bins ( 98.6% of GRA,  98.9% of RSC)
+GRA    ∩ PWL   :     90,494 bins ( 52.0% of GRA, 100.0% of PWL)
+MS     ∩ MSP   :    150,628 bins ( 86.5% of MS,  98.7% of MSP)
+MS     ∩ NGR   :    171,054 bins ( 98.2% of MS,  99.8% of NGR)
+MS     ∩ RGB   :    103,240 bins ( 59.3% of MS,  98.5% of RGB)
+MS     ∩ RSC   :    171,743 bins ( 98.6% of MS,  98.8% of RSC)
+MS     ∩ PWL   :     90,461 bins ( 52.0% of MS, 100.0% of PWL)
+MSP    ∩ NGR   :    148,374 bins ( 97.3% of MSP,  86.6% of NGR)
+MSP    ∩ RGB   :    100,791 bins ( 66.1% of MSP,  96.2% of RGB)
+MSP    ∩ RSC   :    152,485 bins (100.0% of MSP,  87.8% of RSC)
+MSP    ∩ PWL   :     74,963 bins ( 49.1% of MSP,  82.8% of PWL)
+NGR    ∩ RGB   :    102,010 bins ( 59.5% of NGR,  97.3% of RGB)
+NGR    ∩ RSC   :    169,279 bins ( 98.8% of NGR,  97.4% of RSC)
+NGR    ∩ PWL   :     88,992 bins ( 51.9% of NGR,  98.3% of PWL)
+RGB    ∩ RSC   :    102,855 bins ( 98.1% of RGB,  59.2% of RSC)
+RGB    ∩ PWL   :     49,673 bins ( 47.4% of RGB,  54.9% of PWL)
+RSC    ∩ PWL   :     89,756 bins ( 51.7% of RSC,  99.2% of PWL)
+
+================================================================================
+Multi-Feature Combinations
+================================================================================
+
+Physical properties (v1 VAE)
+  Features: GRA, MS, NGR
+  Bins: 171,047 (96.9% of all bins)
+  Boreholes: 524
+
+Physical + RGB (v2 VAE)
+  Features: GRA, MS, NGR, RGB
+  Bins: 101,883 (57.7% of all bins)
+  Boreholes: 296
+
+Physical + RGB + RSC
+  Features: GRA, MS, NGR, RGB, RSC
+  Bins: 100,396 (56.9% of all bins)
+  Boreholes: 293
+
+Physical + RGB + P-wave
+  Features: GRA, MS, NGR, RGB, PWL
+  Bins: 48,970 (27.7% of all bins)
+  Boreholes: 253
+
+All 6 features
+  Features: GRA, MS, NGR, RGB, RSC, PWL
+  Bins: 48,679 (27.6% of all bins)
+  Boreholes: 251
+
+All 7 features
+  Features: GRA, MS, MSP, NGR, RGB, RSC, PWL
+  Bins: 46,628 (26.4% of all bins)
+  Boreholes: 248
+
+================================================================================
+Borehole Coverage
+================================================================================
+
+GRA   :  534 boreholes
+MS    :  534 boreholes
+MSP   :  500 boreholes
+NGR   :  524 boreholes
+RGB   :  304 boreholes
+RSC   :  535 boreholes
+PWL   :  448 boreholes
+
+Boreholes with all 7 features: 248
+Boreholes with GRA+MS+NGR+RGB: 296
+
+================================================================================
+Comparison to 20cm VAE Datasets
+================================================================================
+
+Current VAE v2 (20cm bins, GRA+MS+NGR+RGB):
+  - 238,506 samples
+  - 296 boreholes
+
+With 50cm bins (GRA+MS+NGR+RGB): 101,883 samples from 296 boreholes
+Difference: -136,623 samples (-57.3%)
+
+Saved detailed overlap data to: mscl_overlap_50cm.csv

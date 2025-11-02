@@ -1,0 +1,37 @@
+2025-10-15 10:17:15,135 - INFO - ================================================================================
+2025-10-15 10:17:15,135 - INFO - VAE Lithology Model Training
+2025-10-15 10:17:15,135 - INFO - ================================================================================
+2025-10-15 10:17:15,135 - INFO - Target boreholes: 212
+2025-10-15 10:17:15,135 - INFO - 
+================================================================================
+2025-10-15 10:17:15,135 - INFO - STEP 1: Loading and merging datasets
+2025-10-15 10:17:15,135 - INFO - ================================================================================
+2025-10-15 10:17:15,136 - INFO - Loading MAD dataset (porosity, grain density)...
+2025-10-15 10:17:15,258 - INFO - MAD dataset: 26476 rows
+2025-10-15 10:17:15,259 - INFO - Loading PWC dataset (P-wave velocity)...
+2025-10-15 10:17:15,373 - INFO - PWC dataset: 28445 rows
+2025-10-15 10:17:15,373 - INFO - Loading TCON dataset (thermal conductivity)...
+2025-10-15 10:17:15,475 - INFO - TCON dataset: 30330 rows
+2025-10-15 10:17:15,497 - INFO - Filtering to 212 specified boreholes...
+2025-10-15 10:17:15,518 - INFO - After filtering - MAD: 19819, PWC: 22386, TCON: 20833
+2025-10-15 10:17:15,528 - INFO - Merging datasets on Borehole_ID and depth...
+2025-10-15 10:17:15,544 - INFO - Merged dataset: 3 rows
+2025-10-15 10:17:15,545 - INFO - After removing missing values: 3 rows (dropped 0)
+2025-10-15 10:17:15,546 - INFO - After outlier filtering: 3 rows (dropped 0)
+2025-10-15 10:17:15,553 - INFO - 
+================================================================================
+2025-10-15 10:17:15,554 - INFO - Data Statistics
+2025-10-15 10:17:15,554 - INFO - ================================================================================
+2025-10-15 10:17:15,554 - INFO - Total samples: 3
+2025-10-15 10:17:15,554 - INFO - Unique boreholes: 1
+2025-10-15 10:17:15,554 - INFO - Unique principal lithologies: 1
+2025-10-15 10:17:15,554 - INFO - 
+Top 10 principal lithologies:
+2025-10-15 10:17:15,556 - INFO - Principal
+nannofossil ooze    3
+Name: count, dtype: int64
+2025-10-15 10:17:15,556 - INFO - 
+================================================================================
+2025-10-15 10:17:15,556 - INFO - STEP 2: Preparing data for training
+2025-10-15 10:17:15,556 - INFO - ================================================================================
+2025-10-15 10:17:15,557 - INFO - Total unique boreholes: 1

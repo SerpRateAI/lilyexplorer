@@ -1,0 +1,76 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+================================================================================
+VAE GRA v2.11 - Masked Encoding
+================================================================================
+
+Loading data...
+Dataset: 238,506 samples
+Train: 174,636, Val: 33,277, Test: 30,593
+
+================================================================================
+Training with masked encoding (NGR+RGB block masking)
+================================================================================
+Device: cpu
+Epoch   0: β=0.0010, Train Loss=2.9013, Val Loss=0.7994
+Epoch   5: β=0.0509, Train Loss=1.8871, Val Loss=0.8769
+Epoch  10: β=0.1008, Train Loss=2.0812, Val Loss=1.1763
+
+Early stopping at epoch 11
+
+Training completed in 80.5s (12 epochs)
+
+================================================================================
+Clustering Evaluation
+================================================================================
+k=10: ARI=0.209, Silhouette=0.350
+k=12: ARI=0.236, Silhouette=0.357
+k=15: ARI=0.243, Silhouette=0.339
+k=20: ARI=0.225, Silhouette=0.318
+
+================================================================================
+IMPUTATION TEST: Predict NGR+RGB from GRA+MS
+================================================================================
+
+True values:
+     GRA       MS       NGR       R        G        B
+1:  1.267    65.90   24.88    32.6    27.9    24.7
+2:  1.314    78.81   17.17    33.6    30.7    28.8
+3:  1.362   146.19   19.26    32.1    28.8    27.5
+4:  1.432   209.50   21.04    30.7    27.8    27.0
+5:  1.407   124.12   19.38    31.5    28.5    27.6
+6:  1.336   106.89   18.01    33.2    29.9    28.3
+7:  1.295    88.50   17.43    32.8    29.4    28.1
+8:  1.376   136.63   19.25    33.3    30.4    30.0
+9:  1.417    85.94   23.09    34.2    31.0    30.5
+10:  1.425    39.44   24.61    34.5    31.5    30.9
+
+Imputed values (given GRA+MS):
+     GRA       MS       NGR       R        G        B
+1:  1.424    39.80   16.68    40.2    38.6    34.7
+2:  1.334    39.06   16.02    46.2    44.2    39.7
+3:  1.477   102.94   12.52    41.0    39.7    36.2
+4:  1.602   157.95   11.12    37.4    36.3    33.4
+5:  1.430    34.89   17.80    46.6    44.7    40.1
+6:  1.384    36.09   16.89    41.1    39.4    35.5
+7:  1.339    42.69   16.31    40.7    38.9    35.1
+8:  1.409    52.41   14.39    41.5    39.9    36.1
+9:  1.537    40.64   19.34    43.9    42.2    38.0
+10:  1.514    27.00   22.13    44.7    42.9    38.4
+
+Imputation MSE:
+  NGR: 26.13
+  RGB: 99.01
+
+Model saved: /home/utig5/johna/bhai/ml_models/checkpoints/vae_gra_v2_11_masked_ngr_rgb.pth
+
+================================================================================
+Comparison to v2.6 Baseline
+================================================================================
+v2.6 (no masking):     ARI (k=12) = 0.258
+v2.11 (masked NGR+RGB): ARI (k=12) = 0.236
+Improvement: -8.5%

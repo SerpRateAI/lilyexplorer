@@ -1,0 +1,248 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+Warning: UMAP not available, will use PCA only for 8D visualization
+================================================================================
+VAE Latent Space Distribution Analysis
+================================================================================
+
+Loading VAE v2.6 model...
+Model loaded
+
+Loading data...
+Dataset: 238,506 samples
+
+Scaling data...
+
+Extracting latent representations...
+Latent shape: (238506, 8)
+
+================================================================================
+Latent Dimension Statistics
+================================================================================
+
+Latent Dimension 0:
+  Mean: 0.0015, Std: 0.0233
+  Skewness: -0.1896, Kurtosis: 1.3692
+  Normality test p-value: 0.000000 (REJECT Gaussian!)
+
+Latent Dimension 1:
+  Mean: 0.0024, Std: 0.0137
+  Skewness: -0.1527, Kurtosis: -0.0350
+  Normality test p-value: 0.000000 (REJECT Gaussian!)
+
+Latent Dimension 2:
+  Mean: -0.0022, Std: 0.0159
+  Skewness: -0.0436, Kurtosis: 0.4785
+  Normality test p-value: 0.000000 (REJECT Gaussian!)
+
+Latent Dimension 3:
+  Mean: 0.0155, Std: 0.8207
+  Skewness: -0.0122, Kurtosis: 0.5143
+  Normality test p-value: 0.000000 (REJECT Gaussian!)
+
+Latent Dimension 4:
+  Mean: -0.0024, Std: 0.0167
+  Skewness: 0.4635, Kurtosis: 0.5836
+  Normality test p-value: 0.000000 (REJECT Gaussian!)
+
+Latent Dimension 5:
+  Mean: 0.0331, Std: 0.9167
+  Skewness: -1.1580, Kurtosis: 1.5753
+  Normality test p-value: 0.000000 (REJECT Gaussian!)
+
+Latent Dimension 6:
+  Mean: -0.0216, Std: 0.9359
+  Skewness: 0.1463, Kurtosis: 1.7209
+  Normality test p-value: 0.000000 (REJECT Gaussian!)
+
+Latent Dimension 7:
+  Mean: 0.0018, Std: 0.9579
+  Skewness: 0.1577, Kurtosis: -0.0936
+  Normality test p-value: 0.000000 (REJECT Gaussian!)
+
+Creating histogram plots...
+Saved: latent_distribution_histograms.png
+
+================================================================================
+Analyzing Outliers in Each Latent Dimension
+================================================================================
+
+Latent Dimension 0:
+  Low outliers (<-2.5σ): 4574 samples (1.92%)
+    gabbro                        :  2090 ( 45.7%)
+    pebbly mud                    :   779 ( 17.0%)
+    ash/tuff                      :   333 (  7.3%)
+    basalt                        :   212 (  4.6%)
+    foraminifera ooze             :   173 (  3.8%)
+  High outliers (>+2.5σ): 1915 samples (0.80%)
+    silty clay                    :   662 ( 34.6%)
+    nannofossil ooze              :   628 ( 32.8%)
+    clay                          :   257 ( 13.4%)
+    sandstone                     :   152 (  7.9%)
+    mud                           :   104 (  5.4%)
+
+Latent Dimension 1:
+  Low outliers (<-2.5σ): 1489 samples (0.62%)
+    basalt                        :   463 ( 31.1%)
+    mud                           :   120 (  8.1%)
+    pebbly mud                    :   115 (  7.7%)
+    nannofossil ooze              :    86 (  5.8%)
+    lapilli tuff                  :    82 (  5.5%)
+  High outliers (>+2.5σ): 566 samples (0.24%)
+    wackestone                    :   214 ( 37.8%)
+    packstone                     :   153 ( 27.0%)
+    mudstone                      :    45 (  8.0%)
+    silty clay                    :    31 (  5.5%)
+    diatom ooze                   :    27 (  4.8%)
+
+Latent Dimension 2:
+  Low outliers (<-2.5σ): 1807 samples (0.76%)
+    silty clay                    :   807 ( 44.7%)
+    clay                          :   475 ( 26.3%)
+    mud                           :   149 (  8.2%)
+    sandstone                     :   128 (  7.1%)
+    nannofossil ooze              :    48 (  2.7%)
+  High outliers (>+2.5σ): 2349 samples (0.98%)
+    gabbro                        :  1284 ( 54.7%)
+    pebbly mud                    :   350 ( 14.9%)
+    packstone                     :   145 (  6.2%)
+    wackestone                    :   142 (  6.0%)
+    basalt                        :    49 (  2.1%)
+
+Latent Dimension 3:
+  Low outliers (<-2.5σ): 1739 samples (0.73%)
+    gabbro                        :   987 ( 56.8%)
+    packstone                     :   239 ( 13.7%)
+    wackestone                    :   232 ( 13.3%)
+    grainstone                    :    44 (  2.5%)
+    basalt                        :    29 (  1.7%)
+  High outliers (>+2.5σ): 2005 samples (0.84%)
+    silty clay                    :   571 ( 28.5%)
+    clay                          :   425 ( 21.2%)
+    mud                           :   170 (  8.5%)
+    basalt                        :    83 (  4.1%)
+    sandstone                     :    78 (  3.9%)
+
+Latent Dimension 4:
+  Low outliers (<-2.5σ): 354 samples (0.15%)
+    wackestone                    :   131 ( 37.0%)
+    packstone                     :   108 ( 30.5%)
+    mudstone                      :    25 (  7.1%)
+    sand                          :    20 (  5.6%)
+    clay                          :    19 (  5.4%)
+  High outliers (>+2.5σ): 3272 samples (1.37%)
+    basalt                        :   561 ( 17.1%)
+    boninite                      :   327 ( 10.0%)
+    gabbro                        :   215 (  6.6%)
+    clay                          :   160 (  4.9%)
+    breccia                       :   146 (  4.5%)
+
+Latent Dimension 5:
+  Low outliers (<-2.5σ): 6732 samples (2.82%)
+    gabbro                        :  2328 ( 34.6%)
+    pebbly mud                    :  1137 ( 16.9%)
+    basalt                        :  1014 ( 15.1%)
+    medium to coarse sandstone    :   353 (  5.2%)
+    lapilli tuff                  :   331 (  4.9%)
+  High outliers (>+2.5σ): 199 samples (0.08%)
+    packstone                     :   137 ( 68.8%)
+    grainstone                    :    30 ( 15.1%)
+    wackestone                    :    10 (  5.0%)
+    clay                          :     9 (  4.5%)
+    mud                           :     6 (  3.0%)
+
+Latent Dimension 6:
+  Low outliers (<-2.5σ): 1762 samples (0.74%)
+    gabbro                        :   815 ( 46.3%)
+    basalt                        :   356 ( 20.2%)
+    sandstone                     :   152 (  8.6%)
+    wackestone                    :    88 (  5.0%)
+    packstone                     :    67 (  3.8%)
+  High outliers (>+2.5σ): 3387 samples (1.42%)
+    clay                          :   373 ( 11.0%)
+    packstone                     :   262 (  7.7%)
+    nannofossil ooze              :   226 (  6.7%)
+    boninite                      :   223 (  6.6%)
+    silty clay                    :   178 (  5.3%)
+
+Latent Dimension 7:
+  Low outliers (<-2.5σ): 1264 samples (0.53%)
+    ash/tuff                      :   257 ( 20.3%)
+    silty clay                    :   223 ( 17.6%)
+    clay                          :   190 ( 15.0%)
+    sand                          :   143 ( 11.3%)
+    foraminifera ooze             :   112 (  8.9%)
+  High outliers (>+2.5σ): 615 samples (0.26%)
+    nannofossil ooze              :   438 ( 71.2%)
+    nannofossil chalk             :   173 ( 28.1%)
+    foraminifera ooze             :     4 (  0.7%)
+
+================================================================================
+Detecting Bimodal Distributions
+================================================================================
+
+================================================================================
+Raw Feature Analysis for Outliers
+================================================================================
+
+Latent Dimension 0:
+  Outliers: 6489 samples
+  Inliers: 232017 samples
+
+  Raw feature means:
+    Feature                                      Outliers      Inliers       Diff
+    ----------------------------------------------------------------------------
+    Bulk density (GRA)                              1.996        1.688      18.2%
+    Magnetic susceptibility (instr. units)        406.056       72.107     463.1%
+    NGR total counts (cps)                         19.687       28.600     -31.2%
+    R                                              63.667       73.569     -13.5%
+    G                                              63.515       71.490     -11.2%
+    B                                              63.310       63.467      -0.2%
+
+Latent Dimension 1:
+  Outliers: 2055 samples
+  Inliers: 236451 samples
+
+  Raw feature means:
+    Feature                                      Outliers      Inliers       Diff
+    ----------------------------------------------------------------------------
+    Bulk density (GRA)                              1.536        1.698      -9.5%
+    Magnetic susceptibility (instr. units)        672.411       76.054     784.1%
+    NGR total counts (cps)                         13.194       28.489     -53.7%
+    R                                              72.957       73.303      -0.5%
+    G                                              72.519       71.262       1.8%
+    B                                              68.689       63.417       8.3%
+
+Latent Dimension 2:
+  Outliers: 4156 samples
+  Inliers: 234350 samples
+
+  Raw feature means:
+    Feature                                      Outliers      Inliers       Diff
+    ----------------------------------------------------------------------------
+    Bulk density (GRA)                              1.991        1.691      17.7%
+    Magnetic susceptibility (instr. units)        180.846       79.425     127.7%
+    NGR total counts (cps)                         27.404       28.375      -3.4%
+    R                                              78.979       73.199       7.9%
+    G                                              75.828       71.192       6.5%
+    B                                              73.407       63.286      16.0%
+
+================================================================================
+CONCLUSION
+================================================================================
+
+If latent dimensions show:
+  1. Non-Gaussian distributions (p < 0.001 in normality test)
+  2. Bimodal or multimodal structure
+  3. Outliers that cluster by lithology
+
+Then the VAE is capturing real geological structure that doesn't
+fit the N(0,I) prior assumption. This is actually GOOD - it means
+the model is finding meaningful patterns in the data despite the
+Gaussian prior constraint.

@@ -1,0 +1,200 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+Warning: UMAP not available, will use PCA only for 8D visualization
+================================================================================
+VAE LITHOLOGY MODEL v2.1 - Distribution-Aware Scaling
+================================================================================
+Using device: cpu
+Loading data...
+Loaded 238,506 samples from 296 boreholes
+After removing NaN: 238,506 samples
+
+Applying distribution-aware scaling:
+  GRA bulk density:         Gaussian      → StandardScaler
+  Magnetic susceptibility:  Poisson       → sign(x)*log(|x|+1) + StandardScaler
+  NGR:                      Bimodal       → sign(x)*log(|x|+1) + StandardScaler
+  R, G, B:                  Log-normal    → log(x+1) + StandardScaler
+Found 139 unique lithologies
+
+Data split by borehole:
+  Train: 206 boreholes, 174,636 samples
+  Val:   45 boreholes, 33,277 samples
+  Test:  45 boreholes, 30,593 samples
+
+================================================================================
+TRAINING VAE WITH LATENT DIM = 2
+================================================================================
+Model parameters: 1,802
+
+Training VAE with latent dim=2, beta=1.0
+============================================================
+Epoch   0: Train Loss=4.7596, Val Loss=3.9136, Recon=3.8880, KL=0.8716
+Epoch   5: Train Loss=3.5645, Val Loss=3.6056, Recon=2.1027, KL=1.4618
+Epoch  10: Train Loss=3.5022, Val Loss=3.6415, Recon=2.0256, KL=1.4766
+Epoch  15: Train Loss=3.4639, Val Loss=3.6235, Recon=1.9728, KL=1.4911
+Early stopping at epoch 16
+Training time: 72.5s
+Model saved to: /home/utig5/johna/bhai/ml_models/checkpoints/vae_gra_v2_1_latent2.pth
+
+============================================================
+CLUSTERING ANALYSIS
+============================================================
+
+n_clusters= 5: Silhouette=0.402, ARI=0.113
+  Cluster  0 (n= 2969): clay (26.3%)
+  Cluster  1 (n=10491): silty clay (19.6%)
+  Cluster  2 (n=10876): nannofossil ooze (22.8%)
+  Cluster  3 (n= 4029): nannofossil ooze (55.8%)
+  Cluster  4 (n= 2228): gabbro (91.1%)
+
+n_clusters=10: Silhouette=0.433, ARI=0.190
+  Cluster  0 (n= 4353): silty clay (32.6%)
+  Cluster  1 (n= 4268): nannofossil ooze (38.4%)
+  Cluster  2 (n= 2286): clay (31.0%)
+  Cluster  3 (n= 2191): gabbro (91.9%)
+  Cluster  4 (n= 6137): silty claystone (31.9%)
+  Cluster  5 (n= 2436): nannofossil ooze (47.5%)
+  Cluster  6 (n=  420): gabbro (64.8%)
+  Cluster  7 (n= 3431): interbedded silt and clay (20.5%)
+  Cluster  8 (n= 1641): nannofossil ooze (72.0%)
+  Cluster  9 (n= 3430): clay (21.2%)
+
+n_clusters=15: Silhouette=0.433, ARI=0.187
+  Cluster  0 (n=  542): gabbro (91.1%)
+  Cluster  1 (n= 2834): silty claystone (37.9%)
+  Cluster  2 (n= 1501): nannofossil ooze (78.0%)
+  Cluster  3 (n= 2480): diatom ooze (22.9%)
+  Cluster  4 (n= 3548): silty clay (32.7%)
+  Cluster  5 (n= 2640): wackestone (41.4%)
+  Cluster  6 (n= 2374): silty clay (32.1%)
+  Cluster  7 (n= 2355): chalk (31.0%)
+  Cluster  8 (n= 1951): clay (35.5%)
+  Cluster  9 (n= 2593): interbedded silt and clay (24.6%)
+  Cluster 10 (n= 1958): gabbro (91.5%)
+  Cluster 11 (n=  217): nannofossil ooze (15.7%)
+  Cluster 12 (n=  322): gabbro (66.5%)
+  Cluster 13 (n= 1615): nannofossil ooze (52.7%)
+  Cluster 14 (n= 3663): silty claystone (34.5%)
+
+n_clusters=20: Silhouette=0.397, ARI=0.173
+  Cluster  0 (n= 2478): clay (24.9%)
+  Cluster  1 (n= 2243): clay (23.4%)
+  Cluster  2 (n= 1600): gabbro (94.6%)
+  Cluster  3 (n= 2257): nannofossil ooze (50.0%)
+  Cluster  4 (n= 2010): silty clay (30.2%)
+  Cluster  5 (n= 1460): nannofossil ooze (79.7%)
+  Cluster  6 (n= 1343): clay (36.5%)
+  Cluster  7 (n= 2352): silty claystone (40.8%)
+  Cluster  8 (n=  358): gabbro (88.8%)
+  Cluster  9 (n=  214): gabbro (58.4%)
+  Cluster 10 (n= 1327): diatom ooze (40.5%)
+  Cluster 11 (n= 2914): silty claystone (37.3%)
+  Cluster 12 (n= 2216): silty clay (33.9%)
+  Cluster 13 (n= 1262): nannofossil ooze (44.6%)
+  Cluster 14 (n= 1690): chalk (41.0%)
+  Cluster 15 (n=  645): gabbro (83.9%)
+  Cluster 16 (n= 1416): nannofossil ooze (43.5%)
+  Cluster 17 (n=  133): nannofossil ooze (26.3%)
+  Cluster 18 (n= 1890): silty clay (30.0%)
+  Cluster 19 (n=  785): clay (32.0%)
+
+Generating visualizations...
+Visualizations saved to: /home/utig5/johna/bhai/vae_v2_1_outputs
+
+================================================================================
+TRAINING VAE WITH LATENT DIM = 8
+================================================================================
+Model parameters: 2,102
+
+Training VAE with latent dim=8, beta=1.0
+============================================================
+Epoch   0: Train Loss=5.2703, Val Loss=4.2752, Recon=4.0239, KL=1.2464
+Epoch   5: Train Loss=3.6098, Val Loss=3.6821, Recon=2.1850, KL=1.4249
+Epoch  10: Train Loss=3.5207, Val Loss=3.6695, Recon=2.0530, KL=1.4676
+Epoch  15: Train Loss=3.4736, Val Loss=3.6372, Recon=1.9825, KL=1.4911
+Epoch  20: Train Loss=3.4563, Val Loss=3.6262, Recon=1.9530, KL=1.5033
+Epoch  25: Train Loss=3.4427, Val Loss=3.6358, Recon=1.9313, KL=1.5114
+Epoch  30: Train Loss=3.4373, Val Loss=3.6186, Recon=1.9139, KL=1.5234
+Epoch  35: Train Loss=3.4281, Val Loss=3.6246, Recon=1.9132, KL=1.5149
+Epoch  40: Train Loss=3.4307, Val Loss=3.6387, Recon=1.9071, KL=1.5236
+Early stopping at epoch 43
+Training time: 203.6s
+Model saved to: /home/utig5/johna/bhai/ml_models/checkpoints/vae_gra_v2_1_latent8.pth
+
+============================================================
+CLUSTERING ANALYSIS
+============================================================
+
+n_clusters= 5: Silhouette=0.382, ARI=0.130
+  Cluster  0 (n= 2605): gabbro (90.5%)
+  Cluster  1 (n= 9227): nannofossil ooze (17.3%)
+  Cluster  2 (n= 7131): nannofossil ooze (13.8%)
+  Cluster  3 (n= 3628): nannofossil ooze (63.5%)
+  Cluster  4 (n= 8002): silty clay (25.5%)
+
+n_clusters=10: Silhouette=0.428, ARI=0.179
+  Cluster  0 (n= 2326): clay (29.9%)
+  Cluster  1 (n= 3357): nannofossil ooze (47.8%)
+  Cluster  2 (n= 3903): silty clay (33.1%)
+  Cluster  3 (n= 2201): nannofossil ooze (62.9%)
+  Cluster  4 (n=  503): gabbro (59.2%)
+  Cluster  5 (n= 2085): gabbro (92.4%)
+  Cluster  6 (n= 5020): silty claystone (28.6%)
+  Cluster  7 (n= 4256): clay (20.3%)
+  Cluster  8 (n= 4096): nannofossil ooze (24.6%)
+  Cluster  9 (n= 2846): interbedded silt and clay (23.3%)
+
+n_clusters=15: Silhouette=0.429, ARI=0.166
+  Cluster  0 (n= 1796): diatom ooze (31.4%)
+  Cluster  1 (n= 3453): silty clay (33.3%)
+  Cluster  2 (n= 3602): nannofossil ooze (22.6%)
+  Cluster  3 (n= 1610): nannofossil ooze (73.5%)
+  Cluster  4 (n=  771): gabbro (88.6%)
+  Cluster  5 (n= 2718): interbedded silt and clay (23.5%)
+  Cluster  6 (n= 3891): silty claystone (27.2%)
+  Cluster  7 (n=  940): clay (27.1%)
+  Cluster  8 (n= 3850): clay (22.5%)
+  Cluster  9 (n= 1941): nannofossil ooze (56.5%)
+  Cluster 10 (n= 2581): wackestone (42.9%)
+  Cluster 11 (n= 1652): gabbro (94.0%)
+  Cluster 12 (n=  357): gabbro (74.8%)
+  Cluster 13 (n= 1259): clay (38.9%)
+  Cluster 14 (n=  172): nannofossil ooze (19.2%)
+
+n_clusters=20: Silhouette=0.406, ARI=0.170
+  Cluster  0 (n= 3243): silty clay (33.3%)
+  Cluster  1 (n= 2370): nannofossil ooze (33.0%)
+  Cluster  2 (n= 1336): gabbro (96.6%)
+  Cluster  3 (n= 2898): silty claystone (40.5%)
+  Cluster  4 (n= 1449): nannofossil ooze (80.4%)
+  Cluster  5 (n= 1245): clay (39.2%)
+  Cluster  6 (n= 1391): interbedded silt and clay (31.6%)
+  Cluster  7 (n=  889): clay (27.4%)
+  Cluster  8 (n= 1499): nannofossil ooze (54.0%)
+  Cluster  9 (n=  822): gabbro (84.3%)
+  Cluster 10 (n= 1933): silty claystone (36.6%)
+  Cluster 11 (n=  260): gabbro (70.0%)
+  Cluster 12 (n=  373): gabbro (90.9%)
+  Cluster 13 (n= 1072): nannofossil ooze (41.5%)
+  Cluster 14 (n= 2022): wackestone (38.8%)
+  Cluster 15 (n=  166): nannofossil ooze (19.9%)
+  Cluster 16 (n= 2529): silty clay (31.5%)
+  Cluster 17 (n= 2520): clay (22.9%)
+  Cluster 18 (n= 1285): diatom ooze (41.4%)
+  Cluster 19 (n= 1291): clay (36.2%)
+
+Generating visualizations...
+  Computing PCA projection...
+Visualizations saved to: /home/utig5/johna/bhai/vae_v2_1_outputs
+
+================================================================================
+TRAINING COMPLETE
+================================================================================
+Models saved to: /home/utig5/johna/bhai/ml_models/checkpoints
+Visualizations saved to: /home/utig5/johna/bhai/vae_v2_1_outputs

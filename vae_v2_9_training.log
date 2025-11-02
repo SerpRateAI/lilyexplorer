@@ -1,0 +1,93 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+Warning: UMAP not available, will use PCA only for 8D visualization
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+================================================================================
+β ANNEALING EXPERIMENTS
+================================================================================
+
+Loading data...
+Train: 206 boreholes, 174,636 samples
+Test:  45 boreholes, 30,593 samples
+
+================================================================================
+Testing: Fixed β=0.5
+================================================================================
+
+Epoch   0: β=0.5000, Train Loss=3.7119, Val Loss=2.7477, Recon=2.6037, KL=2.2164
+Epoch   5: β=0.5000, Train Loss=2.6042, Val Loss=2.4852, Recon=1.3412, KL=2.5261
+Epoch  10: β=0.5000, Train Loss=2.5556, Val Loss=2.4606, Recon=1.2806, KL=2.5499
+Epoch  15: β=0.5000, Train Loss=2.5386, Val Loss=2.4463, Recon=1.2527, KL=2.5719
+Epoch  20: β=0.5000, Train Loss=2.5292, Val Loss=2.4770, Recon=1.2445, KL=2.5693
+Epoch  25: β=0.5000, Train Loss=2.5224, Val Loss=2.4881, Recon=1.2377, KL=2.5694
+Early stopping at epoch 28
+
+Training completed in 248.3s
+Final β: 0.5000
+Final train loss: 2.5191
+
+Evaluating on test set...
+Results:
+  k=10: ARI=0.225
+  k=12: ARI=0.237
+  k=15: ARI=0.228
+  k=20: ARI=0.224
+
+Saved: /home/utig5/johna/bhai/ml_models/checkpoints/vae_gra_v2_5_annealing_Fixed_β=0.5.pth
+
+================================================================================
+Testing: Anneal 0.01→0.5 (50 epochs)
+================================================================================
+
+Epoch   0: β=0.0100, Train Loss=1.6765, Val Loss=0.5162, Recon=1.5467, KL=12.9868
+Epoch   5: β=0.0590, Train Loss=0.9807, Val Loss=0.6592, Recon=0.5831, KL=6.7396
+Epoch  10: β=0.1080, Train Loss=1.1942, Val Loss=0.9558, Recon=0.6140, KL=5.3722
+Epoch  15: β=0.1570, Train Loss=1.4185, Val Loss=1.2256, Recon=0.6853, KL=4.6704
+Early stopping at epoch 16
+
+Training completed in 148.7s
+Final β: 0.1668
+Final train loss: 1.4576
+
+Evaluating on test set...
+Results:
+  k=10: ARI=0.237
+  k=12: ARI=0.235
+  k=15: ARI=0.241
+  k=20: ARI=0.239
+
+Saved: /home/utig5/johna/bhai/ml_models/checkpoints/vae_gra_v2_5_annealing_Anneal_0.01to0.5_(50_epochs).pth
+
+================================================================================
+Testing: Anneal 0.001→0.5 (50 epochs)
+================================================================================
+
+Epoch   0: β=0.0010, Train Loss=1.6441, Val Loss=0.4626, Recon=1.6240, KL=20.0956
+Epoch   5: β=0.0509, Train Loss=0.9211, Val Loss=0.5799, Recon=0.5579, KL=7.1371
+Epoch  10: β=0.1008, Train Loss=1.1661, Val Loss=0.9055, Recon=0.6062, KL=5.5543
+Epoch  15: β=0.1507, Train Loss=1.4062, Val Loss=1.1689, Recon=0.6851, KL=4.7850
+Early stopping at epoch 16
+
+Training completed in 158.8s
+Final β: 0.1607
+Final train loss: 1.4476
+
+Evaluating on test set...
+Results:
+  k=10: ARI=0.238
+  k=12: ARI=0.258
+  k=15: ARI=0.237
+  k=20: ARI=0.237
+
+Saved: /home/utig5/johna/bhai/ml_models/checkpoints/vae_gra_v2_5_annealing_Anneal_0.001to0.5_(50_epochs).pth
+
+================================================================================
+Testing: Anneal 0.01→0.5 (25 epochs)
+================================================================================
+
+Epoch   0: β=0.0100, Train Loss=1.7740, Val Loss=0.6338, Recon=1.6246, KL=14.9352

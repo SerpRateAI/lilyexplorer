@@ -1,0 +1,257 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+Warning: UMAP not available, will use PCA only for 8D visualization
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+====================================================================================================
+VAE CLASSIFIER v1.1 (HIERARCHICAL + CLASS-BALANCED LOSS + ENTROPY-BALANCED SPLIT)
+====================================================================================================
+
+Loading data...
+Loading lithology hierarchy...
+Total samples: 238,506
+Total boreholes: 296
+Unique fine-grained lithologies: 139
+Unique lithology groups: 14
+
+Lithology group distribution:
+  Carbonate                     : 100,531 samples (42.15%)
+  Clay/Mud                      : 96,930 samples (40.64%)
+  Sand                          : 13,253 samples ( 5.56%)
+  Biogenic Silica               :  7,414 samples ( 3.11%)
+  Silt                          :  6,951 samples ( 2.91%)
+  Mafic Igneous                 :  5,955 samples ( 2.50%)
+  Volcaniclastic                :  4,187 samples ( 1.76%)
+  Conglomerate/Breccia          :  2,197 samples ( 0.92%)
+  Other                         :    319 samples ( 0.13%)
+  Intermediate/Felsic Igneous   :    284 samples ( 0.12%)
+  Evaporite                     :    176 samples ( 0.07%)
+  Metamorphic                   :    162 samples ( 0.07%)
+  Ultramafic                    :     81 samples ( 0.03%)
+  Diamict                       :     66 samples ( 0.03%)
+
+Number of classes (groups): 14
+
+Performing entropy-balanced borehole split...
+Train: 165,836 samples (211 boreholes, 69.5%)
+Val:   35,869 samples (37 boreholes, 15.0%)
+Test:  36,801 samples (48 boreholes, 15.4%)
+
+Lithology entropy:
+  Train: 1.9805
+  Val:   1.7352
+  Test:  1.7458
+  Max difference: 0.2453
+
+Computing class weights (inverse frequency)...
+Class weight statistics:
+  Min weight: 0.0031
+  Max weight: 3.6292
+  Mean weight: 1.0000
+  Median weight: 0.0915
+  Weight ratio (max/min): 1175.4x
+
+Top 5 highest weighted classes (rarest):
+  Metamorphic                             : weight=3.6292, n_train=58
+  Diamict                                 : weight=3.1959, n_train=66
+  Ultramafic                              : weight=2.6112, n_train=81
+  Intermediate/Felsic Igneous             : weight=1.9466, n_train=109
+  Evaporite                               : weight=1.5979, n_train=133
+
+Top 5 lowest weighted classes (most common):
+  Carbonate                               : weight=0.0031, n_train=69349
+  Clay/Mud                                : weight=0.0032, n_train=66281
+  Sand                                    : weight=0.0274, n_train=7818
+  Biogenic Silica                         : weight=0.0344, n_train=6225
+  Mafic Igneous                           : weight=0.0377, n_train=5683
+
+Loading v2.6.7 VAE model...
+Device: cuda
+✓ VAE loaded successfully
+
+Scaling features...
+✓ Features scaled
+
+Extracting VAE embeddings...
+✓ Embeddings extracted in 1.3s
+  Embedding shape: (165836, 10)
+
+Embedding statistics:
+  Dim 0: std=1.0517 ✓
+  Dim 1: std=0.8130 ✓
+  Dim 2: std=0.0077 ✗
+  Dim 3: std=0.2887 ✓
+  Dim 4: std=0.0157 ✗
+  Dim 5: std=0.0054 ✗
+  Dim 6: std=0.0262 ✗
+  Dim 7: std=0.0179 ✗
+  Dim 8: std=0.3628 ✓
+  Dim 9: std=0.0097 ✗
+
+====================================================================================================
+TRAINING LITHOLOGY CLASSIFIER
+====================================================================================================
+Classifier parameters: 3,246
+
+Using class-balanced CrossEntropyLoss with inverse frequency weighting
+
+Starting training...
+
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+Epoch   1: Train Loss=2.1536, Train Acc=40.81%, Val Loss=1.8066, Val Acc=44.88%, Val Balanced Acc=27.56%
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+Epoch   5: Train Loss=1.5729, Train Acc=41.07%, Val Loss=1.6793, Val Acc=30.97%, Val Balanced Acc=30.67%
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+Epoch  10: Train Loss=1.4996, Train Acc=42.75%, Val Loss=1.6007, Val Acc=35.64%, Val Balanced Acc=29.12%
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+Epoch  15: Train Loss=1.4563, Train Acc=43.68%, Val Loss=1.5998, Val Acc=34.31%, Val Balanced Acc=28.67%
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+Epoch  20: Train Loss=1.4289, Train Acc=44.69%, Val Loss=1.5467, Val Acc=39.41%, Val Balanced Acc=28.05%
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+Epoch  25: Train Loss=1.4144, Train Acc=44.48%, Val Loss=1.5698, Val Acc=35.89%, Val Balanced Acc=29.51%
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+Epoch  30: Train Loss=1.4006, Train Acc=43.95%, Val Loss=1.5823, Val Acc=33.47%, Val Balanced Acc=34.52%
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+Epoch  35: Train Loss=1.3876, Train Acc=44.69%, Val Loss=1.5901, Val Acc=34.83%, Val Balanced Acc=33.92%
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+Epoch  40: Train Loss=1.3714, Train Acc=45.08%, Val Loss=1.5683, Val Acc=36.26%, Val Balanced Acc=32.57%
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+Epoch  45: Train Loss=1.3628, Train Acc=44.90%, Val Loss=1.5738, Val Acc=35.08%, Val Balanced Acc=34.47%
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+Epoch  50: Train Loss=1.3384, Train Acc=45.16%, Val Loss=1.5600, Val Acc=35.87%, Val Balanced Acc=34.58%
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+
+Early stopping at epoch 53
+
+Best validation accuracy (unweighted): 35.74%
+Best validation accuracy (balanced): 35.46%
+Best validation loss: 1.5812
+Training completed in 122.6s (2.0 min)
+
+====================================================================================================
+TEST SET EVALUATION
+====================================================================================================
+Test Accuracy (unweighted): 34.18%
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+Test Accuracy (balanced):   29.73%
+
+Per-group accuracies (all groups):
+  Carbonate                     : 17,751 samples, Acc=32.93%
+  Clay/Mud                      : 12,985 samples, Acc=43.20%
+  Sand                          :  3,870 samples, Acc=6.82%
+  Silt                          :  1,060 samples, Acc=40.75%
+  Biogenic Silica               :    502 samples, Acc=54.98%
+  Conglomerate/Breccia          :    273 samples, Acc=4.76%
+  Mafic Igneous                 :    167 samples, Acc=62.87%
+  Metamorphic                   :    104 samples, Acc=23.08%
+  Volcaniclastic                :     71 samples, Acc=5.63%
+  Intermediate/Felsic Igneous   :     18 samples, Acc=22.22%
+
+Classes with no training samples:
+  ✓ All test classes present in training set
+
+====================================================================================================
+✓ VAE Classifier v1.1 trained successfully
+  Test Accuracy (unweighted): 34.18%
+  Test Accuracy (balanced):   29.73%
+  Model saved: ml_models/checkpoints/vae_classifier_v1_1_best.pth
+====================================================================================================

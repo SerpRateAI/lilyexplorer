@@ -1,0 +1,50 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+Warning: UMAP not available, will use PCA only for 8D visualization
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+Loading data and creating TEST split...
+Test set: 45 boreholes, 30,593 samples
+Loading model...
+Extracting latent representations...
+
+================================================================================
+VAE v2.1 - TEST SET EVALUATION (apples-to-apples comparison)
+================================================================================
+
+k=10:
+  Simplified (12 types): ARI = 0.180
+  Original (139 types):  ARI = 0.192
+  Improvement: -6.2%
+
+k=12:
+  Simplified (12 types): ARI = 0.153
+  Original (139 types):  ARI = 0.167
+  Improvement: -8.6%
+
+k=15:
+  Simplified (12 types): ARI = 0.142
+  Original (139 types):  ARI = 0.179
+  Improvement: -20.8%
+
+k=20:
+  Simplified (12 types): ARI = 0.117
+  Original (139 types):  ARI = 0.166
+  Improvement: -29.3%
+
+================================================================================
+COMPARISON TO TRAINING LOG
+================================================================================
+
+From v2.1 training log (test set, original 139 labels):
+  k=10: ARI = 0.179
+  k=15: ARI = 0.166
+  k=20: ARI = 0.170
+
+Above results show performance with simplified 12-type labels.
+================================================================================
+

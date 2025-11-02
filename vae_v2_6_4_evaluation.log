@@ -1,0 +1,93 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+================================================================================
+VAE GRA v2.6.4 (Dual Pre-training) Clustering Evaluation
+================================================================================
+
+Using device: cpu
+
+Loading v2.6.4 model...
+Model loaded
+
+Loading v2.6 dataset...
+Dataset: 238,506 samples
+Features: 6D (GRA, MS, NGR, RGB)
+Lithologies: 139
+
+Scaling data...
+
+Extracting latent representations...
+Latent shape: (238506, 8)
+
+Using 50K sample subset for clustering evaluation...
+Subset size: 50,000 samples
+
+================================================================================
+Clustering Performance (v2.6.4 - Dual Pre-training)
+================================================================================
+
+k=10 clusters:
+  ARI: 0.1194
+  Silhouette: 0.3210
+
+k=12 clusters:
+  ARI: 0.1196
+  Silhouette: 0.2974
+
+k=15 clusters:
+  ARI: 0.1249
+  Silhouette: 0.2828
+
+k=20 clusters:
+  ARI: 0.1242
+  Silhouette: 0.2723
+
+Average ARI: 0.1220
+Average Silhouette: 0.2934
+
+================================================================================
+Comparison: v2.6.4 (Dual Pre-training) vs v2.6 (Joint Training)
+================================================================================
+
+k     v2.6.4 ARI      v2.6 ARI        Δ ARI           v2.6.4 Sil      v2.6 Sil        Δ Sil          
+------------------------------------------------------------------------------------------
+10    0.1194          0.2380          -0.1186 (-49.8%)  0.3210          0.4280          -0.1070 (-25.0%)
+12    0.1196          0.2580          -0.1384 (-53.6%)  0.2974          0.4090          -0.1116 (-27.3%)
+15    0.1249          0.2370          -0.1121 (-47.3%)  0.2828          0.3920          -0.1092 (-27.9%)
+20    0.1242          0.2370          -0.1128 (-47.6%)  0.2723          0.3790          -0.1067 (-28.1%)
+
+Avg   0.1220          0.2425          -0.1205 (-49.7%)  0.2934          0.4020          -0.1086 (-27.0%)
+
+================================================================================
+Summary
+================================================================================
+
+v2.6.4 Training Strategy:
+  Stage 1a: Pre-train physical encoder (GRA+MS+NGR → 4D) on 524 boreholes
+  Stage 1b: Pre-train RGB encoder (R+G+B → 4D) on 296 boreholes
+  Stage 2: Concatenate to 8D, fine-tune fusion decoders on 296 boreholes
+
+Training time:
+  v2.6.4: 712s (271s + 167s + 274s)
+  v2.6: 115s
+  Ratio: 6.2x slower
+
+v2.6.4 Performance:
+  Average ARI: 0.1220
+  Best ARI: 0.1249 (k=15)
+  Average Silhouette: 0.2934
+
+v2.6 Performance (baseline):
+  Average ARI: 0.2425
+  Best ARI: 0.2580 (k=12)
+  Average Silhouette: 0.4020
+
+✗ Dual pre-training DEGRADES performance by -49.7%
+  Sequential training prevents learning optimal cross-modal correlations
+  Joint training from scratch (v2.6) is superior
+
+Results saved to: vae_v2_6_4_clustering_results.csv

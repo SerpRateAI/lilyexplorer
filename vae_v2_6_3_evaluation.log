@@ -1,0 +1,97 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+Warning: UMAP not available, will use PCA only for 8D visualization
+================================================================================
+VAE GRA v2.6.3 (RGB-Only) Clustering Evaluation
+================================================================================
+
+Using device: cpu
+
+Loading v2.6.3 model (RGB-only)...
+Model loaded
+
+Loading v2.6 dataset...
+Dataset: 238,506 samples
+Features: 3D (R, G, B)
+Lithologies: 139
+
+Scaling data...
+
+Extracting latent representations...
+Latent shape: (238506, 8)
+
+Using 50K sample subset for clustering evaluation...
+Subset size: 50,000 samples
+
+================================================================================
+Clustering Performance (v2.6.3 - RGB Only)
+================================================================================
+
+k=10 clusters:
+  ARI: 0.0553
+  Silhouette: 0.5332
+
+k=12 clusters:
+  ARI: 0.0539
+  Silhouette: 0.5296
+
+k=15 clusters:
+  ARI: 0.0487
+  Silhouette: 0.5271
+
+k=20 clusters:
+  ARI: 0.0421
+  Silhouette: 0.5261
+
+Average ARI: 0.0500
+Average Silhouette: 0.5290
+
+================================================================================
+Comparison: RGB-Only vs Full Features vs Physical-Only
+================================================================================
+
+k     RGB-only     v2.6 (full)  v1 (phys)    RGB vs Full     RGB vs Phys    
+      (v2.6.3)     (6D)         (3D)        
+------------------------------------------------------------------------------------------
+10    0.0553       0.2380       0.0800       -0.1827 (-76.8%)   -0.0247 (-30.9%)
+12    0.0539       0.2580       0.0840       -0.2041 (-79.1%)   -0.0301 (-35.8%)
+15    0.0487       0.2370       0.0870       -0.1883 (-79.5%)   -0.0383 (-44.1%)
+20    0.0421       0.2370       0.0990       -0.1949 (-82.2%)   -0.0569 (-57.5%)
+
+Avg   0.0500       0.2425       0.0875       -0.1925 (-79.4%)   -0.0375 (-42.9%)
+
+================================================================================
+Summary
+================================================================================
+
+Feature Comparison:
+  v2.6.3 (RGB-only):          3D (R, G, B)
+  v2.6 (full features):       6D (GRA, MS, NGR, R, G, B)
+  v1 (physical-only):         3D (GRA, MS, NGR)
+
+v2.6.3 Performance (RGB-only):
+  Average ARI: 0.0500
+  Best ARI: 0.0553 (k=10)
+  Average Silhouette: 0.5290
+
+v2.6 Performance (full features):
+  Average ARI: 0.2425
+  Best ARI: 0.2580 (k=12)
+
+v1 Performance (physical-only):
+  Average ARI: 0.0875
+  Best ARI: 0.0990 (k=20)
+
+Key Findings:
+
+✗ RGB-only achieves -79.4% vs full features (v2.6)
+  → Multi-modal features (physical + visual) are necessary
+  → RGB and physical properties provide complementary information
+
+Results saved to: vae_v2_6_3_clustering_results.csv

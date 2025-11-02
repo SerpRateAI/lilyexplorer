@@ -1,0 +1,78 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+================================================================================
+VAE GRA v2.6.2 - Stage 1: Pre-training on Physical Properties
+================================================================================
+
+Using device: cpu
+
+Loading v1 dataset (GRA + MS + NGR)...
+Dataset: 403,391 samples from 524 boreholes
+Features: 3D (GRA, MS, NGR)
+Lithologies: 178
+
+Splitting data by borehole...
+Train: 288,049 samples (366 boreholes)
+Val:   56,067 samples (79 boreholes)
+Test:  59,275 samples (79 boreholes)
+
+Applying distribution-aware scaling...
+
+Creating DataLoaders...
+
+================================================================================
+Training VAE with 8D latent space (β annealing 0.001 → 0.5)
+================================================================================
+
+Model architecture:
+  Input: 3D (GRA, MS, NGR)
+  Encoder: 3 → 32 → 16 → 8
+  Decoder: 8 → 16 → 32 → 3
+  Parameters: 1,907
+
+Epoch   1/100 | β=0.0010 | Train Loss: 0.2900 (Recon: 0.2744, KL: 15.5945) | Val Loss: 0.0370 (Recon: 0.0147, KL: 22.3258)
+Epoch   2/100 | β=0.0110 | Train Loss: 0.1830 (Recon: 0.0634, KL: 10.8926) | Val Loss: 0.1432 (Recon: 0.0375, KL: 9.6252)
+Epoch   3/100 | β=0.0210 | Train Loss: 0.2256 (Recon: 0.0704, KL: 7.4073) | Val Loss: 0.1979 (Recon: 0.0438, KL: 7.3519)
+Epoch   4/100 | β=0.0309 | Train Loss: 0.2643 (Recon: 0.0780, KL: 6.0209) | Val Loss: 0.2447 (Recon: 0.0576, KL: 6.0471)
+Epoch   5/100 | β=0.0409 | Train Loss: 0.3091 (Recon: 0.0874, KL: 5.4169) | Val Loss: 0.3015 (Recon: 0.0697, KL: 5.6649)
+Epoch   6/100 | β=0.0509 | Train Loss: 0.3583 (Recon: 0.1012, KL: 5.0511) | Val Loss: 0.3537 (Recon: 0.0835, KL: 5.3085)
+Epoch   7/100 | β=0.0609 | Train Loss: 0.4052 (Recon: 0.1145, KL: 4.7756) | Val Loss: 0.4064 (Recon: 0.0957, KL: 5.1041)
+Epoch   8/100 | β=0.0709 | Train Loss: 0.4503 (Recon: 0.1286, KL: 4.5398) | Val Loss: 0.4590 (Recon: 0.1230, KL: 4.7417)
+Epoch   9/100 | β=0.0808 | Train Loss: 0.4940 (Recon: 0.1425, KL: 4.3477) | Val Loss: 0.5032 (Recon: 0.1354, KL: 4.5495)
+Epoch  10/100 | β=0.0908 | Train Loss: 0.5355 (Recon: 0.1563, KL: 4.1753) | Val Loss: 0.5442 (Recon: 0.1411, KL: 4.4392)
+Epoch  11/100 | β=0.1008 | Train Loss: 0.5762 (Recon: 0.1706, KL: 4.0235) | Val Loss: 0.5923 (Recon: 0.1619, KL: 4.2701)
+Epoch  12/100 | β=0.1108 | Train Loss: 0.6143 (Recon: 0.1844, KL: 3.8814) | Val Loss: 0.6324 (Recon: 0.1723, KL: 4.1533)
+Epoch  13/100 | β=0.1208 | Train Loss: 0.6503 (Recon: 0.1975, KL: 3.7494) | Val Loss: 0.6696 (Recon: 0.1905, KL: 3.9673)
+Epoch  14/100 | β=0.1307 | Train Loss: 0.6874 (Recon: 0.2114, KL: 3.6409) | Val Loss: 0.7098 (Recon: 0.1943, KL: 3.9431)
+Epoch  15/100 | β=0.1407 | Train Loss: 0.7224 (Recon: 0.2248, KL: 3.5362) | Val Loss: 0.7543 (Recon: 0.2212, KL: 3.7883)
+Epoch  16/100 | β=0.1507 | Train Loss: 0.7565 (Recon: 0.2382, KL: 3.4395) | Val Loss: 0.7891 (Recon: 0.2325, KL: 3.6939)
+Epoch  17/100 | β=0.1607 | Train Loss: 0.7892 (Recon: 0.2510, KL: 3.3499) | Val Loss: 0.8240 (Recon: 0.2436, KL: 3.6123)
+Epoch  18/100 | β=0.1707 | Train Loss: 0.8221 (Recon: 0.2656, KL: 3.2612) | Val Loss: 0.8663 (Recon: 0.2591, KL: 3.5577)
+Epoch  19/100 | β=0.1806 | Train Loss: 0.8534 (Recon: 0.2774, KL: 3.1886) | Val Loss: 0.8981 (Recon: 0.2792, KL: 3.4265)
+Epoch  20/100 | β=0.1906 | Train Loss: 0.8843 (Recon: 0.2907, KL: 3.1144) | Val Loss: 0.9374 (Recon: 0.2951, KL: 3.3696)
+Epoch  21/100 | β=0.2006 | Train Loss: 0.9135 (Recon: 0.3028, KL: 3.0444) | Val Loss: 0.9625 (Recon: 0.3236, KL: 3.1851)
+Early stopping at epoch 21
+
+Training completed in 257.3 seconds (21 epochs)
+
+Saving Stage 1 model...
+Saved: ml_models/checkpoints/vae_gra_v2_6_2_stage1.pth
+
+================================================================================
+Stage 1 Test Set Evaluation
+================================================================================
+
+Test Loss: 1.9367
+  Reconstruction: 0.3278
+  KL Divergence: 3.2178
+
+================================================================================
+Stage 1 Pre-training Complete
+================================================================================
+
+Model captures physical property representations from 524 boreholes.
+Ready for Stage 2: Fine-tuning with RGB features.

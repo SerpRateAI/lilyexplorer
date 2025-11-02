@@ -1,0 +1,98 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+================================================================================
+VAE GRA v2.2 DATASET CREATION - Adding Spatial Context
+================================================================================
+
+1. Processing GRA data...
+Loading GRA_DataLITH.csv...
+  Loaded 4,134,647 rows
+  After removing NaN: 4,134,647 rows
+  After binning: 423,244 bins from 534 boreholes
+
+2. Processing MS data...
+Loading MS_DataLITH.csv...
+  Loaded 4,081,560 rows
+  After removing NaN: 4,081,560 rows
+  After binning: 422,925 bins from 534 boreholes
+
+3. Processing NGR data...
+Loading NGR_DataLITH.csv...
+  Loaded 822,161 rows
+  After removing NaN: 822,161 rows
+  After binning: 405,474 bins from 524 boreholes
+
+4. Processing RGB data...
+Loading RGB_DataLITH.csv...
+  Loaded 10,789,797 rows
+  After removing NaN: 10,789,797 rows
+  After binning: 253,916 bins from 304 boreholes
+
+5. Merging datasets...
+  Starting with GRA: 423,244 bins
+  After merging MS: 422,834 bins
+  After merging NGR: 403,391 bins
+  After merging RGB: 238,767 bins
+
+6. Initial cleanup...
+  Removed 0 rows with NaN values
+
+7. Removing outliers...
+  GRA outliers: 261
+  R outliers: 0
+  G outliers: 0
+  B outliers: 0
+
+8. Adding spatial context...
+
+Adding spatial context (above/below features)...
+  Added spatial context: 0 NaN values (should be 0)
+  Processed 238,506 samples from 296 boreholes
+
+================================================================================
+FINAL DATASET STATISTICS
+================================================================================
+
+Total samples: 238,506
+Number of boreholes: 296
+Unique lithologies: 139
+
+Top 10 lithologies:
+  nannofossil ooze              :  49778 (20.87%)
+  clay                          :  37237 (15.61%)
+  silty clay                    :  18048 ( 7.57%)
+  wackestone                    :  14230 ( 5.97%)
+  packstone                     :  12548 ( 5.26%)
+  mudstone                      :   9952 ( 4.17%)
+  claystone                     :   9470 ( 3.97%)
+  nannofossil chalk             :   7894 ( 3.31%)
+  diatom ooze                   :   6095 ( 2.56%)
+  clayey silt                   :   5406 ( 2.27%)
+
+Feature statistics (current bin):
+       Bulk density (GRA)  ...              B
+count       238506.000000  ...  238506.000000
+mean             1.696278  ...      63.462839
+std              0.246598  ...      41.518231
+min              0.300000  ...       2.885000
+25%              1.566500  ...      33.333333
+50%              1.713417  ...      48.170000
+75%              1.848400  ...      83.323626
+max              3.947667  ...     239.040000
+
+[8 rows x 6 columns]
+
+Dataset dimensions:
+  Input features: 18D (6 features × 3 positions)
+  Output features: 6D (current position only)
+  Columns in CSV: 21
+
+9. Saving dataset to /home/utig5/johna/bhai/vae_training_data_v2_2_20cm.csv...
+
+✓ Dataset creation complete in 412.0 seconds
+✓ Saved 238,506 samples to /home/utig5/johna/bhai/vae_training_data_v2_2_20cm.csv
+✓ Dataset size: 57.7 MB
+
+================================================================================

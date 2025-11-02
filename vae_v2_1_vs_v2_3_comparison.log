@@ -1,0 +1,31 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+Warning: UMAP not available, will use PCA only for 8D visualization
+Warning: UMAP not available, will use PCA only for 8D visualization
+================================================================================
+VAE GRA v2.1 vs v2.3 COMPARISON
+Testing impact of relative depth on clustering performance
+================================================================================
+
+Loading v2.1 (6D features, no depth)...
+Traceback (most recent call last):
+  File "/home/utig5/johna/bhai/compare_v2_1_vs_v2_3.py", line 202, in <module>
+    main()
+  File "/home/utig5/johna/bhai/compare_v2_1_vs_v2_3.py", line 113, in main
+    model_v2_1, X_v2_1, lithology_v2_1 = load_model_and_data(
+  File "/home/utig5/johna/bhai/compare_v2_1_vs_v2_3.py", line 24, in load_model_and_data
+    checkpoint = torch.load(model_path, map_location='cpu', weights_only=True)
+  File "/home/other/johna/.local/lib/python3.10/site-packages/torch/serialization.py", line 1529, in load
+    raise pickle.UnpicklingError(_get_wo_message(str(e))) from None
+_pickle.UnpicklingError: Weights only load failed. This file can still be loaded, to do so you have two options, [1mdo those steps only if you trust the source of the checkpoint[0m. 
+	(1) In PyTorch 2.6, we changed the default value of the `weights_only` argument in `torch.load` from `False` to `True`. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+	(2) Alternatively, to load with `weights_only=True` please check the recommended steps in the following error message.
+	WeightsUnpickler error: Unsupported global: GLOBAL __main__.DistributionAwareScaler was not an allowed global by default. Please use `torch.serialization.add_safe_globals([__main__.DistributionAwareScaler])` or the `torch.serialization.safe_globals([__main__.DistributionAwareScaler])` context manager to allowlist this global if you trust this class/function.
+
+Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.

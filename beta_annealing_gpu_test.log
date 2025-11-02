@@ -1,0 +1,151 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+Warning: UMAP not available, will use PCA only for 8D visualization
+================================================================================
+β ANNEALING EXPERIMENTS
+================================================================================
+
+Loading data...
+Train: 206 boreholes, 174,636 samples
+Test:  45 boreholes, 30,593 samples
+
+================================================================================
+Testing: Fixed β=0.5
+================================================================================
+
+Epoch   0: β=0.5000, Train Loss=3.7820, Val Loss=2.8127, Recon=2.6437, KL=2.2766
+Epoch   5: β=0.5000, Train Loss=2.6109, Val Loss=2.4913, Recon=1.3455, KL=2.5310
+Epoch  10: β=0.5000, Train Loss=2.5563, Val Loss=2.4578, Recon=1.2751, KL=2.5623
+Epoch  15: β=0.5000, Train Loss=2.5389, Val Loss=2.4698, Recon=1.2531, KL=2.5715
+Epoch  20: β=0.5000, Train Loss=2.5299, Val Loss=2.4650, Recon=1.2442, KL=2.5713
+Epoch  25: β=0.5000, Train Loss=2.5283, Val Loss=2.4677, Recon=1.2375, KL=2.5816
+Epoch  30: β=0.5000, Train Loss=2.5199, Val Loss=2.4829, Recon=1.2300, KL=2.5798
+Early stopping at epoch 31
+
+Training completed in 229.5s
+Final β: 0.5000
+Final train loss: 2.5198
+
+Evaluating on test set...
+Results:
+  k=10: ARI=0.227
+  k=12: ARI=0.242
+  k=15: ARI=0.234
+  k=20: ARI=0.238
+
+Saved: /home/utig5/johna/bhai/ml_models/checkpoints/vae_gra_v2_5_annealing_Fixed_β=0.5.pth
+
+================================================================================
+Testing: Anneal 0.01→0.5 (50 epochs)
+================================================================================
+
+Epoch   0: β=0.0100, Train Loss=2.0016, Val Loss=0.7088, Recon=1.8761, KL=12.5520
+Epoch   5: β=0.0590, Train Loss=0.9750, Val Loss=0.6465, Recon=0.5764, KL=6.7560
+Epoch  10: β=0.1080, Train Loss=1.1995, Val Loss=0.9878, Recon=0.6196, KL=5.3700
+Epoch  15: β=0.1570, Train Loss=1.4194, Val Loss=1.3182, Recon=0.6892, KL=4.6506
+Early stopping at epoch 16
+
+Training completed in 114.4s
+Final β: 0.1668
+Final train loss: 1.4591
+
+Evaluating on test set...
+Results:
+  k=10: ARI=0.239
+  k=12: ARI=0.233
+  k=15: ARI=0.234
+  k=20: ARI=0.228
+
+Saved: /home/utig5/johna/bhai/ml_models/checkpoints/vae_gra_v2_5_annealing_Anneal_0.01to0.5_(50_epochs).pth
+
+================================================================================
+Testing: Anneal 0.001→0.5 (50 epochs)
+================================================================================
+
+Epoch   0: β=0.0010, Train Loss=1.6248, Val Loss=0.4345, Recon=1.6055, KL=19.3390
+Epoch   5: β=0.0509, Train Loss=0.9317, Val Loss=0.5905, Recon=0.5627, KL=7.2505
+Epoch  10: β=0.1008, Train Loss=1.1675, Val Loss=0.9095, Recon=0.6065, KL=5.5663
+Epoch  15: β=0.1507, Train Loss=1.4107, Val Loss=1.1847, Recon=0.6862, KL=4.8078
+Early stopping at epoch 16
+
+Training completed in 115.5s
+Final β: 0.1607
+Final train loss: 1.4530
+
+Evaluating on test set...
+Results:
+  k=10: ARI=0.234
+  k=12: ARI=0.262
+  k=15: ARI=0.239
+  k=20: ARI=0.230
+
+Saved: /home/utig5/johna/bhai/ml_models/checkpoints/vae_gra_v2_5_annealing_Anneal_0.001to0.5_(50_epochs).pth
+
+================================================================================
+Testing: Anneal 0.01→0.5 (25 epochs)
+================================================================================
+
+Epoch   0: β=0.0100, Train Loss=1.7064, Val Loss=0.5546, Recon=1.5666, KL=13.9795
+Epoch   5: β=0.1080, Train Loss=1.2470, Val Loss=0.9733, Recon=0.6614, KL=5.4227
+Epoch  10: β=0.2060, Train Loss=1.6459, Val Loss=1.4617, Recon=0.7895, KL=4.1569
+Epoch  15: β=0.3040, Train Loss=2.0075, Val Loss=1.8740, Recon=0.9551, KL=3.4620
+Early stopping at epoch 15
+
+Training completed in 108.8s
+Final β: 0.3040
+Final train loss: 2.0075
+
+Evaluating on test set...
+Results:
+  k=10: ARI=0.206
+  k=12: ARI=0.251
+  k=15: ARI=0.247
+  k=20: ARI=0.233
+
+Saved: /home/utig5/johna/bhai/ml_models/checkpoints/vae_gra_v2_5_annealing_Anneal_0.01to0.5_(25_epochs).pth
+
+================================================================================
+SUMMARY: β ANNEALING RESULTS
+================================================================================
+
+                        name  ari_k10  ari_k12  ari_k15  ari_k20
+                 Fixed β=0.5 0.226935 0.241716 0.233631 0.237635
+ Anneal 0.01→0.5 (50 epochs) 0.239474 0.233047 0.233709 0.228279
+Anneal 0.001→0.5 (50 epochs) 0.233633 0.261846 0.238725 0.229646
+ Anneal 0.01→0.5 (25 epochs) 0.205594 0.250791 0.247010 0.233305
+
+Average ARI across k values:
+  Fixed β=0.5                             : 0.235
+  Anneal 0.01→0.5 (50 epochs)             : 0.234
+  Anneal 0.001→0.5 (50 epochs)            : 0.241
+  Anneal 0.01→0.5 (25 epochs)             : 0.234
+
+================================================================================
+BEST SCHEDULE
+================================================================================
+
+Schedule: Anneal 0.001→0.5 (50 epochs)
+Average ARI: 0.241
+Training time: 115.5s
+
+Improvement over fixed β=0.5: +2.5%
+
+================================================================================
+CONCLUSION
+================================================================================
+
+β annealing may help if:
+  - It improves average ARI over fixed β
+  - Training is more stable (fewer early stops)
+  - Final loss is lower
+
+Otherwise, fixed β=0.5 is simpler and equally effective.
+================================================================================
+
+Results saved to: beta_annealing_results.csv

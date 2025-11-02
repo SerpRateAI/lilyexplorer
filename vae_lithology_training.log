@@ -1,0 +1,173 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+2025-10-15 10:20:03,971 - INFO - ================================================================================
+2025-10-15 10:20:03,971 - INFO - VAE Lithology Model Training
+2025-10-15 10:20:03,971 - INFO - ================================================================================
+2025-10-15 10:20:03,971 - INFO - Target boreholes: 212
+2025-10-15 10:20:03,971 - INFO - 
+================================================================================
+2025-10-15 10:20:03,971 - INFO - STEP 1: Loading and merging datasets
+2025-10-15 10:20:03,971 - INFO - ================================================================================
+2025-10-15 10:20:03,971 - INFO - Loading MAD dataset (porosity, grain density)...
+/home/utig5/johna/bhai/ml_models/vae_lithology_model.py:245: DtypeWarning: Columns (0) have mixed types. Specify dtype option on import or set low_memory=False.
+  mad_df = pd.read_csv(data_dir / 'MAD_DataLITH.csv')
+2025-10-15 10:20:04,089 - INFO - MAD dataset: 26476 rows
+2025-10-15 10:20:04,089 - INFO - Loading PWC dataset (P-wave velocity)...
+/home/utig5/johna/bhai/ml_models/vae_lithology_model.py:249: DtypeWarning: Columns (0,14,20,26,28) have mixed types. Specify dtype option on import or set low_memory=False.
+  pwc_df = pd.read_csv(data_dir / 'PWC_DataLITH.csv')
+2025-10-15 10:20:04,205 - INFO - PWC dataset: 28445 rows
+2025-10-15 10:20:04,205 - INFO - Loading TCON dataset (thermal conductivity)...
+/home/utig5/johna/bhai/ml_models/vae_lithology_model.py:253: DtypeWarning: Columns (0) have mixed types. Specify dtype option on import or set low_memory=False.
+  tcon_df = pd.read_csv(data_dir / 'TCON_DataLITH.csv')
+2025-10-15 10:20:04,308 - INFO - TCON dataset: 30330 rows
+2025-10-15 10:20:04,331 - INFO - Filtering to 212 specified boreholes...
+2025-10-15 10:20:04,351 - INFO - After filtering - MAD: 19819, PWC: 22386, TCON: 20833
+2025-10-15 10:20:04,359 - INFO - Merging datasets on Borehole_ID and depth (resolution: 0.05m)...
+2025-10-15 10:20:04,371 - INFO - Merged dataset: 187 rows
+2025-10-15 10:20:04,372 - INFO - After removing missing values: 166 rows (dropped 21)
+2025-10-15 10:20:04,373 - INFO - After outlier filtering: 151 rows (dropped 15)
+2025-10-15 10:20:04,380 - INFO - 
+================================================================================
+2025-10-15 10:20:04,381 - INFO - Data Statistics
+2025-10-15 10:20:04,381 - INFO - ================================================================================
+2025-10-15 10:20:04,381 - INFO - Total samples: 151
+2025-10-15 10:20:04,381 - INFO - Unique boreholes: 21
+2025-10-15 10:20:04,381 - INFO - Unique principal lithologies: 18
+2025-10-15 10:20:04,381 - INFO - 
+Top 10 principal lithologies:
+2025-10-15 10:20:04,382 - INFO - Principal
+nannofossil ooze              79
+mud                           14
+clayey silt                   12
+very fine sand                 6
+clay                           6
+lapillistone                   4
+volcanic rock                  4
+medium to coarse sandstone     3
+mudstone                       3
+calcareous ooze                3
+Name: count, dtype: int64
+2025-10-15 10:20:04,383 - INFO - 
+================================================================================
+2025-10-15 10:20:04,383 - INFO - STEP 2: Preparing data for training
+2025-10-15 10:20:04,383 - INFO - ================================================================================
+2025-10-15 10:20:04,383 - INFO - Total unique boreholes: 21
+2025-10-15 10:20:04,384 - INFO - Borehole split - Train: 14, Val: 2, Test: 5
+2025-10-15 10:20:04,385 - INFO - Sample split - Train: 69, Val: 14, Test: 68
+2025-10-15 10:20:04,387 - INFO - Feature statistics (before normalization):
+2025-10-15 10:20:04,387 - INFO -   Porosity (vol%): mean=45.186, std=18.171
+2025-10-15 10:20:04,387 - INFO -   Grain density (g/cm^3): mean=2.711, std=0.076
+2025-10-15 10:20:04,387 - INFO -   P_wave_velocity: mean=1995.290, std=658.094
+2025-10-15 10:20:04,387 - INFO -   Thermal conductivity mean (W/(m*K)): mean=1.565, std=0.840
+2025-10-15 10:20:04,527 - INFO - 
+Using device: cuda
+2025-10-15 10:20:04,527 - INFO - 
+================================================================================
+2025-10-15 10:20:04,527 - INFO - STEP 3: Training VAE with latent_dim=2
+2025-10-15 10:20:04,527 - INFO - ================================================================================
+2025-10-15 10:20:04,529 - INFO - 
+Model architecture:
+2025-10-15 10:20:04,529 - INFO - VAE(
+  (encoder): Sequential(
+    (0): Linear(in_features=4, out_features=16, bias=True)
+    (1): BatchNorm1d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): LeakyReLU(negative_slope=0.2)
+    (3): Dropout(p=0.2, inplace=False)
+    (4): Linear(in_features=16, out_features=32, bias=True)
+    (5): BatchNorm1d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (6): LeakyReLU(negative_slope=0.2)
+    (7): Dropout(p=0.2, inplace=False)
+  )
+  (fc_mu): Linear(in_features=32, out_features=2, bias=True)
+  (fc_log_var): Linear(in_features=32, out_features=2, bias=True)
+  (decoder): Sequential(
+    (0): Linear(in_features=2, out_features=32, bias=True)
+    (1): BatchNorm1d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): LeakyReLU(negative_slope=0.2)
+    (3): Dropout(p=0.2, inplace=False)
+    (4): Linear(in_features=32, out_features=16, bias=True)
+    (5): BatchNorm1d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (6): LeakyReLU(negative_slope=0.2)
+    (7): Dropout(p=0.2, inplace=False)
+    (8): Linear(in_features=16, out_features=4, bias=True)
+  )
+)
+2025-10-15 10:20:04,530 - INFO - Total trainable parameters: 1,640
+2025-10-15 10:20:06,335 - INFO - Starting training for 200 epochs...
+2025-10-15 10:20:06,335 - INFO - Device: cuda, Learning rate: 0.001, Beta: 1.0
+2025-10-15 10:20:08,164 - INFO - Epoch 1/200 - Train Loss: 1.5550 (Recon: 1.1880, KL: 0.3671) - Val Loss: 0.5991 (Recon: 0.5650, KL: 0.0341)
+2025-10-15 10:20:08,220 - INFO -   Saved best model (val_loss: 0.5991)
+2025-10-15 10:20:08,260 - INFO -   Saved best model (val_loss: 0.5759)
+2025-10-15 10:20:08,436 - INFO - Epoch 10/200 - Train Loss: 1.5418 (Recon: 1.3783, KL: 0.1635) - Val Loss: 0.5961 (Recon: 0.5748, KL: 0.0213)
+2025-10-15 10:20:08,634 - INFO - Epoch 20/200 - Train Loss: 0.9558 (Recon: 0.8335, KL: 0.1223) - Val Loss: 0.6929 (Recon: 0.6716, KL: 0.0213)
+2025-10-15 10:20:08,676 - INFO - Early stopping triggered after 22 epochs
+2025-10-15 10:20:08,705 - INFO - Training completed!
+2025-10-15 10:20:08,705 - INFO - Best validation loss: 0.5759
+2025-10-15 10:20:08,708 - INFO - Saved models: /home/utig5/johna/bhai/ml_models/checkpoints/vae_lithology_latent2.pth, /home/utig5/johna/bhai/ml_models/checkpoints/vae_lithology_latent2_best.pth
+2025-10-15 10:20:08,708 - INFO - 
+================================================================================
+2025-10-15 10:20:08,708 - INFO - STEP 3: Training VAE with latent_dim=8
+2025-10-15 10:20:08,708 - INFO - ================================================================================
+2025-10-15 10:20:08,709 - INFO - 
+Model architecture:
+2025-10-15 10:20:08,709 - INFO - VAE(
+  (encoder): Sequential(
+    (0): Linear(in_features=4, out_features=32, bias=True)
+    (1): BatchNorm1d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): LeakyReLU(negative_slope=0.2)
+    (3): Dropout(p=0.2, inplace=False)
+    (4): Linear(in_features=32, out_features=64, bias=True)
+    (5): BatchNorm1d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (6): LeakyReLU(negative_slope=0.2)
+    (7): Dropout(p=0.2, inplace=False)
+    (8): Linear(in_features=64, out_features=128, bias=True)
+    (9): BatchNorm1d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (10): LeakyReLU(negative_slope=0.2)
+    (11): Dropout(p=0.2, inplace=False)
+  )
+  (fc_mu): Linear(in_features=128, out_features=8, bias=True)
+  (fc_log_var): Linear(in_features=128, out_features=8, bias=True)
+  (decoder): Sequential(
+    (0): Linear(in_features=8, out_features=128, bias=True)
+    (1): BatchNorm1d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): LeakyReLU(negative_slope=0.2)
+    (3): Dropout(p=0.2, inplace=False)
+    (4): Linear(in_features=128, out_features=64, bias=True)
+    (5): BatchNorm1d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (6): LeakyReLU(negative_slope=0.2)
+    (7): Dropout(p=0.2, inplace=False)
+    (8): Linear(in_features=64, out_features=32, bias=True)
+    (9): BatchNorm1d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (10): LeakyReLU(negative_slope=0.2)
+    (11): Dropout(p=0.2, inplace=False)
+    (12): Linear(in_features=32, out_features=4, bias=True)
+  )
+)
+2025-10-15 10:20:08,710 - INFO - Total trainable parameters: 25,172
+2025-10-15 10:20:08,762 - INFO - Starting training for 200 epochs...
+2025-10-15 10:20:08,762 - INFO - Device: cuda, Learning rate: 0.001, Beta: 1.0
+2025-10-15 10:20:08,788 - INFO - Epoch 1/200 - Train Loss: 2.8609 (Recon: 1.4578, KL: 1.4031) - Val Loss: 0.5582 (Recon: 0.5375, KL: 0.0207)
+2025-10-15 10:20:08,799 - INFO -   Saved best model (val_loss: 0.5582)
+2025-10-15 10:20:08,826 - INFO -   Saved best model (val_loss: 0.5248)
+2025-10-15 10:20:08,857 - INFO -   Saved best model (val_loss: 0.5191)
+2025-10-15 10:20:08,997 - INFO - Epoch 10/200 - Train Loss: 1.7529 (Recon: 1.2103, KL: 0.5426) - Val Loss: 0.5323 (Recon: 0.5149, KL: 0.0174)
+2025-10-15 10:20:09,153 - INFO -   Saved best model (val_loss: 0.4956)
+2025-10-15 10:20:09,215 - INFO - Epoch 20/200 - Train Loss: 1.4939 (Recon: 0.9076, KL: 0.5864) - Val Loss: 0.5723 (Recon: 0.5324, KL: 0.0398)
+2025-10-15 10:20:09,428 - INFO - Epoch 30/200 - Train Loss: 1.1450 (Recon: 0.6807, KL: 0.4642) - Val Loss: 0.6000 (Recon: 0.5624, KL: 0.0377)
+2025-10-15 10:20:09,481 - INFO -   Saved best model (val_loss: 0.4921)
+2025-10-15 10:20:09,646 - INFO - Epoch 40/200 - Train Loss: 1.3840 (Recon: 1.0345, KL: 0.3495) - Val Loss: 0.5029 (Recon: 0.4729, KL: 0.0300)
+2025-10-15 10:20:09,857 - INFO - Epoch 50/200 - Train Loss: 1.8167 (Recon: 1.4376, KL: 0.3790) - Val Loss: 0.5683 (Recon: 0.5415, KL: 0.0268)
+2025-10-15 10:20:09,899 - INFO - Early stopping triggered after 52 epochs
+2025-10-15 10:20:09,913 - INFO - Training completed!
+2025-10-15 10:20:09,913 - INFO - Best validation loss: 0.4921
+2025-10-15 10:20:09,918 - INFO - Saved models: /home/utig5/johna/bhai/ml_models/checkpoints/vae_lithology_latent8.pth, /home/utig5/johna/bhai/ml_models/checkpoints/vae_lithology_latent8_best.pth
+2025-10-15 10:20:09,918 - INFO - 
+================================================================================
+2025-10-15 10:20:09,918 - INFO - Training completed successfully!
+2025-10-15 10:20:09,918 - INFO - ================================================================================
+2025-10-15 10:20:09,918 - INFO - Log file: /home/utig5/johna/bhai/ml_models/logs/vae_lithology_training_20251015_102003.log
+2025-10-15 10:20:09,918 - INFO - Next steps: Run analysis script to generate UMAP projections and clustering

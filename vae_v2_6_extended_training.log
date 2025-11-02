@@ -1,0 +1,58 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+================================================================================
+VAE v2.6 - EXTENDED TRAINING (100 epochs, no early stopping)
+================================================================================
+
+Camboulin et al. (2024) hypothesis test:
+  Previous training stopped at epoch 16 (early stopping)
+  Phase 2 generalization should occur epochs 10-50
+  Training for 100 epochs to test if ARI improves
+
+Samples: 238,506
+Train: 174,184, Val: 33,729, Test: 30,593
+
+Training for 100 epochs with β annealing (NO early stopping)...
+Evaluating ARI every 10 epochs
+
+================================================================================
+Epoch   0: β=0.001, Train Loss=2.136, Val Loss=0.618, ARI=0.238, Sil=0.359
+Epoch  10: β=0.101, Train Loss=1.197, Val Loss=0.896, ARI=0.248, Sil=0.342
+Epoch  20: β=0.201, Train Loss=1.617, Val Loss=1.406, ARI=0.242, Sil=0.351
+Epoch  30: β=0.300, Train Loss=1.980, Val Loss=1.811, ARI=0.248, Sil=0.351
+Epoch  40: β=0.400, Train Loss=2.299, Val Loss=2.156, ARI=0.241, Sil=0.350
+Epoch  50: β=0.500, Train Loss=2.581, Val Loss=2.458, ARI=0.239, Sil=0.350
+Epoch  60: β=0.500, Train Loss=2.582, Val Loss=2.462, ARI=0.240, Sil=0.350
+Epoch  70: β=0.500, Train Loss=2.582, Val Loss=2.460, ARI=0.240, Sil=0.351
+Epoch  80: β=0.500, Train Loss=2.576, Val Loss=2.455, ARI=0.238, Sil=0.350
+Epoch  90: β=0.500, Train Loss=2.579, Val Loss=2.456, ARI=0.239, Sil=0.350
+Epoch  99: β=0.500, Train Loss=2.581, Val Loss=2.450, ARI=0.238, Sil=0.350
+
+================================================================================
+EXTENDED TRAINING RESULTS
+================================================================================
+
+ARI progression (k=12):
+  Epoch   0: ARI = 0.238 (+0.0% vs epoch 0)
+  Epoch  10: ARI = 0.248 (+4.2% vs epoch 0)
+  Epoch  20: ARI = 0.242 (+1.8% vs epoch 0)
+  Epoch  30: ARI = 0.248 (+4.3% vs epoch 0)
+  Epoch  40: ARI = 0.241 (+1.4% vs epoch 0)
+  Epoch  50: ARI = 0.239 (+0.8% vs epoch 0)
+  Epoch  60: ARI = 0.240 (+0.9% vs epoch 0)
+  Epoch  70: ARI = 0.240 (+1.2% vs epoch 0)
+  Epoch  80: ARI = 0.238 (+0.2% vs epoch 0)
+  Epoch  90: ARI = 0.239 (+0.5% vs epoch 0)
+  Epoch  99: ARI = 0.238 (+0.4% vs epoch 0)
+
+Best ARI: 0.248 at epoch 30
+Previous v2.6 (epoch 16): ARI = 0.258
+
+✗ Extended training did NOT improve beyond epoch 16
+  Model likely reached optimum in Phase 1
+
+Model saved to: vae_gra_v2_6_extended_100epochs.pth

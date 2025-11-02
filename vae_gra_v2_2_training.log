@@ -1,0 +1,79 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+Warning: UMAP not available, will use PCA only for 8D visualization
+================================================================================
+VAE GRA v2.2 - Spatial Context Model
+================================================================================
+Using device: cpu
+Loading data...
+Loaded 238,506 samples from 296 boreholes
+
+Feature shapes:
+  Input (18D): (238506, 18)
+  Target (6D): (238506, 6)
+  Unique lithologies: 139
+
+Splitting data by borehole...
+  Train: 207 boreholes, 169,018 samples
+  Val:   44 boreholes, 37,093 samples
+  Test:  45 boreholes, 32,395 samples
+
+Applying distribution-aware scaling...
+
+================================================================================
+Training 2D Latent Model
+================================================================================
+
+Model parameters: 2,186
+
+Training VAE...
+Epoch   1: Train=4.386, Val=2.994, Recon=1.850, KL=1.143
+Epoch   5: Train=3.631, Val=2.949, Recon=1.723, KL=1.226
+Epoch  10: Train=3.562, Val=2.928, Recon=1.663, KL=1.265
+Epoch  15: Train=3.537, Val=2.938, Recon=1.640, KL=1.298
+Epoch  20: Train=3.527, Val=2.937, Recon=1.636, KL=1.301
+
+Early stopping at epoch 24
+
+Training completed in 173.0 seconds (24 epochs)
+Best validation loss: 2.921
+
+✓ Saved checkpoint to /home/utig5/johna/bhai/ml_models/checkpoints/vae_gra_v2_2_latent2.pth
+✓ Saved training history plot
+
+================================================================================
+Training 8D Latent Model
+================================================================================
+
+Model parameters: 2,486
+
+Training VAE...
+Epoch   1: Train=4.648, Val=3.046, Recon=2.000, KL=1.046
+Epoch   5: Train=3.629, Val=2.956, Recon=1.704, KL=1.252
+Epoch  10: Train=3.563, Val=2.930, Recon=1.669, KL=1.262
+Epoch  15: Train=3.537, Val=2.940, Recon=1.637, KL=1.303
+Epoch  20: Train=3.528, Val=2.936, Recon=1.647, KL=1.290
+Epoch  25: Train=3.520, Val=2.949, Recon=1.651, KL=1.297
+Epoch  30: Train=3.514, Val=2.941, Recon=1.634, KL=1.306
+Epoch  35: Train=3.512, Val=2.940, Recon=1.657, KL=1.284
+Epoch  40: Train=3.504, Val=2.927, Recon=1.639, KL=1.288
+Epoch  45: Train=3.509, Val=2.937, Recon=1.621, KL=1.316
+Epoch  50: Train=3.503, Val=2.938, Recon=1.622, KL=1.316
+
+Early stopping at epoch 53
+
+Training completed in 323.7 seconds (53 epochs)
+Best validation loss: 2.912
+
+✓ Saved checkpoint to /home/utig5/johna/bhai/ml_models/checkpoints/vae_gra_v2_2_latent8.pth
+✓ Saved training history plot
+
+================================================================================
+VAE GRA v2.2 Training Complete!
+================================================================================

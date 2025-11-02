@@ -1,0 +1,159 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+Warning: UMAP not available, will use PCA only for 8D visualization
+====================================================================================================
+VAE LATENT SPACE DISTRIBUTION ANALYSIS
+====================================================================================================
+
+Loading data...
+Train: 174,636 samples
+Test:  30,593 samples
+
+Loading VAE model...
+Device: cuda
+Model loaded: 8D latent space
+
+Extracting latent representations...
+Latent shape: (30593, 8)
+Latent range: [-4.62, 4.81]
+
+Generating Q-Q plots...
+Q-Q plots saved to: vae_latent_qq_plots.png
+
+Running formal normality tests...
+====================================================================================================
+NORMALITY TEST RESULTS (α=0.05)
+====================================================================================================
+ Dimension      Mean      Std  Skewness  Kurtosis    Shapiro_p          KS_p  Anderson_stat  Anderson_reject   DAgostino_p  Is_Gaussian_05
+         1 -0.001231 0.020400 -1.657036  3.386176 0.000000e+00  1.710020e-80     241.062603             True  0.000000e+00           False
+         2  0.001260 0.015019 -1.228712  1.974926 9.809089e-45  2.022998e-24      98.050101             True 2.199458e-205           False
+         3  0.224772 1.215431  1.917193  3.610945 0.000000e+00 8.786085e-144     338.358464             True  0.000000e+00           False
+         4 -0.175408 0.944282 -0.073949  0.847804 1.395562e-22  4.645714e-10      18.993303             True  3.220078e-22           False
+         5 -0.002839 0.017657  0.349377  0.546389 7.946463e-24  4.688317e-16      22.751849             True  3.591166e-36           False
+         6 -0.001784 0.006233  0.856174  0.656550 1.810852e-38  5.360822e-60      85.568493             True 1.185475e-110           False
+         7  0.123213 0.858096  0.060556  1.607102 7.398834e-31  4.530662e-19      44.277258             True  1.537494e-37           False
+         8  0.113798 0.862105  0.066249  0.018256 3.317397e-17  3.172093e-16      19.797107             True  2.600170e-01           False
+
+Gaussian dimensions (all tests pass): 0/8
+Non-Gaussian dimensions: 8/8
+
+Results saved to: vae_latent_normality_tests.csv
+
+Generating distribution histograms...
+Distribution plots saved to: vae_latent_distributions.png
+
+Computing PCA projection...
+PCA explained variance: 43.9% + 21.8% = 65.7%
+
+Generating 2D density plots...
+2D density plots saved to: vae_latent_2d_density.png
+
+Analyzing correlations between latent dimensions...
+Max correlation: -0.891 between Dim 2 and Dim 6
+Mean absolute correlation: 0.368
+
+Correlation matrix saved to: vae_latent_correlations.png
+
+====================================================================================================
+LATENT SPACE SUMMARY
+====================================================================================================
+
+Shape: (30593, 8)
+Device used for encoding: cuda
+
+ Dimension      Mean      Std       Min      Max    Range  Skewness  Kurtosis
+         1 -0.001231 0.020400 -0.081819 0.081357 0.163177 -1.657036  3.386176
+         2  0.001260 0.015019 -0.079167 0.037265 0.116431 -1.228712  1.974926
+         3  0.224772 1.215431 -2.824686 4.811130 7.635815  1.917193  3.610945
+         4 -0.175408 0.944282 -4.405803 4.801111 9.206914 -0.073949  0.847804
+         5 -0.002839 0.017657 -0.068165 0.076445 0.144610  0.349377  0.546389
+         6 -0.001784 0.006233 -0.020772 0.029758 0.050530  0.856174  0.656550
+         7  0.123213 0.858096 -2.652361 4.608664 7.261024  0.060556  1.607102
+         8  0.113798 0.862105 -4.623436 3.275290 7.898726  0.066249  0.018256
+
+⚠️  POSTERIOR COLLAPSE detected in dimensions: [1, 2, 5, 6]
+   (std < 0.1, should be ~1 for N(0,I) prior)
+
+====================================================================================================
+KEY FINDINGS
+====================================================================================================
+1. Gaussian dimensions: 0/8
+2. Max dimension correlation: 0.891
+3. Posterior collapse: 4 dimensions
+4. PCA variance explained (PC1+PC2): 65.7%
+
+INTERPRETATION:
+  - ALL dimensions are NON-GAUSSIAN
+  - VAE N(0,I) prior is violated
+  - But clustering still works if structure is compact
+  - Strong correlations (max 0.89) indicate dimensions are NOT independent
+  - Disentanglement failed, but this may help clustering (preserves feature correlations)
+  - 4 dimensions collapsed → effective dimensionality < 8
+====================================================================================================
+
+====================================================================================================
+CLUSTER SHAPE ANALYSIS (Top 5 Lithologies)
+====================================================================================================
+
+
+nannofossil ooze (n=5010):
+--------------------------------------------------------------------------------
+  Eigenvalues: [8.94270936e-01 2.48404593e-01 1.73602771e-01 1.32257221e-01
+ 3.43868425e-06 1.94891477e-06 3.33711331e-07 5.96778297e-08]
+  Sphericity ratio (small/large): 0.000
+  Shape: HIGHLY ELONGATED (cigar-shaped)
+  Volume (det(Σ)): 6.81e-28
+  Total variance (tr(Σ)): 1.45
+
+clay (n=4007):
+--------------------------------------------------------------------------------
+  Eigenvalues: [1.36294172e+00 4.91555748e-01 1.81570286e-01 8.80644239e-02
+ 7.96922646e-06 1.64551501e-06 7.18846766e-08 1.80509629e-08]
+  Sphericity ratio (small/large): 0.000
+  Shape: HIGHLY ELONGATED (cigar-shaped)
+  Volume (det(Σ)): 1.82e-28
+  Total variance (tr(Σ)): 2.12
+
+silty clay (n=3128):
+--------------------------------------------------------------------------------
+  Eigenvalues: [7.45559356e-01 3.79084467e-01 1.55214759e-01 8.36743559e-02
+ 9.78668845e-06 1.19466036e-06 5.71006661e-08 1.62309968e-08]
+  Sphericity ratio (small/large): 0.000
+  Shape: HIGHLY ELONGATED (cigar-shaped)
+  Volume (det(Σ)): 3.98e-29
+  Total variance (tr(Σ)): 1.36
+
+silty claystone (n=2655):
+--------------------------------------------------------------------------------
+  Eigenvalues: [2.44463628e-01 9.06842220e-02 5.40974637e-02 1.88301010e-02
+ 9.47624631e-07 1.70510522e-07 1.27632229e-08 8.28608120e-09]
+  Sphericity ratio (small/large): 0.000
+  Shape: HIGHLY ELONGATED (cigar-shaped)
+  Volume (det(Σ)): 3.86e-34
+  Total variance (tr(Σ)): 0.41
+
+gabbro (n=2520):
+--------------------------------------------------------------------------------
+  Eigenvalues: [3.33634781e+00 2.36868844e-01 8.05985300e-02 3.79170720e-02
+ 1.35733687e-05 1.64271446e-06 1.95442822e-08 4.40138137e-09]
+  Sphericity ratio (small/large): 0.000
+  Shape: HIGHLY ELONGATED (cigar-shaped)
+  Volume (det(Σ)): 4.63e-30
+  Total variance (tr(Σ)): 3.69
+
+====================================================================================================
+
+ANALYSIS COMPLETE!
+
+Generated files:
+  - vae_latent_qq_plots.png
+  - vae_latent_normality_tests.csv
+  - vae_latent_distributions.png
+  - vae_latent_2d_density.png
+  - vae_latent_correlations.png

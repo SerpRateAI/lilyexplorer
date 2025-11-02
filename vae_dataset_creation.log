@@ -1,0 +1,106 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+================================================================================
+VAE LITHOLOGY MODEL - DATASET CREATION
+================================================================================
+Features: GRA bulk density + MS + NGR (MSCL measurements)
+Bin size: 20 cm
+================================================================================
+
+============================================================
+Loading GRA_DataLITH.csv
+============================================================
+  Chunk 5: 1,000,000 rows processed (41.4s)
+  Chunk 10: 2,000,000 rows processed (82.6s)
+  Chunk 15: 3,000,000 rows processed (124.2s)
+  Chunk 20: 4,000,000 rows processed (165.6s)
+  Converting 423,244 bins to dataframe...
+  DONE: 423,244 bins from 534 boreholes (175.0s)
+
+============================================================
+Loading MS_DataLITH.csv
+============================================================
+  Chunk 5: 1,000,000 rows processed (41.7s)
+  Chunk 10: 2,000,000 rows processed (83.6s)
+  Chunk 15: 3,000,000 rows processed (125.3s)
+  Chunk 20: 4,000,000 rows processed (167.2s)
+  Converting 422,925 bins to dataframe...
+  DONE: 422,925 bins from 534 boreholes (174.0s)
+
+============================================================
+Loading NGR_DataLITH.csv
+============================================================
+  Chunk 5: 500,000 rows processed (22.8s)
+  Converting 405,474 bins to dataframe...
+  DONE: 405,474 bins from 524 boreholes (40.3s)
+
+================================================================================
+MERGING DATASETS
+================================================================================
+Starting with GRA: 423,244 bins, 534 boreholes
+After adding MS:  422,834 bins, 534 boreholes
+After adding NGR: 403,391 bins, 524 boreholes
+
+================================================================================
+DATASET STATISTICS
+================================================================================
+
+Top 10 lithologies:
+   1. nannofossil ooze                        : 79938 ( 19.8%)
+   2. clay                                    : 47906 ( 11.9%)
+   3. silty clay                              : 31332 (  7.8%)
+   4. mud                                     : 24105 (  6.0%)
+   5. diatom ooze                             : 17935 (  4.4%)
+   6. nannofossil chalk                       : 16013 (  4.0%)
+   7. wackestone                              : 15017 (  3.7%)
+   8. packstone                               : 14436 (  3.6%)
+   9. clayey silt                             : 11513 (  2.9%)
+  10. mudstone                                : 10741 (  2.7%)
+
+Total unique lithologies: 178
+
+Depth coverage per borehole:
+  Mean bins/borehole: 769.8 ± 696.4
+  Mean depth range:   222.2 ± 206.2 m
+  Min bins:           1
+  Max bins:           3497
+
+Feature statistics:
+       Bulk density (GRA)  Magnetic susceptibility (instr. units)  NGR total counts (cps)
+count       403391.000000                           403391.000000           403391.000000
+mean             1.669775                              107.683318               25.334525
+std              0.271777                              349.497902               17.973188
+min             -2.387750                             -479.677500               -5.885000
+25%              1.530438                                4.041667               11.279167
+50%              1.695000                               16.412500               23.177000
+75%              1.838667                               55.250312               35.959583
+max              8.462000                             8964.699500              292.543500
+
+================================================================================
+Dataset saved to: /home/utig5/johna/bhai/vae_training_data_20cm.csv
+================================================================================
+
+COMPARISON TO PREVIOUS MODEL:
+  Previous (MAD-based):  151 samples from ~5 boreholes
+  New (GRA+MS+NGR):      403,391 samples from 524 boreholes
+  Improvement:           2671x more samples
+
+Sample data:
+   Borehole_ID  Depth_Bin Principal  Bulk density (GRA)  Magnetic susceptibility (instr. units)  NGR total counts (cps)
+0   318-U1355A        0.0      sand            1.521400                              221.250000               32.238500
+1   318-U1355A        0.2      sand            1.501143                              456.075000               32.642500
+2   318-U1355A        0.4      sand            1.557750                              676.200000               36.737000
+3   318-U1355A        0.6      sand            1.695875                              800.250000               38.419000
+4   318-U1355A        0.8      sand            1.790625                              742.887500               38.534500
+5   318-U1355A        1.0      sand            1.992750                              960.300000               36.035000
+6   318-U1355A        1.2      sand            2.030500                              834.137500               34.195000
+7   318-U1355A        1.4      sand            2.034500                              777.912500               35.414000
+8   318-U1355A        1.6      sand            2.109250                              694.057143               36.171667
+9   318-U1355A        1.8      sand            2.205000                              757.900000               35.932500
+10  318-U1355A        2.0      sand            2.213714                              832.125000               38.050000
+11  318-U1355A        2.2      sand            2.054750                              733.125000               38.232000
+12  318-U1355A        2.4      sand            2.194375                              835.362500               40.734000
+13  318-U1355A        2.6      sand            2.202000                              889.637500               42.822000
+14  318-U1355A        2.8      sand            2.200500                              934.050000               42.600000

@@ -1,0 +1,49 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+================================================================================
+INTRINSIC DIMENSION ESTIMATION FOR BOREHOLE DATA
+================================================================================
+
+Loaded 238,506 samples
+Valid samples: 238,506
+
+--------------------------------------------------------------------------------
+Raw 6D feature space (no scaling):
+--------------------------------------------------------------------------------
+Intrinsic Dimension estimate: 3.67 ± 0.27
+
+--------------------------------------------------------------------------------
+Normalized 6D feature space (StandardScaler):
+--------------------------------------------------------------------------------
+Intrinsic Dimension estimate: 3.95 ± 0.25
+
+================================================================================
+RECOMMENDATIONS
+================================================================================
+
+Estimated intrinsic dimension: ~4D
+Current v2.6 latent dimension: 8D
+
+✓ Bottleneck (8D) > Intrinsic Dimension (4D)
+  Model is CORRECTLY SIZED per Camboulin et al. (2024)
+  Should exhibit 'double hunchback' ID profile in Phase 2
+
+================================================================================
+TRAINING RECOMMENDATION
+================================================================================
+
+Camboulin et al. (2024) findings:
+  - Phase 1 (epochs 1-10): Fast reconstruction learning
+  - Phase 2 (epochs 10-200): Slow generalization, double hunchback emerges
+
+Your v2.6 training:
+  - Stopped at epoch 16 (early stopping)
+  - Likely just entered Phase 2 and quit!
+
+✓ RETRAIN for 100 epochs WITHOUT early stopping
+  Track ARI every 10 epochs to see if performance improves
+  Expect ARI plateau around epoch 30-50

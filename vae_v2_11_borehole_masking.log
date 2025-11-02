@@ -1,0 +1,82 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+================================================================================
+VAE GRA v2.11 - Borehole-Level Masking (10%)
+================================================================================
+
+Loading data...
+Dataset: 238,506 samples
+Train: 174,636, Val: 33,277, Test: 30,593
+
+================================================================================
+Training with borehole-level masking (10% features per borehole)
+================================================================================
+Each borehole randomly masks ~10% of features for ALL its samples
+Simulates realistic missing data: e.g., some boreholes have no NGR
+
+Device: cpu
+Epoch   0: β=0.0010, Train Loss=2.6714, Val Loss=0.8603
+Epoch   5: β=0.0509, Train Loss=1.3909, Val Loss=0.8521
+Epoch  10: β=0.1008, Train Loss=1.5731, Val Loss=1.1128
+
+Early stopping at epoch 11
+
+Training completed in 102.4s (12 epochs)
+
+================================================================================
+Clustering Evaluation
+================================================================================
+k=10: ARI=0.221, Silhouette=0.396
+k=12: ARI=0.240, Silhouette=0.362
+k=15: ARI=0.243, Silhouette=0.356
+k=20: ARI=0.230, Silhouette=0.348
+
+================================================================================
+IMPUTATION TEST: Predict NGR+RGB from GRA+MS
+================================================================================
+
+True values:
+     GRA       MS       NGR       R        G        B
+1:  1.267    65.90   24.88    32.6    27.9    24.7
+2:  1.314    78.81   17.17    33.6    30.7    28.8
+3:  1.362   146.19   19.26    32.1    28.8    27.5
+4:  1.432   209.50   21.04    30.7    27.8    27.0
+5:  1.407   124.12   19.38    31.5    28.5    27.6
+6:  1.336   106.89   18.01    33.2    29.9    28.3
+7:  1.295    88.50   17.43    32.8    29.4    28.1
+8:  1.376   136.63   19.25    33.3    30.4    30.0
+9:  1.417    85.94   23.09    34.2    31.0    30.5
+10:  1.425    39.44   24.61    34.5    31.5    30.9
+
+Imputed values (given GRA+MS):
+     GRA       MS       NGR       R        G        B
+1:  1.403    31.15   15.90    55.2    53.0    47.6
+2:  1.398    37.78   15.91    51.0    48.9    44.1
+3:  1.443    56.85   15.48    43.5    41.8    37.9
+4:  1.560    58.65   17.35    45.7    44.1    39.9
+5:  1.526    33.75   19.89    50.3    48.4    43.3
+6:  1.371    36.88   18.77    42.2    40.3    36.1
+7:  1.359    36.52   16.67    48.2    46.1    41.6
+8:  1.576    48.51   17.15    53.3    51.5    46.4
+9:  1.500    30.20   21.78    44.7    42.8    38.2
+10:  1.505    46.80   16.93    49.4    47.5    42.9
+
+Imputation MSE:
+  NGR: 17.68
+  RGB: 252.84
+
+Model saved: ml_models/checkpoints/vae_gra_v2_11_masked_borehole_10pct.pth
+
+================================================================================
+Comparison: All Masking Strategies
+================================================================================
+v2.6 (no masking):         ARI (k=12) = 0.258
+v2.11 (block NGR+RGB 30%): ARI (k=12) = 0.236 (-8.5%)
+v2.11 (random 15%):        ARI (k=12) = 0.248 (-3.8%)
+v2.11 (borehole 10%):      ARI (k=12) = 0.240 (-6.9%)
+
+✗ Still 6.9% worse than v2.6

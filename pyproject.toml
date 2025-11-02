@@ -4,4 +4,19 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    'jupyter',
+    'scikit-learn',
+    'catboost',
+    'matplotlib',
+    'numpy',
+    'scipy',
+    'torch',
+    "seaborn>=0.13.2",
+    "hvplot>=0.12.1",
+    "datashader>=0.18.2",
+    "xarray>=2025.10.1",
+    "netcdf4>=1.7.2",
+    "cartopy>=0.25.0",
+    "umap-learn>=0.5.9.post2",
+]

@@ -1,0 +1,140 @@
+Principal_Lithology,Lithology_Group,Count,Percentage
+nannofossil ooze,Carbonate,49778,20.87075377558636
+clay,Clay/Mud,37237,15.612605133623472
+silty clay,Clay/Mud,18048,7.567105230057106
+wackestone,Carbonate,14230,5.966306927289041
+packstone,Carbonate,12548,5.261083578610181
+mudstone,Clay/Mud,9952,4.172641359127233
+claystone,Clay/Mud,9470,3.970550007127703
+nannofossil chalk,Carbonate,7894,3.309769984822185
+diatom ooze,Biogenic Silica,6095,2.555491266467091
+clayey silt,Clay/Mud,5406,2.266609645040376
+sand,Sand,5395,2.2619976017374825
+mud,Clay/Mud,4894,2.0519399931238627
+silty claystone,Clay/Mud,3798,1.5924127694900758
+nannofossil clay,Carbonate,3487,1.4620177270173496
+chalk,Carbonate,3410,1.429733423897093
+interbedded silt and clay,Clay/Mud,2570,1.0775410262215626
+gabbro,Mafic Igneous,2522,1.0574157463543894
+sandstone,Sand,2448,1.0263892732258308
+calcareous ooze,Carbonate,2409,1.0100374833337529
+basalt,Mafic Igneous,2401,1.0066832700225572
+foraminifera ooze,Carbonate,2213,0.9278592572094622
+grainstone,Carbonate,2108,0.883835207500021
+silty sand,Silt,1941,0.8138160046288143
+siltstone,Silt,1614,0.6767125355336973
+clast-poor sandy diamict,Sand,1380,0.5786017961812282
+pebbly mud,Clay/Mud,1222,0.5123560832851165
+silt,Silt,1199,0.5027127200154293
+medium to coarse sandstone,Sand,1147,0.4809103334926585
+lapilli tuff,Volcaniclastic,1131,0.4742019068702673
+sandy silt,Silt,1086,0.4553344569947926
+breccia,Conglomerate/Breccia,1022,0.4285007505052283
+fine sand,Sand,891,0.3735755075344016
+silty sandstone,Silt,887,0.3718984008788039
+tuff,Volcaniclastic,855,0.3584815476340218
+clast-rich sandy diamict,Sand,853,0.3576429943062228
+interbedded siltstone and mudstone,Clay/Mud,809,0.3391948210946475
+diatomite,Biogenic Silica,789,0.3308092878166587
+conglomerate,Conglomerate/Breccia,644,0.2700141715512398
+boninite,Mafic Igneous,596,0.2498888916840666
+interbedded sand and mud,Clay/Mud,582,0.2440190183894744
+marl,Carbonate,545,0.2285057818251951
+ash,Volcaniclastic,541,0.2268286751695974
+ash/tuff,Volcaniclastic,522,0.218862418555508
+biosiliceous ooze,Biogenic Silica,490,0.2054455653107259
+fine sandstone,Sand,466,0.1953829253771393
+limestone,Carbonate,452,0.1895130520825471
+breccia/conglomerate,Conglomerate/Breccia,437,0.1832239021240556
+very fine sand,Sand,435,0.1823853487962567
+clast-poor muddy diamict,Clay/Mud,420,0.1760961988377651
+lapillistone,Volcaniclastic,379,0.158905855617888
+rudstone,Carbonate,343,0.1438118957175081
+clayey siltstone,Clay/Mud,333,0.1396191290785137
+interbedded sandstone and mudstone,Clay/Mud,321,0.1345878091117204
+silty mud,Clay/Mud,303,0.1270408291615305
+tephra,Volcaniclastic,302,0.1266215524976311
+sandy mud/mudstone to muddy sand/sandstone,Clay/Mud,299,0.1253637225059327
+foraminifera chalk,Carbonate,292,0.1224287858586366
+clast-rich muddy diamict,Clay/Mud,284,0.1190745725474411
+hyaloclastite,Mafic Igneous,256,0.1073348259582568
+calcarenite,Carbonate,253,0.1060769959665585
+volcanic rock,Other,250,0.1048191659748601
+sandy siltstone,Silt,219,0.0918215893939775
+interbedded mud/mudstone and diamict,Clay/Mud,204,0.0855324394354859
+foraminifera clay,Carbonate,173,0.0725348628546032
+dolostone,Evaporite,173,0.0725348628546032
+diorite,Intermediate/Felsic Igneous,165,0.0691806495434077
+volcaniclastic rock,Volcaniclastic,164,0.0687613728795082
+marlstone,Carbonate,157,0.0658264362322121
+lapilli tephra,Volcaniclastic,155,0.0649878829044133
+dolerite,Mafic Igneous,147,0.0616336695932177
+sandy clay,Clay/Mud,131,0.0549252429708267
+schist,Metamorphic,123,0.0515710296596312
+lapilli ash,Volcaniclastic,101,0.0423469430538435
+interbedded sand/sandstone and mud/mudstone,Clay/Mud,92,0.0385734530787485
+gravel,Conglomerate/Breccia,92,0.0385734530787485
+medium to coarse sand,Sand,91,0.0381541764148491
+sandy mud,Clay/Mud,89,0.0373156230870502
+medium sand,Sand,78,0.0327035797841563
+clayey sand,Clay/Mud,78,0.0327035797841563
+floatstone,Carbonate,76,0.0318650264563574
+clayey sandstone,Clay/Mud,68,0.0285108131451619
+debris flow,Diamict,66,0.027672259817363
+sand-silt-clay,Clay/Mud,64,0.0268337064895642
+calcilutite,Carbonate,62,0.0259951531617653
+sandy mudstone,Clay/Mud,60,0.0251565998339664
+clayey mud,Clay/Mud,52,0.0218023865227709
+harzburgite,Ultramafic,50,0.020963833194972
+dacite,Intermediate/Felsic Igneous,46,0.0192867265393742
+lava,Other,39,0.0163517898920781
+andesite,Intermediate/Felsic Igneous,38,0.0159325132281787
+carbonate ooze,Carbonate,38,0.0159325132281787
+sandy claystone,Clay/Mud,37,0.0155132365642793
+silty mudstone,Clay/Mud,33,0.0138361299086815
+muddy sand/sandstone to silty mud/mudstone,Clay/Mud,32,0.0134168532447821
+agglomerate,Volcaniclastic,30,0.0125782999169832
+ooze,Other,28,0.0117397465891843
+felsic patch,Intermediate/Felsic Igneous,26,0.0109011932613854
+gravelly sandstone,Sand,25,0.010481916597486
+coarse sand,Sand,24,0.0100626399335865
+muddy silt,Clay/Mud,24,0.0100626399335865
+nannofossil mud,Carbonate,23,0.0096433632696871
+dunite,Ultramafic,22,0.0092240866057876
+cataclasite,Metamorphic,19,0.0079662566140893
+radiolarian ooze,Biogenic Silica,18,0.0075469799501899
+chert,Biogenic Silica,18,0.0075469799501899
+gabbronorite,Mafic Igneous,16,0.006708426622391
+foraminifera limestone,Carbonate,16,0.006708426622391
+diabase,Mafic Igneous,13,0.0054505966306927
+granofels,Metamorphic,11,0.0046120433028938
+radiolarian mud,Clay/Mud,9,0.0037734899750949
+ultramafic rock,Ultramafic,8,0.0033542133111955
+foraminifera mud,Carbonate,7,0.002934936647296
+fine tuff,Volcaniclastic,7,0.002934936647296
+foraminifera sand,Carbonate,7,0.002934936647296
+metavolcanic rock,Metamorphic,6,0.0025156599833966
+rhyodacite,Intermediate/Felsic Igneous,6,0.0025156599833966
+very fine sandstone,Sand,5,0.0020963833194972
+boundstone,Carbonate,5,0.0020963833194972
+coarse sand and gravel,Sand,5,0.0020963833194972
+coarse sandstone,Sand,5,0.0020963833194972
+pebbly mudstone,Clay/Mud,4,0.0016771066555977
+pebbly sandstone,Sand,4,0.0016771066555977
+metabasite,Mafic Igneous,4,0.0016771066555977
+porcellanite,Biogenic Silica,4,0.0016771066555977
+marble,Metamorphic,3,0.0012578299916983
+felsic vein,Intermediate/Felsic Igneous,3,0.0012578299916983
+carbonate,Carbonate,3,0.0012578299916983
+diatom silt,Silt,3,0.0012578299916983
+muddy sand,Clay/Mud,3,0.0012578299916983
+gypsum rock,Evaporite,2,0.0008385533277988
+coal,Other,2,0.0008385533277988
+breccia/conglomerate/gravel,Conglomerate/Breccia,2,0.0008385533277988
+sandy silt to silty sand,Silt,2,0.0008385533277988
+foraminifera sandstone,Carbonate,2,0.0008385533277988
+gravelly sand,Sand,1,0.0004192766638994
+metaclaystone,Clay/Mud,1,0.0004192766638994
+anhydrite rock,Evaporite,1,0.0004192766638994
+muddy siltstone,Clay/Mud,1,0.0004192766638994
+serpentinite,Ultramafic,1,0.0004192766638994

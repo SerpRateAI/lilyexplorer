@@ -1,0 +1,85 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+Warning: UMAP not available, will use PCA only for 8D visualization
+====================================================================================================
+TESTING FLEXIBLE VAE PRIORS FOR CLUSTERING
+====================================================================================================
+
+Loading data...
+Train: 174,636 samples
+Val:   33,277 samples
+Test:  30,593 samples
+
+Device: cuda
+
+====================================================================================================
+TRAINING: Gaussian N(0,I)
+====================================================================================================
+  Epoch 10: β=0.0908, Val Loss=0.7706
+  Early stopping at epoch 16
+
+Evaluating clustering...
+
+Results:
+  Collapsed dims: 6/10
+  Effective dim: 4
+  Best clustering: k=18, ARI=0.2790, Sil=0.2163
+  Training time: 87.3s
+
+====================================================================================================
+TRAINING: Mixture of 10 Gaussians
+====================================================================================================
+  Epoch 10: β=0.0908, Val Loss=0.7391
+  Early stopping at epoch 16
+
+Evaluating clustering...
+
+Results:
+  Collapsed dims: 6/10
+  Effective dim: 4
+  Best clustering: k=10, ARI=0.2547, Sil=0.2880
+  Training time: 117.7s
+
+====================================================================================================
+TRAINING: Student's t (df=3)
+====================================================================================================
+  Epoch 10: β=0.0908, Val Loss=0.7985
+  Early stopping at epoch 16
+
+Evaluating clustering...
+
+Results:
+  Collapsed dims: 6/10
+  Effective dim: 4
+  Best clustering: k=18, ARI=0.2529, Sil=0.1666
+  Training time: 109.7s
+
+====================================================================================================
+RESULTS SUMMARY
+====================================================================================================
+
+                  model  train_time  collapsed_dims  effective_dim  best_k  best_ari  best_sil
+        Gaussian N(0,I)   87.299070               6              4      18  0.278958  0.216317
+Mixture of 10 Gaussians  117.658362               6              4      10  0.254672  0.288031
+     Student's t (df=3)  109.713983               6              4      18  0.252884  0.166607
+
+====================================================================================================
+COMPARISON TO v2.6.6 BASELINE
+====================================================================================================
+v2.6.6 (Gaussian prior, latent_dim=10): GMM ARI = 0.2860
+
+✗ Gaussian N(0,I): ARI = 0.2790 (-2.5%)
+✗ Mixture of 10 Gaussians: ARI = 0.2547 (-11.0%)
+✗ Student's t (df=3): ARI = 0.2529 (-11.6%)
+
+🏆 v2.6.6 remains best. Flexible priors don't improve clustering.
+   Low β (0.5) already provides sufficient flexibility.
+====================================================================================================
+
+Results saved to: flexible_prior_comparison.csv

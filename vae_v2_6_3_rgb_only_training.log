@@ -1,0 +1,82 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+Warning: UMAP not available, will use PCA only for 8D visualization
+================================================================================
+VAE GRA v2.6.3 - RGB Only
+================================================================================
+
+Using device: cpu
+
+Loading v2.6 dataset (RGB only)...
+Dataset: 238,506 samples from 296 boreholes
+Features: 3D (R, G, B)
+Lithologies: 139
+
+Splitting data by borehole...
+Train: 169,018 samples (207 boreholes)
+Val:   37,093 samples (44 boreholes)
+Test:  32,395 samples (45 boreholes)
+
+Applying log scaling for RGB...
+
+Creating DataLoaders...
+
+================================================================================
+Training RGB-only VAE with 8D latent space (β annealing 0.001 → 0.5)
+================================================================================
+
+Model architecture:
+  Input: 3D (R, G, B)
+  Encoder: 3 → 32 → 16 → 8
+  Decoder: 8 → 16 → 32 → 3
+  Parameters: 1,907
+
+Epoch   1/100 | β=0.0010 | Train Loss: 113.9362 (Recon: 110.0895, KL: 3846.6734) | Val Loss: 18.9612 (Recon: 14.9582, KL: 4003.0188)
+Epoch   2/100 | β=0.0110 | Train Loss: 66.4015 (Recon: 41.0746, KL: 2306.6436) | Val Loss: 28.5792 (Recon: 12.7459, KL: 1442.0131)
+Epoch   3/100 | β=0.0210 | Train Loss: 63.0389 (Recon: 36.6962, KL: 1256.8062) | Val Loss: 33.8242 (Recon: 12.8617, KL: 1000.1172)
+Epoch   4/100 | β=0.0309 | Train Loss: 63.4243 (Recon: 34.4381, KL: 936.8515) | Val Loss: 37.3287 (Recon: 12.6260, KL: 798.4068)
+Epoch   5/100 | β=0.0409 | Train Loss: 65.9145 (Recon: 33.3173, KL: 796.6070) | Val Loss: 43.9404 (Recon: 14.3504, KL: 723.1197)
+Epoch   6/100 | β=0.0509 | Train Loss: 71.3268 (Recon: 33.8314, KL: 736.6472) | Val Loss: 48.8529 (Recon: 14.1083, KL: 682.6060)
+Epoch   7/100 | β=0.0609 | Train Loss: 75.8892 (Recon: 33.7004, KL: 692.9828) | Val Loss: 54.7121 (Recon: 15.1972, KL: 649.0618)
+Epoch   8/100 | β=0.0709 | Train Loss: 81.0372 (Recon: 34.7508, KL: 653.2089) | Val Loss: 61.5236 (Recon: 17.9708, KL: 614.6320)
+Epoch   9/100 | β=0.0808 | Train Loss: 87.2290 (Recon: 36.8175, KL: 623.5958) | Val Loss: 65.7077 (Recon: 19.2409, KL: 574.7992)
+Epoch  10/100 | β=0.0908 | Train Loss: 91.3701 (Recon: 37.6428, KL: 591.5807) | Val Loss: 74.0851 (Recon: 24.8945, KL: 541.6275)
+Epoch  11/100 | β=0.1008 | Train Loss: 95.0269 (Recon: 39.1010, KL: 554.8211) | Val Loss: 73.1545 (Recon: 22.1650, KL: 505.8488)
+Epoch  12/100 | β=0.1108 | Train Loss: 96.7464 (Recon: 39.9973, KL: 512.2691) | Val Loss: 75.2997 (Recon: 23.6977, KL: 465.8055)
+Epoch  13/100 | β=0.1208 | Train Loss: 98.6430 (Recon: 39.5579, KL: 489.2771) | Val Loss: 77.9158 (Recon: 23.1982, KL: 453.1101)
+Epoch  14/100 | β=0.1307 | Train Loss: 102.5036 (Recon: 39.8694, KL: 479.0748) | Val Loss: 81.1002 (Recon: 21.9222, KL: 452.6390)
+Epoch  15/100 | β=0.1407 | Train Loss: 106.5221 (Recon: 40.8107, KL: 466.9657) | Val Loss: 85.0438 (Recon: 22.9450, KL: 441.2940)
+Epoch  16/100 | β=0.1507 | Train Loss: 110.3532 (Recon: 41.3285, KL: 458.0272) | Val Loss: 90.7803 (Recon: 27.7687, KL: 418.1257)
+Epoch  17/100 | β=0.1607 | Train Loss: 115.0799 (Recon: 42.8764, KL: 449.3619) | Val Loss: 94.7145 (Recon: 26.5275, KL: 424.3649)
+Epoch  18/100 | β=0.1707 | Train Loss: 118.4795 (Recon: 43.2035, KL: 441.0874) | Val Loss: 99.1527 (Recon: 28.7992, KL: 412.2433)
+Epoch  19/100 | β=0.1806 | Train Loss: 122.3061 (Recon: 43.8734, KL: 434.1936) | Val Loss: 102.2583 (Recon: 28.0444, KL: 410.8388)
+Epoch  20/100 | β=0.1906 | Train Loss: 126.2263 (Recon: 44.6801, KL: 427.7943) | Val Loss: 107.9483 (Recon: 30.8457, KL: 404.4830)
+Epoch  21/100 | β=0.2006 | Train Loss: 130.2954 (Recon: 45.7825, KL: 421.3006) | Val Loss: 114.0398 (Recon: 34.3609, KL: 397.2030)
+Early stopping at epoch 21
+
+Training completed in 175.7 seconds (21 epochs)
+
+Saving RGB-only model...
+Saved: ml_models/checkpoints/vae_gra_v2_6_3_rgb_only.pth
+
+================================================================================
+Test Set Evaluation
+================================================================================
+
+Test Loss: 248.9851
+  Reconstruction: 38.6507
+  KL Divergence: 420.6688
+
+================================================================================
+RGB-Only Training Complete
+================================================================================
+
+Next step: Evaluate clustering performance and compare to:
+  - v2.6 (GRA+MS+NGR+RGB, 6D)
+  - v1 (GRA+MS+NGR, 3D)

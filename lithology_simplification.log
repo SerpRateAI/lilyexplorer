@@ -1,0 +1,114 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+================================================================================
+LITHOLOGY LABEL SIMPLIFICATION
+================================================================================
+
+Loaded 238,506 samples
+Original lithologies: 139
+Simplified lithologies: 12
+Unmapped → 'Other': 15,103 samples
+
+Simplified lithology distribution:
+Lithology_Simplified
+Clay/Claystone    72171
+Biogenic ooze     60513
+Limestone         29310
+Mud/Mudstone      16512
+Other             15103
+Silt/Siltstone    11875
+Sand/Sandstone    11480
+Biogenic chalk    11304
+Volcaniclastic     2906
+Gabbro             2698
+Basalt             2401
+Diamict            2233
+Name: count, dtype: int64
+
+✓ Saved to /home/utig5/johna/bhai/vae_training_data_v2_20cm_simplified.csv
+  Dataset size: 25.3 MB
+
+================================================================================
+GROUPING EXAMPLES
+================================================================================
+
+Basalt (2,401 samples):
+  - basalt (2,401)
+
+Biogenic chalk (11,304 samples):
+  - chalk (3,410)
+  - nannofossil chalk (7,894)
+
+Biogenic ooze (60,513 samples):
+  - calcareous ooze (2,409)
+  - diatom ooze (6,095)
+  - foraminifera ooze (2,213)
+  - nannofossil ooze (49,778)
+  - radiolarian ooze (18)
+
+Clay/Claystone (72,171 samples):
+  - clay (37,237)
+  - claystone (9,470)
+  - nannofossil clay (3,487)
+  - sandy clay (131)
+  - silty clay (18,048)
+  ... and 1 more
+
+Diamict (2,233 samples):
+  - clast-poor sandy diamict (1,380)
+  - clast-rich sandy diamict (853)
+
+Gabbro (2,698 samples):
+  - diabase (13)
+  - dolerite (147)
+  - gabbro (2,522)
+  - gabbronorite (16)
+
+Limestone (29,310 samples):
+  - boundstone (5)
+  - floatstone (76)
+  - grainstone (2,108)
+  - packstone (12,548)
+  - rudstone (343)
+  ... and 1 more
+
+Mud/Mudstone (16,512 samples):
+  - clayey mud (52)
+  - mud (4,894)
+  - mudstone (9,952)
+  - pebbly mud (1,222)
+  - sandy mud (89)
+  ... and 1 more
+
+Other (15,103 samples):
+  - agglomerate (30)
+  - andesite (38)
+  - anhydrite rock (1)
+  - ash/tuff (522)
+  - biosiliceous ooze (490)
+  ... and 86 more
+
+Sand/Sandstone (11,480 samples):
+  - clayey sand (78)
+  - coarse sandstone (5)
+  - fine sandstone (466)
+  - medium to coarse sandstone (1,147)
+  - sand (5,395)
+  ... and 2 more
+
+Silt/Siltstone (11,875 samples):
+  - clayey silt (5,406)
+  - interbedded silt and clay (2,570)
+  - sandy silt (1,086)
+  - silt (1,199)
+  - siltstone (1,614)
+
+Volcaniclastic (2,906 samples):
+  - ash (541)
+  - lapilli tuff (1,131)
+  - lapillistone (379)
+  - tuff (855)
+
+================================================================================

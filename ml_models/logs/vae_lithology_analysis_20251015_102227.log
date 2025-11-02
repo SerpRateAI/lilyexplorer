@@ -1,0 +1,33 @@
+2025-10-15 10:22:27,791 - INFO - ================================================================================
+2025-10-15 10:22:27,791 - INFO - VAE Lithology Analysis
+2025-10-15 10:22:27,791 - INFO - ================================================================================
+2025-10-15 10:22:28,002 - INFO - Using device: cuda
+2025-10-15 10:22:28,002 - INFO - 
+Loading preprocessed data...
+2025-10-15 10:22:28,003 - INFO - Loading MAD dataset (porosity, grain density)...
+2025-10-15 10:22:28,132 - INFO - MAD dataset: 26476 rows
+2025-10-15 10:22:28,133 - INFO - Loading PWC dataset (P-wave velocity)...
+2025-10-15 10:22:28,242 - INFO - PWC dataset: 28445 rows
+2025-10-15 10:22:28,242 - INFO - Loading TCON dataset (thermal conductivity)...
+2025-10-15 10:22:28,338 - INFO - TCON dataset: 30330 rows
+2025-10-15 10:22:28,360 - INFO - Filtering to 212 specified boreholes...
+2025-10-15 10:22:28,380 - INFO - After filtering - MAD: 19819, PWC: 22386, TCON: 20833
+2025-10-15 10:22:28,387 - INFO - Merging datasets on Borehole_ID and depth (resolution: 0.05m)...
+2025-10-15 10:22:28,400 - INFO - Merged dataset: 187 rows
+2025-10-15 10:22:28,401 - INFO - After removing missing values: 166 rows (dropped 21)
+2025-10-15 10:22:28,402 - INFO - After outlier filtering: 151 rows (dropped 15)
+2025-10-15 10:22:28,408 - INFO - Total unique boreholes: 21
+2025-10-15 10:22:28,410 - INFO - Borehole split - Train: 14, Val: 2, Test: 5
+2025-10-15 10:22:28,411 - INFO - Sample split - Train: 69, Val: 14, Test: 68
+2025-10-15 10:22:28,413 - INFO - Feature statistics (before normalization):
+2025-10-15 10:22:28,413 - INFO -   Porosity (vol%): mean=45.186, std=18.171
+2025-10-15 10:22:28,413 - INFO -   Grain density (g/cm^3): mean=2.711, std=0.076
+2025-10-15 10:22:28,413 - INFO -   P_wave_velocity: mean=1995.290, std=658.094
+2025-10-15 10:22:28,413 - INFO -   Thermal conductivity mean (W/(m*K)): mean=1.565, std=0.840
+2025-10-15 10:22:28,415 - INFO - 
+Plotting training history...
+2025-10-15 10:22:30,417 - INFO - Saved training history plot
+2025-10-15 10:22:30,417 - INFO - 
+================================================================================
+2025-10-15 10:22:30,417 - INFO - Analyzing VAE with latent_dim=2
+2025-10-15 10:22:30,417 - INFO - ================================================================================

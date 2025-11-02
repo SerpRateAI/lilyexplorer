@@ -1,0 +1,172 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+Warning: UMAP not available, will use PCA only for 8D visualization
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+====================================================================================================
+ENTROPY-BALANCED CROSS-VALIDATION - v2.6.7
+====================================================================================================
+β schedule: 1e-10 → 0.75 over 50 epochs
+
+Full dataset statistics:
+  Total samples: 238,506
+  Unique lithologies: 139
+  Lithology entropy: 3.119
+
+Total boreholes: 296
+Unique dominant lithologies: 50
+
+Device: cuda
+K-fold CV: 5 folds (stratified by dominant lithology)
+
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/model_selection/_split.py:811: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=5.
+  warnings.warn(
+====================================================================================================
+FOLD 1/5
+====================================================================================================
+Lithology diversity:
+  Full dataset:  entropy=3.119, n_lith=139
+  Train set:     entropy=3.099, n_lith=127
+  Test set:      entropy=2.955, n_lith=86
+  Train Δentropy: 0.019
+  Test Δentropy:  0.164
+
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/model_selection/_split.py:811: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=7.
+  warnings.warn(
+Train: 161,659 samples (202 boreholes)
+Val:   31,131 samples (34 boreholes)
+Test:  45,716 samples (60 boreholes)
+
+Results:
+  Training time: 48.1s
+  Collapsed dims: 6/10
+  Effective dim: 4
+  Best clustering: k=10, ARI=0.2428, Sil=0.2174
+
+====================================================================================================
+FOLD 2/5
+====================================================================================================
+Lithology diversity:
+  Full dataset:  entropy=3.119, n_lith=139
+  Train set:     entropy=3.113, n_lith=132
+  Test set:      entropy=2.927, n_lith=86
+  Train Δentropy: 0.005
+  Test Δentropy:  0.192
+
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/model_selection/_split.py:811: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=7.
+  warnings.warn(
+Train: 155,507 samples (203 boreholes)
+Val:   33,538 samples (34 boreholes)
+Test:  49,461 samples (59 boreholes)
+
+Results:
+  Training time: 44.2s
+  Collapsed dims: 6/10
+  Effective dim: 4
+  Best clustering: k=12, ARI=0.2200, Sil=0.2298
+
+====================================================================================================
+FOLD 3/5
+====================================================================================================
+Lithology diversity:
+  Full dataset:  entropy=3.119, n_lith=139
+  Train set:     entropy=3.120, n_lith=134
+  Test set:      entropy=2.974, n_lith=80
+  Train Δentropy: 0.001
+  Test Δentropy:  0.144
+
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/model_selection/_split.py:811: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=7.
+  warnings.warn(
+Train: 163,286 samples (203 boreholes)
+Val:   26,077 samples (34 boreholes)
+Test:  49,143 samples (59 boreholes)
+
+Results:
+  Training time: 47.1s
+  Collapsed dims: 6/10
+  Effective dim: 4
+  Best clustering: k=12, ARI=0.1758, Sil=0.2118
+
+====================================================================================================
+FOLD 4/5
+====================================================================================================
+Lithology diversity:
+  Full dataset:  entropy=3.119, n_lith=139
+  Train set:     entropy=3.084, n_lith=134
+  Test set:      entropy=3.116, n_lith=81
+  Train Δentropy: 0.034
+  Test Δentropy:  0.002
+
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/model_selection/_split.py:811: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=7.
+  warnings.warn(
+Train: 166,652 samples (203 boreholes)
+Val:   29,039 samples (34 boreholes)
+Test:  42,815 samples (59 boreholes)
+
+Results:
+  Training time: 47.9s
+  Collapsed dims: 6/10
+  Effective dim: 4
+  Best clustering: k=15, ARI=0.1498, Sil=0.1536
+
+====================================================================================================
+FOLD 5/5
+====================================================================================================
+Lithology diversity:
+  Full dataset:  entropy=3.119, n_lith=139
+  Train set:     entropy=3.113, n_lith=127
+  Test set:      entropy=2.883, n_lith=93
+  Train Δentropy: 0.006
+  Test Δentropy:  0.235
+
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/model_selection/_split.py:811: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=7.
+  warnings.warn(
+Train: 157,033 samples (203 boreholes)
+Val:   30,102 samples (34 boreholes)
+Test:  51,371 samples (59 boreholes)
+
+Results:
+  Training time: 44.7s
+  Collapsed dims: 6/10
+  Effective dim: 4
+  Best clustering: k=10, ARI=0.1894, Sil=0.1917
+
+====================================================================================================
+ENTROPY-BALANCED CROSS-VALIDATION SUMMARY - v2.6.7
+====================================================================================================
+
+ fold  train_samples  test_samples  train_entropy  test_entropy  train_entropy_diff  test_entropy_diff  best_k  best_ari  best_sil
+    1         161659         45716       3.099178      2.954837            0.019369           0.163710      10  0.242785  0.217395
+    2         155507         49461       3.113192      2.926798            0.005355           0.191749      12  0.220014  0.229838
+    3         163286         49143       3.120003      2.974420            0.001456           0.144127      12  0.175823  0.211822
+    4         166652         42815       3.084091      3.116122            0.034456           0.002425      15  0.149825  0.153649
+    5         157033         51371       3.112599      2.883398            0.005948           0.235149      10  0.189447  0.191696
+
+ARI Statistics:
+  Mean: 0.1956
+  Std:  0.0366
+  Min:  0.1498
+  Max:  0.2428
+  95% CI: [0.1239, 0.2672]
+
+Entropy Balance:
+  Full dataset entropy: 3.119
+  Mean test entropy diff: 0.147
+  Max test entropy diff: 0.235
+
+====================================================================================================
+COMPARISON TO v2.6.6
+====================================================================================================
+v2.6.6 (β: 0.001→0.5):         ARI = 0.190 ± 0.045
+v2.6.7 (β: 1e-10→0.75):         ARI = 0.1956 ± 0.0366
+
+Improvement: +2.9%
+
+✓ v2.6.7 β schedule improves performance on entropy-balanced CV!
+====================================================================================================
+
+Results saved to: v2_6_7_entropy_balanced_cv.csv

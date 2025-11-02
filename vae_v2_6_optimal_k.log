@@ -1,0 +1,84 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+Warning: UMAP not available, will use PCA only for 8D visualization
+================================================================================
+VAE GRA v2.6: OPTIMAL k SELECTION
+================================================================================
+
+Testing k∈[5,30] with best β annealing schedule (0.001→0.5 over 50 epochs)
+
+Loading data...
+Train: 206 boreholes, 174,636 samples
+Val:   45 boreholes, 33,277 samples
+Test:  45 boreholes, 30,593 samples
+
+Device: cuda
+
+================================================================================
+Training VAE with β annealing: 0.001→0.5 over 50 epochs
+================================================================================
+
+Epoch   0: β=0.0010, Train Loss=1.5858, Val Loss=0.3315, Recon=1.5674, KL=18.4018
+Epoch   5: β=0.0509, Train Loss=0.9204, Val Loss=0.5954, Recon=0.5540, KL=7.1995
+Epoch  10: β=0.1008, Train Loss=1.1702, Val Loss=0.9047, Recon=0.6026, KL=5.6300
+Epoch  15: β=0.1507, Train Loss=1.4109, Val Loss=1.1794, Recon=0.6800, KL=4.8499
+Early stopping at epoch 15
+
+Training completed in 106.7s
+Epochs trained: 16
+Final β: 0.1507
+Final train loss: 1.4109
+Final val loss: 1.1794
+
+Extracting latent representations...
+Latent shape: (30593, 8)
+
+================================================================================
+Testing k∈[5,30]
+================================================================================
+
+k= 5: ARI=0.1449, Silhouette=0.2975
+k= 6: ARI=0.1776, Silhouette=0.3066
+k= 7: ARI=0.1997, Silhouette=0.3216
+k= 8: ARI=0.1972, Silhouette=0.3340
+k= 9: ARI=0.2208, Silhouette=0.3297
+k=10: ARI=0.2354, Silhouette=0.3320
+k=11: ARI=0.2272, Silhouette=0.3288
+k=12: ARI=0.2579, Silhouette=0.3300
+k=13: ARI=0.2460, Silhouette=0.3235
+k=14: ARI=0.2521, Silhouette=0.3122
+k=15: ARI=0.2358, Silhouette=0.3117
+k=16: ARI=0.2426, Silhouette=0.3106
+k=17: ARI=0.2311, Silhouette=0.3040
+k=18: ARI=0.2312, Silhouette=0.3061
+k=19: ARI=0.2389, Silhouette=0.3085
+k=20: ARI=0.2433, Silhouette=0.2969
+k=21: ARI=0.2376, Silhouette=0.2994
+k=22: ARI=0.2238, Silhouette=0.3010
+k=23: ARI=0.2283, Silhouette=0.3008
+k=24: ARI=0.2417, Silhouette=0.3005
+k=25: ARI=0.2364, Silhouette=0.2850
+k=26: ARI=0.2212, Silhouette=0.2818
+k=27: ARI=0.2368, Silhouette=0.2890
+k=28: ARI=0.2195, Silhouette=0.2888
+k=29: ARI=0.2272, Silhouette=0.2775
+k=30: ARI=0.2247, Silhouette=0.2820
+
+================================================================================
+RESULTS SUMMARY
+================================================================================
+
+Best ARI:        k=12, ARI=0.2579
+Best Silhouette: k= 8, Silhouette=0.3340
+
+Top 5 by ARI:
+Traceback (most recent call last):
+  File "/home/utig5/johna/bhai/train_v2_6_optimal_k.py", line 279, in <module>
+    print(f"  k={row['k']:2d}: ARI={row['ari']:.4f}, Silhouette={row['silhouette']:.4f}")
+ValueError: Unknown format code 'd' for object of type 'float'

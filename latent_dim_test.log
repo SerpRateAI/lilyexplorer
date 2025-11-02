@@ -1,0 +1,163 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+Warning: UMAP not available, will use PCA only for 8D visualization
+====================================================================================================
+TESTING LATENT DIMENSIONALITY
+====================================================================================================
+
+Loading data...
+Train: 174,636 samples
+Val:   33,277 samples
+Test:  30,593 samples
+
+Device: cuda
+
+====================================================================================================
+Testing latent_dim = 2
+====================================================================================================
+
+
+Training completed in 123.2s
+Latent std per dimension: [0.84144676 0.98980665]
+Collapsed dimensions: 0/2
+Effective dimensionality: 2
+
+Testing clustering methods...
+K-Means (k=12): ARI=0.1843, Sil=0.4464
+GMM (k=18):     ARI=0.1858, Sil=0.3768
+
+====================================================================================================
+Testing latent_dim = 4
+====================================================================================================
+
+
+Training completed in 115.6s
+Latent std per dimension: [1.066852   0.96058327 0.8863991  0.8880464 ]
+Collapsed dimensions: 0/4
+Effective dimensionality: 4
+
+Testing clustering methods...
+K-Means (k=12): ARI=0.2482, Sil=0.3284
+GMM (k=18):     ARI=0.2658, Sil=0.2000
+
+====================================================================================================
+Testing latent_dim = 6
+====================================================================================================
+
+
+Training completed in 116.0s
+Latent std per dimension: [0.0207504  0.9887831  0.9475085  0.9142382  1.0737487  0.01146299]
+Collapsed dimensions: 2/6
+Effective dimensionality: 4
+
+Testing clustering methods...
+K-Means (k=12): ARI=0.2298, Sil=0.3499
+GMM (k=18):     ARI=0.2740, Sil=0.2535
+
+====================================================================================================
+Testing latent_dim = 8
+====================================================================================================
+
+
+Training completed in 114.0s
+Latent std per dimension: [0.01564024 0.90741634 0.01481224 0.01656707 1.0832118  0.9031933
+ 0.01965674 0.97171736]
+Collapsed dimensions: 4/8
+Effective dimensionality: 4
+
+Testing clustering methods...
+K-Means (k=12): ARI=0.2318, Sil=0.3341
+GMM (k=18):     ARI=0.2662, Sil=0.2561
+
+====================================================================================================
+Testing latent_dim = 10
+====================================================================================================
+
+
+Training completed in 114.2s
+Latent std per dimension: [0.9713188  0.8716144  0.9349915  1.0745047  0.01128046 0.02106985
+ 0.02733822 0.0126019  0.02317486 0.01498885]
+Collapsed dimensions: 6/10
+Effective dimensionality: 4
+
+Testing clustering methods...
+K-Means (k=12): ARI=0.2318, Sil=0.3383
+GMM (k=18):     ARI=0.2771, Sil=0.2676
+
+====================================================================================================
+Testing latent_dim = 12
+====================================================================================================
+
+
+Training completed in 108.9s
+Latent std per dimension: [0.01024831 0.9021226  0.01169657 0.01186963 0.0094996  0.98487103
+ 1.0510236  0.91835356 0.00692301 0.01176086 0.01171859 0.01742035]
+Collapsed dimensions: 8/12
+Effective dimensionality: 4
+
+Testing clustering methods...
+K-Means (k=12): ARI=0.2588, Sil=0.3416
+GMM (k=18):     ARI=0.2700, Sil=0.2727
+
+====================================================================================================
+RESULTS SUMMARY
+====================================================================================================
+
+ latent_dim  train_time  collapsed_dims  effective_dim  utilization_pct  kmeans_ari  kmeans_sil  gmm_ari  gmm_sil
+          2  123.215765               0              2       100.000000    0.184269    0.446397 0.185789 0.376786
+          4  115.578589               0              4       100.000000    0.248197    0.328415 0.265808 0.199988
+          6  115.982337               2              4        66.666667    0.229759    0.349902 0.274023 0.253532
+          8  114.012660               4              4        50.000000    0.231827    0.334071 0.266245 0.256140
+         10  114.238889               6              4        40.000000    0.231770    0.338329 0.277071 0.267620
+         12  108.926597               8              4        33.333333    0.258767    0.341585 0.270046 0.272696
+
+BEST CONFIGURATIONS:
+----------------------------------------------------------------------------------------------------
+K-Means: latent_dim=12, ARI=0.2588, Effective dim=4
+GMM:     latent_dim=10, ARI=0.2771, Effective dim=4
+
+====================================================================================================
+KEY INSIGHTS
+====================================================================================================
+
+1. Posterior Collapse vs Latent Dimensionality:
+   latent_dim= 2:  0 collapsed,  2 active (100.0% utilization)
+   latent_dim= 4:  0 collapsed,  4 active (100.0% utilization)
+   latent_dim= 6:  2 collapsed,  4 active (66.7% utilization)
+   latent_dim= 8:  4 collapsed,  4 active (50.0% utilization)
+   latent_dim=10:  6 collapsed,  4 active (40.0% utilization)
+   latent_dim=12:  8 collapsed,  4 active (33.3% utilization)
+
+2. Clustering Performance vs Latent Dimensionality:
+   (Does more dimensions = better clustering?)
+   latent_dim= 2: K-Means ARI=0.1843, GMM ARI=0.1858
+   latent_dim= 4: K-Means ARI=0.2482, GMM ARI=0.2658
+   latent_dim= 6: K-Means ARI=0.2298, GMM ARI=0.2740
+   latent_dim= 8: K-Means ARI=0.2318, GMM ARI=0.2662
+   latent_dim=10: K-Means ARI=0.2318, GMM ARI=0.2771
+   latent_dim=12: K-Means ARI=0.2588, GMM ARI=0.2700
+
+3. Performance vs Effective Dimensionality:
+   Effective dim= 2 (from latent_dim= 2): GMM ARI=0.1858
+   Effective dim= 4 (from latent_dim= 4): GMM ARI=0.2658
+   Effective dim= 4 (from latent_dim= 6): GMM ARI=0.2740
+   Effective dim= 4 (from latent_dim= 8): GMM ARI=0.2662
+   Effective dim= 4 (from latent_dim=10): GMM ARI=0.2771
+   Effective dim= 4 (from latent_dim=12): GMM ARI=0.2700
+
+Results saved to: latent_dimensionality_comparison.csv
+
+====================================================================================================
+CONCLUSION
+====================================================================================================
+
+✓ latent_dim=10 is BETTER than 8D (+4.1%)
+  GMM ARI: 0.2771 vs 0.2662
+  Effective dim: 4 vs 4
+====================================================================================================

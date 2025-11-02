@@ -1,0 +1,94 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+================================================================================
+VAE GRA v2.6.4 - Stage 2: Fusion Training
+================================================================================
+
+Using device: cpu
+
+Loading pre-trained encoders...
+Loaded pre-trained encoders:
+  Physical encoder: 21 epochs, 271.0s
+  RGB encoder: 21 epochs, 166.5s
+  Decoders initialized randomly (will be trained in Stage 2)
+
+Loading v2.6 dataset (GRA + MS + NGR + RGB)...
+Dataset: 238,506 samples from 296 boreholes
+Features: 6D (GRA, MS, NGR, R, G, B)
+
+Splitting data by borehole...
+Train: 169,018 samples (207 boreholes)
+Val:   37,093 samples (44 boreholes)
+Test:  32,395 samples (45 boreholes)
+
+Scaling features with pre-trained scalers...
+
+
+================================================================================
+Fine-tuning Dual Encoder VAE (8D latent = 4D physical + 4D RGB)
+================================================================================
+
+Model architecture:
+  Physical encoder: 3D (GRA, MS, NGR) → 4D latent [PRE-TRAINED]
+  RGB encoder: 3D (R, G, B) → 4D latent [PRE-TRAINED]
+  Combined: 8D latent (4D + 4D)
+  Physical decoder: 8D → 3D (GRA, MS, NGR) [NEW - learns cross-modal]
+  RGB decoder: 8D → 3D (R, G, B) [NEW - learns cross-modal]
+  Total parameters: 3,542
+
+Fine-tuning strategy:
+  - Lower learning rate (5e-4) to preserve pre-trained encoder knowledge
+  - Shorter β annealing (25 epochs) since encoders are pre-trained
+  - Decoders see full 8D latent → learn physical↔RGB correlations
+
+Epoch   1/100 | β=0.0010 | Train Loss: 0.9392 (Recon: 0.9262, KL: 13.0046) | Val Loss: 0.0868 (Recon: 0.0712, KL: 15.5054)
+Epoch   2/100 | β=0.0210 | Train Loss: 0.3750 (Recon: 0.1304, KL: 11.6695) | Val Loss: 0.2802 (Recon: 0.0881, KL: 9.1642)
+Epoch   3/100 | β=0.0409 | Train Loss: 0.4878 (Recon: 0.1551, KL: 8.1319) | Val Loss: 0.4172 (Recon: 0.1192, KL: 7.2825)
+Epoch   4/100 | β=0.0609 | Train Loss: 0.6146 (Recon: 0.1858, KL: 7.0435) | Val Loss: 0.5428 (Recon: 0.1498, KL: 6.4562)
+Epoch   5/100 | β=0.0808 | Train Loss: 0.7383 (Recon: 0.2211, KL: 6.3975) | Val Loss: 0.6636 (Recon: 0.1893, KL: 5.8664)
+Epoch   6/100 | β=0.1008 | Train Loss: 0.8560 (Recon: 0.2610, KL: 5.9022) | Val Loss: 0.7695 (Recon: 0.2268, KL: 5.3832)
+Epoch   7/100 | β=0.1208 | Train Loss: 0.9647 (Recon: 0.2996, KL: 5.5078) | Val Loss: 0.8699 (Recon: 0.2615, KL: 5.0376)
+Epoch   8/100 | β=0.1407 | Train Loss: 1.0674 (Recon: 0.3375, KL: 5.1872) | Val Loss: 0.9635 (Recon: 0.3040, KL: 4.6861)
+Epoch   9/100 | β=0.1607 | Train Loss: 1.1614 (Recon: 0.3722, KL: 4.9122) | Val Loss: 1.0459 (Recon: 0.3340, KL: 4.4310)
+Epoch  10/100 | β=0.1806 | Train Loss: 1.2547 (Recon: 0.4108, KL: 4.6716) | Val Loss: 1.1363 (Recon: 0.3723, KL: 4.2294)
+Epoch  11/100 | β=0.2006 | Train Loss: 1.3405 (Recon: 0.4457, KL: 4.4607) | Val Loss: 1.2122 (Recon: 0.4119, KL: 3.9892)
+Epoch  12/100 | β=0.2206 | Train Loss: 1.4232 (Recon: 0.4821, KL: 4.2667) | Val Loss: 1.2878 (Recon: 0.4361, KL: 3.8614)
+Epoch  13/100 | β=0.2405 | Train Loss: 1.5073 (Recon: 0.5214, KL: 4.0988) | Val Loss: 1.3551 (Recon: 0.4702, KL: 3.6793)
+Epoch  14/100 | β=0.2605 | Train Loss: 1.5830 (Recon: 0.5540, KL: 3.9505) | Val Loss: 1.4342 (Recon: 0.5262, KL: 3.4856)
+Epoch  15/100 | β=0.2804 | Train Loss: 1.6561 (Recon: 0.5901, KL: 3.8011) | Val Loss: 1.4938 (Recon: 0.5365, KL: 3.4136)
+Epoch  16/100 | β=0.3004 | Train Loss: 1.7283 (Recon: 0.6242, KL: 3.6755) | Val Loss: 1.5653 (Recon: 0.5838, KL: 3.2671)
+Epoch  17/100 | β=0.3204 | Train Loss: 1.7981 (Recon: 0.6598, KL: 3.5532) | Val Loss: 1.6181 (Recon: 0.6135, KL: 3.1359)
+Epoch  18/100 | β=0.3403 | Train Loss: 1.8649 (Recon: 0.6946, KL: 3.4389) | Val Loss: 1.6800 (Recon: 0.6474, KL: 3.0342)
+Epoch  19/100 | β=0.3603 | Train Loss: 1.9292 (Recon: 0.7263, KL: 3.3388) | Val Loss: 1.7421 (Recon: 0.6900, KL: 2.9200)
+Epoch  20/100 | β=0.3802 | Train Loss: 1.9923 (Recon: 0.7637, KL: 3.2313) | Val Loss: 1.7967 (Recon: 0.7193, KL: 2.8334)
+Epoch  21/100 | β=0.4002 | Train Loss: 2.0527 (Recon: 0.7966, KL: 3.1386) | Val Loss: 1.8521 (Recon: 0.7345, KL: 2.7926)
+Early stopping at epoch 21
+
+Fine-tuning completed in 274.4 seconds (21 epochs)
+
+Saving Stage 2 fusion model...
+Saved: ml_models/checkpoints/vae_gra_v2_6_4_stage2_fusion.pth
+
+================================================================================
+Test Set Evaluation
+================================================================================
+
+Test Loss: 2.5200
+  Reconstruction: 0.8127
+  KL Divergence: 3.4146
+
+================================================================================
+Stage 2 Fusion Training Complete
+================================================================================
+
+Total training time:
+  Stage 1a (physical): 271s
+  Stage 1b (RGB): 167s
+  Stage 2 (fusion): 274s
+  Total: 712s
+
+Next step: Evaluate clustering performance and compare to v2.6
