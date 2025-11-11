@@ -8,7 +8,9 @@ For detailed information on specific topics, see:
 - **[DEVELOPMENT_SETUP.md](DEVELOPMENT_SETUP.md)** - Python setup, GPU configuration (cotopaxi), UMAP issues
 - **[ANALYSIS_NOTEBOOKS.md](ANALYSIS_NOTEBOOKS.md)** - Measurement-specific notebooks, VAE analysis pipelines
 - **[SCIENTIFIC_INSIGHTS.md](SCIENTIFIC_INSIGHTS.md)** - Core innovations, key lessons from VAE development
+- **[GIT_WORKFLOW.md](GIT_WORKFLOW.md)** - Commit workflow and best practices (commit after each major task)
 - **[VAE_CLASSIFIER_INVESTIGATION_SUMMARY.md](VAE_CLASSIFIER_INVESTIGATION_SUMMARY.md)** - Complete lithology classifier investigation (2025-11-01)
+- **[SEMISUPERVISED_VAE_CLASSIFIER_SUMMARY.md](SEMISUPERVISED_VAE_CLASSIFIER_SUMMARY.md)** - Semi-supervised classifier experiment (2025-11-11, failed)
 
 ## Project Overview
 
