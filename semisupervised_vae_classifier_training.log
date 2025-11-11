@@ -1,0 +1,228 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+/home/other/johna/.local/lib/python3.10/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+Warning: UMAP not available, will use PCA only for 8D visualization
+====================================================================================================
+SEMI-SUPERVISED CLASSIFIER: VAE v2.6.7 PRE-TRAINING + FINE-TUNING
+====================================================================================================
+
+Loading VAE v2.6.7...
+✓ VAE v2.6.7 encoder loaded
+
+Loading v2.6.7 dataset...
+Total samples: 238,506
+Loading lithology hierarchy...
+Samples after hierarchy mapping: 238,506
+Lithology groups: 14
+
+Classes: 14
+   0. Biogenic Silica               :    7,414 samples ( 3.11%)
+   1. Carbonate                     :  100,531 samples (42.15%)
+   2. Clay/Mud                      :   96,930 samples (40.64%)
+   3. Conglomerate/Breccia          :    2,197 samples ( 0.92%)
+   4. Diamict                       :       66 samples ( 0.03%)
+   5. Evaporite                     :      176 samples ( 0.07%)
+   6. Intermediate/Felsic Igneous   :      284 samples ( 0.12%)
+   7. Mafic Igneous                 :    5,955 samples ( 2.50%)
+   8. Metamorphic                   :      162 samples ( 0.07%)
+   9. Other                         :      319 samples ( 0.13%)
+  10. Sand                          :   13,253 samples ( 5.56%)
+  11. Silt                          :    6,951 samples ( 2.91%)
+  12. Ultramafic                    :       81 samples ( 0.03%)
+  13. Volcaniclastic                :    4,187 samples ( 1.76%)
+
+Creating entropy-balanced borehole split...
+Train: 169,271 samples from 207 boreholes
+Test:  69,235 samples from 89 boreholes
+
+Class weights: min=0.002, max=6.235, ratio=3228.5×
+
+Device: cuda
+
+====================================================================================================
+TRAINING: FROZEN ENCODER
+====================================================================================================
+Freeze encoder: True
+Learning rate: 0.001
+
+Total parameters: 1,906
+Trainable parameters: 814
+
+Epoch   1: Loss=2.5176, Balanced Acc=0.1607
+Epoch   5: Loss=2.0484, Balanced Acc=0.1606
+Epoch  10: Loss=1.9187, Balanced Acc=0.1602
+Epoch  15: Loss=1.8308, Balanced Acc=0.1711
+Epoch  20: Loss=1.7836, Balanced Acc=0.1756
+Epoch  25: Loss=1.7270, Balanced Acc=0.1672
+Epoch  30: Loss=1.7007, Balanced Acc=0.1699
+Epoch  35: Loss=1.6673, Balanced Acc=0.1742
+Epoch  40: Loss=1.6513, Balanced Acc=0.1691
+Epoch  45: Loss=1.6322, Balanced Acc=0.1683
+Early stopping at epoch 46
+
+Best balanced accuracy: 0.1838
+
+  Biogenic Silica               : 47.95% ( 1,512 samples)
+  Carbonate                     : 61.52% (26,276 samples)
+  Clay/Mud                      : 10.77% (27,186 samples)
+  Conglomerate/Breccia          :  6.86% (   875 samples)
+  Evaporite                     :  0.93% (   107 samples)
+  Intermediate/Felsic Igneous   :  0.00% (    14 samples)
+  Mafic Igneous                 : 18.97% ( 2,377 samples)
+  Metamorphic                   :  0.00% (    18 samples)
+  Other                         :  0.00% (   297 samples)
+  Sand                          : 30.48% ( 6,561 samples)
+  Silt                          : 11.35% ( 2,237 samples)
+  Ultramafic                    :  0.00% (     1 samples)
+  Volcaniclastic                : 31.57% ( 1,774 samples)
+
+Overall balanced accuracy: 0.1696
+✓ Model saved to: /home/utig5/johna/bhai/ml_models/checkpoints/semisupervised_frozen_encoder_best.pth
+
+====================================================================================================
+TRAINING: FINETUNED ENCODER
+====================================================================================================
+Freeze encoder: False
+Learning rate: 0.0001
+
+Total parameters: 1,906
+Trainable parameters: 814
+
+Epoch   1: Loss=2.6229, Balanced Acc=0.0997
+Epoch   5: Loss=2.5214, Balanced Acc=0.1443
+Epoch  10: Loss=2.4259, Balanced Acc=0.1568
+Epoch  15: Loss=2.3424, Balanced Acc=0.1631
+Epoch  20: Loss=2.2732, Balanced Acc=0.1654
+Epoch  25: Loss=2.2260, Balanced Acc=0.1622
+Epoch  30: Loss=2.1863, Balanced Acc=0.1612
+Epoch  35: Loss=2.1521, Balanced Acc=0.1624
+Early stopping at epoch 35
+
+Best balanced accuracy: 0.1654
+
+  Biogenic Silica               : 45.11% ( 1,512 samples)
+  Carbonate                     : 69.17% (26,276 samples)
+  Clay/Mud                      : 12.50% (27,186 samples)
+  Conglomerate/Breccia          :  0.46% (   875 samples)
+  Evaporite                     :  0.00% (   107 samples)
+  Intermediate/Felsic Igneous   :  0.00% (    14 samples)
+  Mafic Igneous                 : 21.67% ( 2,377 samples)
+  Metamorphic                   :  0.00% (    18 samples)
+  Other                         :  0.00% (   297 samples)
+  Sand                          : 32.89% ( 6,561 samples)
+  Silt                          :  1.52% ( 2,237 samples)
+  Ultramafic                    :  0.00% (     1 samples)
+  Volcaniclastic                : 27.85% ( 1,774 samples)
+
+Overall balanced accuracy: 0.1624
+✓ Model saved to: /home/utig5/johna/bhai/ml_models/checkpoints/semisupervised_finetuned_encoder_best.pth
+
+====================================================================================================
+COMPARISON TO BASELINES
+====================================================================================================
+
+| Approach | Balanced Acc | Notes |
+|----------|--------------|-------|
+| Direct classifier (raw 6D) | 42.32% | Baseline (best) |
+| VAE classifier v1.1 (frozen 10D) | 29.73% | Previous work |
+| Semi-supervised (frozen encoder) | 16.96% | This work |
+| Semi-supervised (fine-tuned encoder) | 16.24% | This work |
+
+Analysis:
+  Frozen encoder vs VAE v1.1: -43.0%
+  Fine-tuned vs frozen: -4.2%
+  Fine-tuned vs direct classifier: -61.6%
+
+✗ FAILURE: Fine-tuning does not improve over frozen embeddings.
+  VAE pre-training is not beneficial for classification task.
+
+====================================================================================================
+SEMI-SUPERVISED CLASSIFIER TRAINING COMPLETE
+====================================================================================================

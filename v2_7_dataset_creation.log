@@ -1,0 +1,96 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/home/utig5/johna/bhai/create_vae_v2_7_dataset.py:29: DtypeWarning: Columns (0) have mixed types. Specify dtype option on import or set low_memory=False.
+  mad_df = pd.read_csv('/home/utig5/johna/bhai/datasets/MAD_DataLITH.csv')
+====================================================================================================
+VAE v2.7 DATASET CREATION: v2.6 + MAD FEATURES
+====================================================================================================
+
+Loading v2.6 dataset (GRA+MS+NGR+RGB)...
+v2.6 dataset: 238,506 samples, 296 boreholes
+
+Loading MAD dataset...
+MAD dataset: 26,476 measurements
+
+MAD features available:
+  Porosity (vol%)               :   26,474 measurements
+  Grain density (g/cm^3)        :   26,476 measurements
+  Bulk density (g/cm^3)         :   26,475 measurements
+  Dry density (g/cm^3)          :   26,475 measurements
+  Moisture wet (wt%)            :   26,312 measurements
+
+Aggregating MAD measurements by 20cm depth bins...
+MAD aggregated: 25,821 depth bins
+
+Merging MAD features with v2.6 dataset...
+v2.7 dataset after merge: 12,199 samples
+Boreholes: 196
+
+Missing values in MAD features:
+  Porosity (vol%)               :      1 ( 0.01%)
+  Grain density (g/cm^3)        :      0 ( 0.00%)
+  Moisture wet (wt%)            :      0 ( 0.00%)
+
+After removing missing MAD values: 12,198 samples
+
+====================================================================================================
+FINAL v2.7 DATASET STATISTICS
+====================================================================================================
+
+Total samples: 12,198
+Total boreholes: 196
+Unique lithologies: 120
+
+Feature statistics:
+  GRA_bulk_density    : mean=   1.751, std=   0.246, range=[   0.308,    2.783]
+  MS                  : mean= 126.023, std= 343.214, range=[ -70.350, 6148.567]
+  NGR                 : mean=  30.978, std=  22.699, range=[  -0.185,  170.277]
+  RGB_R               : mean=  74.295, std=  45.958, range=[   6.857,  237.560]
+  RGB_G               : mean=  72.450, std=  45.332, range=[   5.987,  237.500]
+  RGB_B               : mean=  65.708, std=  41.350, range=[   5.215,  226.570]
+  Porosity            : mean=  47.692, std=  16.126, range=[-130.100,   90.300]
+  Grain_Density       : mean=   2.717, std=   0.127, range=[   0.397,    3.699]
+  Water_Content       : mean=  27.376, std=  12.496, range=[ -27.200,   91.600]
+
+Distribution shapes:
+  GRA bulk density: Gaussian
+  MS, NGR: Poisson/Bimodal (will use signed log)
+  RGB: Log-normal (will use log transform)
+  Porosity: Log-normal (will use log transform)
+  Grain Density: Gaussian
+  Water Content: Log-normal (will use log transform)
+
+Top 10 lithologies:
+  clay                                    :  1,747 (14.32%)
+  nannofossil ooze                        :  1,367 (11.21%)
+  silty clay                              :    656 ( 5.38%)
+  packstone                               :    607 ( 4.98%)
+  mudstone                                :    601 ( 4.93%)
+  claystone                               :    599 ( 4.91%)
+  wackestone                              :    578 ( 4.74%)
+  interbedded silt and clay               :    552 ( 4.53%)
+  nannofossil chalk                       :    502 ( 4.12%)
+  mud                                     :    431 ( 3.53%)
+
+====================================================================================================
+COMPARISON TO v2.6
+====================================================================================================
+
+v2.6: 238,506 samples, 296 boreholes, 6 features
+v2.7:  12,198 samples, 196 boreholes, 9 features
+
+Change: -94.9% samples, -33.8% boreholes, +50% features
+
+⚠ WARNING: Significant borehole coverage loss
+  Trade-off: 34% fewer boreholes for +3 discriminative features
+  Hypothesis: Porosity/grain density improve lithology classification beyond 42% ceiling
+
+✓ Dataset saved to: /home/utig5/johna/bhai/vae_training_data_v2_7_20cm.csv
+  Size: 12,198 samples
+  Columns: 13
+
+====================================================================================================
+v2.7 DATASET CREATION COMPLETE
+====================================================================================================

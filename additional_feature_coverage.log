@@ -1,0 +1,68 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/home/utig5/johna/bhai/analyze_additional_feature_coverage.py:71: DtypeWarning: Columns (0) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(filepath, usecols=[
+====================================================================================================
+ADDITIONAL FEATURE COVERAGE ANALYSIS FOR VAE v2.6.7
+====================================================================================================
+
+Loading current VAE v2.6.7 dataset...
+Current dataset: 238,506 samples from 296 boreholes
+
+Current boreholes: 296
+
+Current depth bins: 238,506
+
+====================================================================================================
+CHECKING COVERAGE OF ADDITIONAL FEATURES
+====================================================================================================
+
+Checking PWC (P-wave velocity)...
+  Total measurements: 28,445
+  Total boreholes: 287
+  Common boreholes: 0/296 (0.0%)
+  Common depth bins: 0/238,506 (0.0%)
+
+Checking MAD_grain (Grain density (discrete))...
+  Error: Usecols do not match columns, columns expected but not found: ['Grain density (g/cm³)', 'Porosity (%)']
+
+Checking MAD_porosity (Porosity (discrete))...
+  Error: Usecols do not match columns, columns expected but not found: ['Grain density (g/cm³)', 'Porosity (%)']
+
+Checking SRM (Natural remanent magnetization)...
+  Error: Usecols do not match columns, columns expected but not found: ['Inclination (deg)']
+
+====================================================================================================
+COVERAGE SUMMARY
+====================================================================================================
+
+Feature              Description                           Borehole %     Sample %    N_Samples
+----------------------------------------------------------------------------------------------------
+PWC                  P-wave velocity                             0.0%         0.0%            0
+
+====================================================================================================
+RECOMMENDATIONS
+====================================================================================================
+
+LOW COVERAGE (<20% of current samples):
+  ✗ PWC (P-wave velocity): 0.0% coverage
+    - Not recommended (only 0 samples)
+
+NOTES:
+
+1. High coverage features can be added with minimal dataset size reduction
+2. Medium coverage features create trade-off: more features vs fewer samples
+3. Low coverage features likely not worth the large dataset reduction
+
+4. Consider previously tested alternatives:
+   - RSC (reflectance spectroscopy): Tested in v2.6.1, performed -54% worse than RGB
+   - MSP (point magnetic susceptibility): Tested in v2.6.1, redundant with MS loop
+   - Spatial context (above/below bins): Tested in v2.2, only +3.9% improvement
+
+5. Remember: Feature quality > dataset size
+   - v2.6.1 with +44% more data performed -54% worse (RSC < RGB)
+   - Only add features if they provide discriminative information
+
+====================================================================================================

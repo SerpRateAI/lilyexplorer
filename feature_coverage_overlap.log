@@ -1,0 +1,104 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/home/utig5/johna/bhai/analyze_feature_coverage_overlap.py:21: DtypeWarning: Columns (0) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(filepath, usecols=['Exp', 'Site', 'Hole'])
+/home/utig5/johna/bhai/analyze_feature_coverage_overlap.py:21: DtypeWarning: Columns (0) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(filepath, usecols=['Exp', 'Site', 'Hole'])
+/home/utig5/johna/bhai/analyze_feature_coverage_overlap.py:21: DtypeWarning: Columns (0) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(filepath, usecols=['Exp', 'Site', 'Hole'])
+/home/utig5/johna/bhai/analyze_feature_coverage_overlap.py:21: DtypeWarning: Columns (0) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(filepath, usecols=['Exp', 'Site', 'Hole'])
+/home/utig5/johna/bhai/analyze_feature_coverage_overlap.py:21: DtypeWarning: Columns (0) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(filepath, usecols=['Exp', 'Site', 'Hole'])
+/home/utig5/johna/bhai/analyze_feature_coverage_overlap.py:21: DtypeWarning: Columns (0) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(filepath, usecols=['Exp', 'Site', 'Hole'])
+====================================================================================================
+FEATURE COVERAGE OVERLAP ANALYSIS
+====================================================================================================
+
+Loading measurement datasets...
+
+GRA (bulk density)            :  534 boreholes
+MS (magnetic susceptibility)  :  534 boreholes
+NGR (natural gamma)           :  524 boreholes
+RGB (color imaging)           :  304 boreholes
+PWC (P-wave velocity)         :  287 boreholes
+THCN (thermal conductivity)   : ERROR - [Errno 2] No such file or directory: '/home/utig5/johna/bhai/datasets/THCN_DataLITH.csv'
+CARB (carbonate content)      :  295 boreholes
+MAD (porosity/grain density)  :  347 boreholes
+
+====================================================================================================
+V2.6 BASELINE COVERAGE
+====================================================================================================
+
+Boreholes with GRA+MS+NGR+RGB (v2.6): 296
+
+====================================================================================================
+PROPOSED V2.7 FEATURE OVERLAPS
+====================================================================================================
+
+P-wave velocity (PWC):
+  Total boreholes with this feature: 287
+  Overlap with v2.6 baseline: 163 (55.1% of v2.6)
+  New boreholes (has feature but not v2.6): 124
+  v2.6 boreholes missing this feature: 133
+
+Thermal conductivity (THCN):
+  Total boreholes with this feature: 0
+  Overlap with v2.6 baseline: 0 (0.0% of v2.6)
+  New boreholes (has feature but not v2.6): 0
+  v2.6 boreholes missing this feature: 296
+
+Carbonate content (CARB):
+  Total boreholes with this feature: 295
+  Overlap with v2.6 baseline: 169 (57.1% of v2.6)
+  New boreholes (has feature but not v2.6): 126
+  v2.6 boreholes missing this feature: 127
+
+MAD (porosity/grain density):
+  Total boreholes with this feature: 347
+  Overlap with v2.6 baseline: 197 (66.6% of v2.6)
+  New boreholes (has feature but not v2.6): 150
+  v2.6 boreholes missing this feature: 99
+
+====================================================================================================
+COMBINED FEATURE SET ANALYSIS
+====================================================================================================
+
+Boreholes with ALL features (GRA+MS+NGR+RGB+PWC+THCN+CARB+MAD): 0
+
+Partial feature combinations:
+
+  v2.6 + P-wave velocity: 163 boreholes
+  v2.6 + MAD (porosity): 197 boreholes
+  v2.6 + Carbonate content: 169 boreholes
+  v2.6 + Thermal conductivity: 0 boreholes
+
+  v2.6 + at least ONE new feature: 218 boreholes
+
+====================================================================================================
+SUMMARY: FEATURE RICHNESS vs DATASET EXPANSION
+====================================================================================================
+
+v2.6 baseline: 296 boreholes with GRA+MS+NGR+RGB
+
+Overlap percentages:
+                     Feature  Overlap_v2.6  Overlap_Pct
+       P-wave velocity (PWC)           163    55.067568
+ Thermal conductivity (THCN)             0     0.000000
+    Carbonate content (CARB)           169    57.094595
+MAD (porosity/grain density)           197    66.554054
+
+Average overlap with v2.6 baseline: 44.7%
+
+⚠ CONCLUSION: MIXED - some features add richness, others expand dataset
+  Need to carefully select which features to include
+
+Recommendation: Create multiple v2.7 variants:
+  - v2.7a (maximal richness): 0 boreholes, all features
+  - v2.7b (balanced): 218 boreholes, v2.6 + selective features
+  - v2.7c (expansion): Use features individually to maximize coverage
+
+====================================================================================================

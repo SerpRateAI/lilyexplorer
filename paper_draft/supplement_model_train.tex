@@ -301,6 +301,29 @@ Predictions cluster near feature means with random noise. Model cannot learn GRA
 
 \textbf{Conclusion.} Fundamental distinction between reconstruction (autoencoder) and imputation (conditional generation). VAEs excel at reconstructing complete inputs ($R^2 > 0.85$ for most features) but fail at predicting missing features from weakly correlated partial inputs ($R^2 < 0$). Masking during training degrades clustering ($-4\%$ to $-8\%$) without enabling useful imputation. Cannot optimize both objectives simultaneously. For clustering applications, v2.6 (no masking) superior. For imputation needs, dedicated conditional generative model with stronger feature relationships required.
 
+\subsection*{S2.5 Fuzzy Depth Matching (v2.6.8)}
+
+\textbf{Motivation.} v2.6.7 uses exact 20~cm depth binning to co-locate GRA, MS, NGR, and RGB measurements. This strict alignment requirement may discard samples where measurements are slightly offset. Hypothesis: relaxing depth matching tolerance could extract more training samples from the existing 296 boreholes with RGB coverage.
+
+\textbf{Method.} Fuzzy matching: for each 20~cm bin center, accept measurements within $\pm$20~cm tolerance. Take closest measurement within tolerance for each feature type. This allows measurements up to 40~cm apart to be paired (one at $+$20~cm, another at $-$20~cm from bin center).
+
+\textbf{Implementation.} Created fuzzy matched dataset: 251,210 samples (+5.3\% vs v2.6.7's 238,506) from same 296 boreholes. Trained v2.6.8 model with identical architecture to v2.6.7: 10D latent, $\beta$ annealing $10^{-10} \rightarrow 0.75$ over 50 epochs, distribution-aware scaling.
+
+\textbf{Results.} Training converged normally (18 epochs, 100.6~s). Clustering performance catastrophically degraded:
+\begin{itemize}
+\item $k=10$: ARI = 0.087 ($-$55.5\% vs v2.6.7's 0.196)
+\item $k=12$: ARI = 0.086 ($-$56.1\% vs v2.6.7)
+\item Best ARI: 0.087 at $k=10$ (worst of all v2.6.x variants)
+\end{itemize}
+
+\textbf{Root cause: Label noise from relaxed alignment.} At lithological boundaries, fuzzy matching pairs measurements from different rock types. Example: ``clay'' measurement at 10.0~m paired with ``basalt'' at 10.4~m across contact. Up to 40~cm separation allows mixing features from distinct lithologies. Model learns spurious feature-lithology associations instead of true signatures.
+
+\textbf{Quantifying noise.} Of 12,676 additional samples (+5.3\%), estimated $\sim$30--40\% cross lithological boundaries (based on average contact spacing $\sim$1~m in sedimentary sections). This introduces $\sim$1,500--2,000 mislabeled training examples, enough to severely degrade learned representations.
+
+\textbf{Silhouette scores paradox.} Despite catastrophic ARI degradation, silhouette scores remained moderate (0.146--0.154). This indicates model still learns well-separated clusters in latent space, but these clusters no longer align with true lithology due to corrupted training labels. Well-separated but wrong clusters.
+
+\textbf{Conclusion.} Data quality dominates data quantity for clustering. v2.6.7's exact 20~cm binning is optimal: adding 5.3\% noisy samples destroys 55\% of clustering performance. Strict depth alignment preserves lithological coherence. Future work should focus on improving feature quality (e.g., higher-resolution imaging) rather than relaxing matching constraints.
+
 %% ------------------------------------------------------------------------ %%
 %  TEXT S3
 %% ------------------------------------------------------------------------ %%
@@ -568,6 +591,7 @@ v2.2 & 18D spatial & 239K & 296 & 0.103$^\dagger$ & $-$38\% \\
 v3 & 6D dual-encoder & 239K & 296 & 0.091$^\dagger$ & $-$45\% \\
 v2.10 & 6D + VampPrior & 239K & 296 & 0.261$^\dagger$ & +1\%, val loss +680\% \\
 v2.11 & 6D + masking & 239K & 296 & 0.240$^\dagger$ & $-$7\% \\
+v2.6.8 & 10D fuzzy $\pm$20cm & 251K & 296 & 0.087$^\dagger$ & $-$55\%, +5\% data \\
 \midrule
 \multicolumn{6}{l}{\textit{Failed Experiments - Transfer Learning:}} \\
 v2.6.1 & 7D RSC+MSP & 345K & 484 & 0.119$^\dagger$ & $-$54\%, +44\% data \\

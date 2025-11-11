@@ -1,0 +1,70 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+====================================================================================================
+ARCHITECTURE COMPARISON: Breaking the 42% Ceiling
+====================================================================================================
+
+Loading v2.6 dataset...
+Total samples: 238,506
+Boreholes: 296
+
+Loading lithology hierarchy...
+Samples after hierarchy: 238,506
+Classes: 14
+
+Class distribution:
+   0. Biogenic Silica               :    7,414 ( 3.11%)
+   1. Carbonate                     :  100,531 (42.15%)
+   2. Clay/Mud                      :   96,930 (40.64%)
+   3. Conglomerate/Breccia          :    2,197 ( 0.92%)
+   4. Diamict                       :       66 ( 0.03%)
+   5. Evaporite                     :      176 ( 0.07%)
+   6. Intermediate/Felsic Igneous   :      284 ( 0.12%)
+   7. Mafic Igneous                 :    5,955 ( 2.50%)
+   8. Metamorphic                   :      162 ( 0.07%)
+   9. Other                         :      319 ( 0.13%)
+  10. Sand                          :   13,253 ( 5.56%)
+  11. Silt                          :    6,951 ( 2.91%)
+  12. Ultramafic                    :       81 ( 0.03%)
+  13. Volcaniclastic                :    4,187 ( 1.76%)
+
+Creating borehole-level split (70/15/15)...
+Train: 169,271 samples from 207 boreholes
+Val:   35,044 samples from  44 boreholes
+Test:  34,191 samples from  45 boreholes
+
+====================================================================================================
+MODEL 1: RANDOM FOREST
+====================================================================================================
+
+Training time: 2.9s
+Balanced accuracy: 0.3161 (31.61%)
+
+====================================================================================================
+MODEL 2: CATBOOST
+====================================================================================================
+
+Training time: 25.5s
+Balanced accuracy: 0.1793 (17.93%)
+
+====================================================================================================
+MODEL 3: DEEP NEURAL NETWORK
+====================================================================================================
+
+Training time: 60.9s
+Balanced accuracy: 0.2242 (22.42%)
+
+====================================================================================================
+MODEL 4: ENSEMBLE (VOTING)
+====================================================================================================
+
+Traceback (most recent call last):
+  File "/home/utig5/johna/bhai/train_architecture_comparison.py", line 265, in <module>
+    all_preds = np.vstack([y_pred_rf, y_pred_cb, y_pred_deep])
+  File "/home/other/johna/.local/lib/python3.10/site-packages/numpy/core/shape_base.py", line 289, in vstack
+    return _nx.concatenate(arrs, 0, dtype=dtype, casting=casting)
+ValueError: all the input array dimensions except for the concatenation axis must match exactly, but along dimension 1, the array at index 0 has size 34191 and the array at index 1 has size 1

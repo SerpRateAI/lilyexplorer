@@ -186,6 +186,31 @@ Optimal latent dimensionality discovered through systematic experiments.
 **Why It Failed:** Both encoders pre-optimized for within-modality reconstruction, can't discover cross-modal correlations ("dark + dense = basalt")
 **Key Lesson:** Multi-modal learning is NOT compositional: optimal(A) + optimal(B) ≠ optimal(A+B)
 
+### VAE GRA v2.6.8 (Fuzzy Depth Matching - Failed)
+**Strategy:** Increase data coverage by using fuzzy ±20cm depth matching instead of strict 20cm binning
+**Training Dataset:** 251,285 samples (+5%) from same 296 boreholes
+**Architecture:** 10D latent space, β annealing (1e-10 → 0.75), distribution-aware scaling
+**Performance:** ARI = 0.087 (k=12, avg across k), -55% vs v2.6.7's 0.196
+**Why It Failed:** Fuzzy matching introduces temporal misalignment between measurements. GRA at 100.0m + MS at 100.15m + RGB at 100.18m are not co-located in the same core segment. Physical properties vary too rapidly with depth (~cm scale) for ±20cm tolerance.
+**Key Lesson:** Strict co-location is essential for multimodal geoscience data. Can't trade spatial precision for sample count.
+**Model Files:** `train_v2_6_8_fuzzy.py`, `v2_6_8_fuzzy_training.log`, `vae_training_data_v2_6_8_fuzzy.csv`
+
+### VAE GRA v2.6.10 (Predicted RGB - Failed)
+**Strategy:** Expand dataset by predicting RGB from GRA+MS+NGR using supervised CatBoost (R²=0.72), then train VAE on mixed real+predicted RGB
+**Training Dataset:** 395,682 samples (+66%) from 523 boreholes (+77%)
+- 60.3% real RGB (238,506 samples from 296 boreholes)
+- 39.7% predicted RGB (157,176 samples from 228 boreholes)
+**RGB Prediction Quality:** R²=0.72, RMSE~23 per channel (28% unexplained variance)
+**Architecture:** Same as v2.6.7 (10D latent, β: 1e-10 → 0.75)
+**Performance:** ARI = 0.093 (avg), -53% vs v2.6.7's 0.196
+- k=10: 0.112 (-43%)
+- k=12: 0.106 (-46%)
+- k=15: 0.079 (-60%)
+- k=20: 0.073 (-63%)
+**Why It Failed:** 28% unexplained variance in RGB predictions introduces enough noise to corrupt critical cross-modal correlations. "Dark + dense = basalt" patterns break when RGB values have ±50 RGB unit errors (95th percentile). More data doesn't compensate for feature quality degradation.
+**Key Lesson:** Supervised imputation with R²=0.72 is insufficient for clustering. Feature quality dominates dataset size. Joins v2.6.1 (RSC), v2.6.2-4 (transfer learning), v2.6.8 (fuzzy matching) as failed attempts to overcome data limitations with clever engineering.
+**Model Files:** `train_rgb_predictor.py`, `rgb_predictor_*.cbm`, `create_vae_v2_6_10_dataset.py`, `train_vae_v2_6_10.py`, `vae_v2_6_10_training.log`, `vae_v2_6_10_clustering_results.csv`
+
 ---
 
 ### VAE GRA v2.10 (VampPrior - Failed)
@@ -276,23 +301,28 @@ Standard v2.6 achieves excellent reconstruction when ALL features available:
 
 ---
 
-## Transfer Learning Failure Summary
+## Data Expansion Failure Summary
 
-**All transfer learning approaches fail (-50% to -79% vs v2.6):**
+**All attempts to expand dataset or overcome RGB bottleneck fail:**
 
-| Approach | ARI (k=12) | vs v2.6 |
-|----------|------------|---------|
-| **v2.6 (baseline)** | **0.258** | **Baseline** |
-| v2.6.1 (RSC+MSP, +44% data) | 0.119 | -54% ❌ |
-| v2.6.2 (phys→RGB transfer) | 0.125 | -51% ❌ |
-| v2.6.3 (RGB only) | 0.054 | -79% ❌❌ |
-| v2.6.4 (dual pre-train) | 0.122 | -54% ❌ |
+| Approach | Samples | Boreholes | ARI (avg) | vs v2.6.7 |
+|----------|---------|-----------|-----------|-----------|
+| **v2.6.7 (baseline)** | 239K | 296 | **0.196** | **Baseline** |
+| v2.6.1 (RSC+MSP, +44% data) | 345K | 484 | 0.119 | -39% ❌ |
+| v2.6.2 (phys→RGB transfer) | 239K | 296 | 0.125 | -36% ❌ |
+| v2.6.3 (RGB only) | 239K | 296 | 0.054 | -72% ❌❌ |
+| v2.6.4 (dual pre-train) | 239K | 296 | 0.122 | -38% ❌ |
+| v2.6.8 (fuzzy ±20cm matching) | 251K | 296 | 0.087 | -56% ❌ |
+| v2.6.10 (predicted RGB, +77% BH) | 396K | 523 | 0.093 | -53% ❌ |
 
-**Why Joint Training Wins:**
+**Why Joint Training on Real RGB Wins:**
 1. Pre-training optimizes for reconstruction, not cross-modal clustering
 2. Cross-modal correlations ("dark + dense = basalt") must be learned jointly
 3. Pre-trained encoders create representational commitments that prevent adaptation
-4. 228 extra physical-only boreholes don't help because patterns don't transfer
+4. Alternative features (RSC) lack diagnostic power of RGB camera color
+5. Fuzzy depth matching introduces measurement misalignment
+6. Supervised imputation (R²=0.72) insufficient - 28% noise corrupts clustering
+7. **Feature quality dominates dataset size** - cannot compensate with clever engineering
 
 **Scientific Conclusion:** For multi-modal clustering, joint training from scratch is optimal.
 

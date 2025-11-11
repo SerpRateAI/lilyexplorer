@@ -176,6 +176,31 @@ CatBoost regression models for predicting bulk density from GRA measurements:
 ### Model Usage
 Models predict MAD bulk density from GRA measurements and other features, accounting for systematic biases mentioned in the paper. The borehole-split version ensures no data leakage between training and testing by splitting at the borehole level rather than randomly.
 
+### RGB Color Prediction (Failed Experiment)
+
+CatBoost regression models for predicting RGB color from physical properties (used in failed v2.6.10 experiment):
+
+**Model Files:**
+- `ml_models/rgb_predictor_r.cbm` - Red channel predictor
+- `ml_models/rgb_predictor_g.cbm` - Green channel predictor
+- `ml_models/rgb_predictor_b.cbm` - Blue channel predictor
+- `ml_models/rgb_predictor_summary.json` - Performance metrics
+
+**Training Scripts:**
+- `train_rgb_predictor.py` - CatBoost training for RGB prediction
+
+**Visualization:**
+- `visualize_rgb_predictions.py` - Prediction quality assessment
+- `rgb_prediction_quality.png` - Scatter plots and residuals
+- `rgb_prediction_examples.png` - True vs predicted color swatches
+
+**Performance:**
+- R²=0.72 (avg), RMSE~23 per channel
+- Feature importance: NGR 40%, MS 41%, GRA 18%
+- 95th percentile error: ~50 RGB units
+
+**Usage:** These models were used to expand the VAE v2.6.10 dataset by predicting RGB for 228 boreholes lacking camera data. Experiment failed (-53% ARI) because 28% unexplained variance corrupted cross-modal correlations. **Not recommended for production use.** See `VAE_V2_6_10_SUMMARY.md` for details.
+
 ### Lithology Prediction from Physical Properties (VAE Models)
 
 **Recommendation: Use VAE GRA v2.6.7** for all lithology clustering (entropy-balanced CV: ARI = 0.196 ± 0.037, best performance).
@@ -185,13 +210,15 @@ Models predict MAD bulk density from GRA measurements and other features, accoun
 | Model | Features | Samples | GMM ARI (5-fold CV) | Status |
 |-------|----------|---------|---------------------|--------|
 | **VAE GRA v2.6.7** | **10D latent** (GRA+MS+NGR+RGB, β: 1e-10→0.75) | 239K | **0.196 ± 0.037** | **✓ USE THIS** |
+| VAE GRA v2.6.10 | 10D latent (60% real + 40% predicted RGB) | 396K | 0.093 | ❌ Failed (-53%) |
+| VAE GRA v2.6.8 | 10D latent (fuzzy ±20cm depth matching) | 251K | 0.087 | ❌ Failed (-55%) |
 | VAE GRA v2.6.6 | 10D latent (GRA+MS+NGR+RGB, β: 0.001→0.5) | 239K | 0.19 ± 0.05 | Superseded by v2.6.7 |
 | VAE GRA v2.6 | 8D latent (GRA+MS+NGR+RGB, β anneal) | 239K | ~0.19 (est.) | Superseded by v2.6.7 |
 | VAE GRA v2.5 | 6D (fixed β=0.5) | 239K | ~0.18 (est.) | Fixed β baseline |
 | VAE GRA v2.1 | 6D (dist-aware, β=1.0) | 239K | ~0.13 (est.) | Distribution baseline |
 | VAE GRA v2 | 6D (standard scaling) | 239K | ~0.10 (est.) | Multimodal baseline |
 | VAE GRA v1 | 3D (physical only) | 403K | ~0.06 (est.) | Max coverage |
-| Failed experiments (8 variants) | Various | — | 0.04-0.19 (est.) | ❌ Don't use |
+| Failed experiments (9 variants) | Various | — | 0.04-0.19 (est.) | ❌ Don't use |
 
 **Key Model Files:**
 - **Production Model**: `ml_models/checkpoints/vae_gra_v2_6_7_final.pth` (trained on all 238,506 samples)
@@ -213,8 +240,9 @@ Models predict MAD bulk density from GRA measurements and other features, accoun
 7. **Joint training > transfer learning**: All pre-training approaches fail (-50% to -79%)
 8. **VampPrior overfits**: v2.10 validation loss explodes +680% despite +1.2% ARI gain
 9. **Masking degrades clustering**: v2.11 feature masking reduces ARI -4% to -8%, fails at imputation (R²<0)
+10. **Predicted RGB fails**: v2.6.10 using supervised RGB prediction (R²=0.72, +77% boreholes) degrades ARI -53%, demonstrating 28% unexplained variance corrupts cross-modal correlations
 
-**For detailed documentation:** See `VAE_MODELS.md` for complete model descriptions, all 8 failed experiments (v2.2, v3, v2.6.1-4, v2.10-11), and scientific insights.
+**For detailed documentation:** See `VAE_MODELS.md` for complete model descriptions, all 9 failed experiments (v2.2, v3, v2.6.1-4, v2.6.8, v2.6.10-11), and scientific insights.
 
 ### VAE Pipeline Notebooks
 

@@ -1,0 +1,110 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+Warning: UMAP not available, will use PCA only for 8D visualization
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+====================================================================================================
+TRAINING VAE v2.6.10: EXPANDED DATASET WITH PREDICTED RGB
+====================================================================================================
+
+Dataset composition:
+  Total samples: 395,682
+  Total boreholes: 523
+  Unique lithologies: 14
+
+RGB breakdown:
+  Real RGB:       238,506 samples ( 60.3%)
+  Predicted RGB:  157,176 samples ( 39.7%)
+
+Comparison to v2.6.7 baseline:
+  v2.6.7 samples:     238,506
+  v2.6.10 samples:    395,682 (+66%)
+  v2.6.7 boreholes:   296
+  v2.6.10 boreholes:  523 (+77%)
+
+Device: cuda
+
+Model parameters: 2,010
+
+Starting training on ALL data...
+β schedule: 1e-10 → 0.75 over 50 epochs
+
+Epoch   1: Loss=0.5277, Recon=0.5277, KL=71.1254, β=0.000000
+Epoch   5: Loss=0.5472, Recon=0.1391, KL=6.8022, β=0.060000
+Epoch  10: Loss=0.9584, Recon=0.2889, KL=4.9589, β=0.135000
+Epoch  15: Loss=1.2845, Recon=0.4269, KL=4.0836, β=0.210000
+Epoch  20: Loss=1.5591, Recon=0.5521, KL=3.5333, β=0.285000
+Epoch  25: Loss=1.8008, Recon=0.6629, KL=3.1608, β=0.360000
+Epoch  30: Loss=2.0224, Recon=0.7666, KL=2.8869, β=0.435000
+Epoch  35: Loss=2.2258, Recon=0.8685, KL=2.6614, β=0.510000
+Epoch  40: Loss=2.4157, Recon=0.9700, KL=2.4713, β=0.585000
+Epoch  45: Loss=2.5922, Recon=1.0722, KL=2.3030, β=0.660000
+Epoch  50: Loss=2.7531, Recon=1.1755, KL=2.1465, β=0.735000
+Epoch  55: Loss=2.7840, Recon=1.1981, KL=2.1146, β=0.750000
+Epoch  60: Loss=2.7836, Recon=1.1965, KL=2.1162, β=0.750000
+Epoch  65: Loss=2.7838, Recon=1.1966, KL=2.1163, β=0.750000
+Epoch  70: Loss=2.7826, Recon=1.1949, KL=2.1168, β=0.750000
+Epoch  75: Loss=2.7769, Recon=1.1943, KL=2.1102, β=0.750000
+Epoch  80: Loss=2.7782, Recon=1.1956, KL=2.1100, β=0.750000
+Epoch  85: Loss=2.7775, Recon=1.1949, KL=2.1102, β=0.750000
+Epoch  90: Loss=2.7774, Recon=1.1944, KL=2.1106, β=0.750000
+Epoch  95: Loss=2.7754, Recon=1.1934, KL=2.1094, β=0.750000
+Epoch 100: Loss=2.7762, Recon=1.1936, KL=2.1101, β=0.750000
+
+Training complete!
+Total training time: 969.1s (16.2 min)
+
+✓ Model saved to: /home/utig5/johna/bhai/ml_models/checkpoints/vae_gra_v2_6_10.pth
+
+====================================================================================================
+LATENT SPACE ANALYSIS
+====================================================================================================
+Latent space dimensionality:
+  Collapsed dims: 7/10
+  Effective dims: 3
+
+Per-dimension std devs:
+  Dim 0: 0.9529 ✓
+  Dim 1: 0.0069 ✗
+  Dim 2: 0.0137 ✗
+  Dim 3: 0.0072 ✗
+  Dim 4: 0.7783 ✓
+  Dim 5: 0.0074 ✗
+  Dim 6: 0.0119 ✗
+  Dim 7: 0.7250 ✓
+  Dim 8: 0.0127 ✗
+  Dim 9: 0.0080 ✗
+
+====================================================================================================
+CLUSTERING PERFORMANCE (GMM)
+====================================================================================================
+k=10: ARI = 0.1116, Silhouette = 0.2842
+k=12: ARI = 0.1059, Silhouette = 0.2896
+k=15: ARI = 0.0793, Silhouette = 0.2720
+k=20: ARI = 0.0733, Silhouette = 0.2503
+
+Average: ARI = 0.0925, Silhouette = 0.2740
+
+Comparison to v2.6.7 baseline:
+  v2.6.7 ARI:  0.1960 (238,506 samples, 296 BH, 100% real RGB)
+  v2.6.10 ARI: 0.0925 (395,682 samples, 523 BH, 60% real RGB)
+
+✗ FAILURE: v2.6.10 significant performance drop
+  Predicted RGB noise degrades clustering too much
+
+✓ Results saved to: vae_v2_6_10_clustering_results.csv
+
+====================================================================================================
+v2.6.10 TRAINING COMPLETE
+====================================================================================================
+Checkpoint: /home/utig5/johna/bhai/ml_models/checkpoints/vae_gra_v2_6_10.pth
+Training samples: 395,682
+Performance: ARI = 0.0925
+Latent dims: 3/10 active
+
+Novel approach: First VAE model using predicted RGB features (60% real, 40% predicted)
+====================================================================================================

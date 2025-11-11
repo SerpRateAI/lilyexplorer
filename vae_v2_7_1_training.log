@@ -1,0 +1,48 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+====================================================================================================
+VAE v2.7.1 TRANSFER LEARNING: MAD Pre-training → Full Dataset
+====================================================================================================
+
+Loading v2.7 encoder...
+✓ v2.7 checkpoint loaded
+  v2.7 ARI: 0.268
+
+Loading v2.6 full dataset (239K samples, 6 features)...
+Total samples: 238,506
+Total boreholes: 296
+
+Creating borehole-level train/val/test split...
+Train: 169,271 samples from 207 boreholes
+Val:   35,044 samples from  44 boreholes
+Test:  34,191 samples from  45 boreholes
+
+Applying distribution-aware scaling (6D)...
+
+Device: cuda
+
+Total parameters: 2,106
+Trainable parameters: 918 (decoder only)
+
+====================================================================================================
+TRAINING: Frozen Encoder + New Decoder
+====================================================================================================
+
+Epoch   1: Train Loss=1.6369, Val Loss=1.0138, β=0.000000
+Epoch   5: Train Loss=1.1224, Val Loss=1.2177, β=0.060000
+Epoch  10: Train Loss=1.3731, Val Loss=1.5050, β=0.135000
+Epoch  15: Train Loss=1.6378, Val Loss=1.8023, β=0.210000
+
+Early stopping at epoch 16
+
+Training time: 30.1s
+
+====================================================================================================
+CLUSTERING EVALUATION
+====================================================================================================
+
+k=10: ARI=0.140, Silhouette=0.179

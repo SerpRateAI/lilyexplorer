@@ -1,0 +1,60 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+====================================================================================================
+FINDING MISSING VAE DATA
+====================================================================================================
+
+Loading current VAE v2.6.7 dataset...
+Current dataset: 238,506 samples from 296 boreholes
+
+Loading raw IODP datasets...
+  Loading GRA...
+  Loading MS...
+  Loading NGR...
+  Loading RGB...
+
+Raw dataset borehole counts:
+  GRA: 534 boreholes
+  MS:  534 boreholes
+  NGR: 524 boreholes
+  RGB: 304 boreholes
+
+Boreholes with ALL four measurements: 296
+Current VAE dataset uses: 296
+
+✓ All boreholes with all 4 measurements are already included
+
+====================================================================================================
+WHAT'S LIMITING THE DATASET?
+====================================================================================================
+
+Bottleneck analysis (which measurement limits each borehole):
+  GRA: 50/50 boreholes (100%)
+
+====================================================================================================
+DEPTH BINNING STRATEGY
+====================================================================================================
+
+Current strategy: 20cm bins with exact alignment
+
+Could we get more data by:
+1. Using larger bins (e.g., 50cm, 1m)?
+2. Allowing fuzzy matching (±10cm tolerance)?
+3. Interpolating missing measurements?
+
+Let me check depth spacing in raw data...
+
+
+====================================================================================================
+RECOMMENDATIONS
+====================================================================================================
+
+Additional strategies to explore:
+1. Re-run dataset creation script to capture all boreholes
+2. Investigate why some boreholes were excluded (QC filters? missing lithology?)
+3. Check if depth binning tolerance can be relaxed slightly
+4. Consider 50cm bins as alternative (trade resolution for coverage)
+
+====================================================================================================

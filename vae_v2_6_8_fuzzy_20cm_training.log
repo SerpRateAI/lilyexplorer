@@ -1,0 +1,91 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+Warning: UMAP not available, will use PCA only for 8D visualization
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+====================================================================================================
+VAE v2.6.8 - FUZZY MATCHING TOLERANCE COMPARISON
+====================================================================================================
+
+Configuration:
+  Tolerance: ± 20 cm
+  GPU ID: 0
+  Max epochs: 100
+
+Loading fuzzy ±20cm dataset: vae_training_data_fuzzy_20cm.csv
+✓ Loaded 251,210 samples from 296 boreholes
+
+Dataset statistics:
+  Samples: 251,182
+  Boreholes: 296
+  Lithology groups: 14
+
+Scaling features (distribution-aware)...
+✓ Features scaled
+
+Device: cuda:0
+VAE architecture:
+  Input: 6D (GRA, MS, NGR, RGB)
+  Hidden: [32, 16]
+  Latent: 10D
+  Parameters: 2,202
+
+====================================================================================================
+TRAINING
+====================================================================================================
+
+β annealing: 1.00e-10 → 0.75 over 50 epochs
+Batch size: 256
+Learning rate: 1e-3
+
+Epoch   1: Loss=0.2257, Recon=0.2257, KL=2.6891, β=0.0000
+Epoch   5: Loss=0.1512, Recon=0.1000, KL=0.8530, β=0.0600
+Epoch  10: Loss=0.1826, Recon=0.1004, KL=0.6087, β=0.1350
+Epoch  15: Loss=0.2205, Recon=0.1120, KL=0.5165, β=0.2100
+
+Early stopping at epoch 18
+
+Training completed in 100.6s (1.7 min)
+Best loss: 0.1477
+
+Extracting embeddings...
+✓ Embeddings extracted: (251182, 10)
+
+====================================================================================================
+CLUSTERING EVALUATION
+====================================================================================================
+
+GMM clustering with k=10...
+  k=10: ARI=0.0874, Silhouette=0.1457
+GMM clustering with k=12...
+  k=12: ARI=0.0859, Silhouette=0.1486
+GMM clustering with k=15...
+  k=15: ARI=0.0731, Silhouette=0.1543
+GMM clustering with k=20...
+  k=20: ARI=0.0609, Silhouette=0.1280
+
+✓ Results saved to vae_v2_6_8_fuzzy_20cm_results.csv
+
+====================================================================================================
+SUMMARY
+====================================================================================================
+
+Tolerance: ± 20 cm
+Samples: 251,182
+Training time: 100.6s (1.7 min)
+
+Clustering performance:
+  k=10: ARI=0.0874, Silhouette=0.1457
+  k=12: ARI=0.0859, Silhouette=0.1486
+  k=15: ARI=0.0731, Silhouette=0.1543
+  k=20: ARI=0.0609, Silhouette=0.1280
+
+Best ARI: 0.0874 at k=10
+v2.6.7 baseline (±20cm): 0.196 (5-fold CV average)
+(This is the baseline)
+
+====================================================================================================
