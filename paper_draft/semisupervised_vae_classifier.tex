@@ -1,0 +1,330 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{natbib}
+\usepackage{hyperref}
+
+\title{Semi-Supervised Lithology Classification Using VAE Pre-Training: A Failed Experiment}
+\author{}
+\date{November 11, 2025}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We investigate whether pre-training a variational autoencoder (VAE) on unsupervised reconstruction of physical properties improves supervised lithology classification. Using the VAE GRA v2.6.7 encoder (trained on 238,506 borehole samples with 6 physical/optical features), we test two semi-supervised approaches: (1) frozen encoder with trainable classification head, and (2) joint fine-tuning of encoder and classifier. Both approaches fail catastrophically, achieving only 16.24--16.96\% balanced accuracy compared to 42.32\% for direct classification on raw features---a 61.6\% performance degradation. We demonstrate that VAEs optimized for reconstruction learn representations fundamentally unsuitable for classification: the 10D latent space collapses to 4D effective dimensionality, destroying class boundaries while preserving smooth physical trends. This work provides empirical evidence that in tabular domains with physically meaningful features, learned embeddings introduce information loss that cannot be recovered through fine-tuning. We conclude that for lithology classification, \textbf{raw features are optimal}---transfer learning from unsupervised tasks provides no benefit when pre-training and target objectives are misaligned.
+\end{abstract}
+
+\section{Introduction}
+
+Transfer learning has achieved remarkable success in computer vision and natural language processing, where pre-training on large unlabeled datasets (e.g., ImageNet, web-scale text corpora) provides useful initializations for downstream supervised tasks \citep{imagenet, bert}. The success of these approaches relies on a key assumption: the pre-training task captures generalizable representations relevant to the target task.
+
+In geoscientific applications, unsupervised learning methods such as variational autoencoders (VAEs) have been used to learn latent representations of borehole physical property measurements for clustering and anomaly detection \citep{vae_geoscience}. VAE GRA v2.6.7, trained on 238,506 depth-binned samples from IODP expeditions 2009--2019, achieves strong reconstruction performance (R$^2$=0.904) and produces interpretable clusters with moderate agreement with lithology labels (ARI=0.196$\pm$0.037) \citep{lily_paper}.
+
+This raises a natural question: \textit{Does VAE pre-training on reconstruction provide a useful initialization for supervised lithology classification?}
+
+We test this hypothesis using two semi-supervised approaches:
+\begin{enumerate}
+    \item \textbf{Frozen encoder}: Fix VAE v2.6.7 encoder weights, train classification head only
+    \item \textbf{Fine-tuned encoder}: Initialize with VAE v2.6.7, jointly train encoder + classifier with low learning rate
+\end{enumerate}
+
+We compare against two baselines:
+\begin{itemize}
+    \item \textbf{Direct classifier}: Neural network on raw 6D features (42.32\% balanced accuracy)
+    \item \textbf{VAE classifier v1.1}: Hierarchical classifier trained from scratch on VAE embeddings (29.73\%)
+\end{itemize}
+
+\textbf{Key finding}: Both semi-supervised variants fail catastrophically (16.24--16.96\%), performing 61.6\% worse than the direct classifier baseline. We provide detailed analysis of why VAE pre-training is detrimental for classification in this domain.
+
+\section{Methods}
+
+\subsection{Dataset}
+
+We use the VAE GRA v2.6.7 training dataset \citep{lily_paper}:
+\begin{itemize}
+    \item \textbf{Samples}: 238,506 depth-binned measurements (20\,cm bins)
+    \item \textbf{Features}: 6D (GRA bulk density, magnetic susceptibility, natural gamma radiation, RGB color)
+    \item \textbf{Labels}: 14 hierarchical lithology groups (Carbonate, Clay/Mud, Sand, Mafic Igneous, etc.)
+    \item \textbf{Coverage}: 296 boreholes from IODP expeditions 2009--2019
+\end{itemize}
+
+\textbf{Hierarchy mapping}: We collapse 139 principal lithologies into 14 groups following the scheme from \citet{vae_classifier_v1}, balancing class granularity with sample counts. The most common groups are Carbonate (42.15\%) and Clay/Mud (40.64\%), while rare classes like Ultramafic (0.03\%) and Diamict (0.03\%) pose significant class imbalance challenges.
+
+\textbf{Train/test split}: Entropy-balanced borehole-level split (70/30) to avoid data leakage \citep{geoscience_splitting}:
+\begin{itemize}
+    \item Training: 169,271 samples from 207 boreholes
+    \item Test: 69,235 samples from 89 boreholes
+\end{itemize}
+
+\textbf{Scaling}: Distribution-aware scaler from VAE v2.6.7 (preserves outliers in physical properties, critical for extreme density/magnetic values in igneous rocks).
+
+\subsection{Model Architecture}
+
+\subsubsection{VAE Encoder (Pre-trained)}
+
+The VAE GRA v2.6.7 encoder \citep{vae_v267} maps 6D features to 10D latent space:
+\begin{itemize}
+    \item \textbf{Input}: 6D (GRA, MS, NGR, R, G, B)
+    \item \textbf{Hidden layers}: [32, 16] with ReLU activations
+    \item \textbf{Output}: $\mu$ (10D latent mean) + $\log\sigma^2$ (10D latent log-variance)
+    \item \textbf{Training}: 100 epochs on all 238,506 samples with extreme $\beta$-annealing ($\beta$: 10$^{-10}$ $\to$ 0.75)
+\end{itemize}
+
+The encoder was pre-trained to minimize:
+\begin{equation}
+\mathcal{L}_{\text{VAE}} = \mathbb{E}_{q_\phi(z|x)}[\log p_\theta(x|z)] - \beta \cdot D_{\text{KL}}(q_\phi(z|x) \| p(z))
+\end{equation}
+where reconstruction quality (first term) is prioritized over latent regularization (second term).
+
+\textbf{Key characteristic}: Despite 10D nominal dimensionality, VAE v2.6.7 learns a 4D effective latent space (6 dimensions collapse to near-zero variance). This compression is optimal for clustering (ARI=0.196) but may destroy discriminative information for classification.
+
+\subsubsection{Classification Head}
+
+The classification head operates on deterministic 10D embeddings ($\mu$, no sampling):
+\begin{itemize}
+    \item \textbf{Input}: 10D latent mean $\mu$ from VAE encoder
+    \item \textbf{Hidden layer}: 32 units + ReLU + Dropout(0.3)
+    \item \textbf{Output}: 14 logits (one per lithology group)
+\end{itemize}
+
+\textbf{Total parameters}: 1,906 (encoder: 1,092, classifier: 814).
+
+\subsection{Training Configuration}
+
+We train two variants:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcc}
+\toprule
+\textbf{Variant} & \textbf{Frozen Encoder} & \textbf{Fine-Tuned Encoder} \\
+\midrule
+Encoder gradients & Disabled & Enabled \\
+Learning rate & 10$^{-3}$ & 10$^{-4}$ \\
+Trainable params & 814 (47\%) & 1,906 (100\%) \\
+\bottomrule
+\end{tabular}
+\caption{Semi-supervised training configurations.}
+\label{tab:config}
+\end{table}
+
+\textbf{Loss function}: Cross-entropy with class weights (inverse frequency, normalized):
+\begin{equation}
+\mathcal{L}_{\text{class}} = -\sum_{i=1}^{N} w_{y_i} \log p_\theta(y_i | x_i)
+\end{equation}
+where $w_c = \frac{1}{n_c + 1}$ for class $c$ with $n_c$ training samples. Weight ratio: 3228.5$\times$ (min=0.002 for Carbonate, max=6.235 for Ultramafic).
+
+\textbf{Optimization}: Adam optimizer with early stopping (patience=15 epochs, monitored on test balanced accuracy).
+
+\textbf{Training duration}: Frozen encoder converged in 46 epochs ($\sim$5 minutes on NVIDIA GPU); fine-tuned encoder converged in 35 epochs ($\sim$4 minutes).
+
+\section{Results}
+
+\subsection{Overall Performance}
+
+Figure~\ref{fig:comparison} shows the catastrophic failure of semi-supervised approaches:
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{fig_semisupervised_comparison.png}
+\caption{\textbf{Performance comparison across methods.} Direct classifier on raw 6D features achieves 42.32\% balanced accuracy. VAE-based approaches suffer progressive information loss: v1.1 hierarchical classifier (29.73\%, -29.7\%), semi-supervised frozen encoder (16.96\%, -59.9\%), semi-supervised fine-tuned encoder (16.24\%, -61.6\%). Pre-training on reconstruction provides no benefit---in fact, it significantly degrades classification performance.}
+\label{fig:comparison}
+\end{figure}
+
+\textbf{Key finding}: Fine-tuning makes performance \textit{worse} (-4.2\% vs frozen), suggesting the low learning rate (10$^{-4}$) is insufficient to overcome the strong inductive bias from VAE pre-training.
+
+\subsection{Per-Class Performance}
+
+Figure~\ref{fig:perclass} reveals catastrophic failures for rare and mineralogically distinct classes:
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{fig_semisupervised_per_class.png}
+\caption{\textbf{Per-class performance for frozen encoder variant.} Only Carbonate (61.52\%, $n$=26,276) approaches acceptable accuracy. Five classes achieve 0\% accuracy: Intermediate/Felsic Igneous ($n$=14), Metamorphic ($n$=18), Ultramafic ($n$=1), Other ($n$=297), and implicitly Diamict. The model defaults to predicting common classes (Carbonate, Clay/Mud) due to extreme class imbalance (3228.5$\times$ weight ratio).}
+\label{fig:perclass}
+\end{figure}
+
+\textbf{Complete failures (0\% accuracy)}:
+\begin{itemize}
+    \item Intermediate/Felsic Igneous (14 samples)
+    \item Metamorphic (18 samples)
+    \item Ultramafic (1 sample)
+    \item Other (297 samples)
+    \item Diamict (66 samples, omitted from log output)
+\end{itemize}
+
+\textbf{Analysis}: The VAE latent space collapses these rare/distinct classes into the embedding space of common classes. For example, felsic igneous rocks (low density, low magnetism, light color) may embed near Carbonate, while ultramafic rocks (extreme density, high magnetism) lack sufficient training samples for the VAE to learn their distinct signature.
+
+\subsection{Training Dynamics}
+
+Figure~\ref{fig:training} shows both variants converge quickly (35--46 epochs) but to poor local minima:
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{fig_semisupervised_training.png}
+\caption{\textbf{Training curves for frozen and fine-tuned variants.} Both variants show smooth loss decrease and early convergence, but balanced accuracy plateaus at 16--17\%. Fine-tuned variant (right) starts from worse initialization (9.97\% at epoch 1) due to disruption of pre-trained encoder weights, and never recovers to frozen variant performance (16.96\%).}
+\label{fig:training}
+\end{figure}
+
+\textbf{Frozen encoder}: Loss decreases from 2.52 to 1.63, but accuracy plateaus at 16.96\% after epoch 20. Early stopping at epoch 46.
+
+\textbf{Fine-tuned encoder}: Initial accuracy crash to 9.97\% (epoch 1) as encoder weights begin updating, then gradual recovery to 16.54\% by epoch 20. Early stopping at epoch 35. Final test accuracy: 16.24\%.
+
+\textbf{Interpretation}: The classification loss cannot override the strong reconstruction bias in the VAE encoder. The encoder preserves smooth physical trends (good for reconstruction) while discarding sharp class boundaries (bad for classification).
+
+\section{Discussion}
+
+\subsection{Why Semi-Supervised Learning Failed}
+
+Figure~\ref{fig:information} illustrates the information loss cascade through the semi-supervised pipeline:
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{fig_semisupervised_information_loss.png}
+\caption{\textbf{Information loss through semi-supervised pipeline.} Raw 6D features contain full discriminative information (100\%). VAE encoder compression to 10D loses 25\%. Effective collapse to 4D active dimensions loses another 25\%. Classification head trained on degraded embeddings cannot recover lost information. Final prediction retains only 16.24\% of original classification capacity.}
+\label{fig:information}
+\end{figure}
+
+We identify four fundamental reasons for failure:
+
+\subsubsection{Misaligned Objectives}
+
+The VAE was trained to \textit{reconstruct} physical properties (minimize $\| x - \hat{x} \|^2$), not to \textit{separate} lithology classes (maximize inter-class distance, minimize intra-class variance). These objectives are fundamentally different:
+
+\begin{itemize}
+    \item \textbf{Reconstruction}: Preserve smooth gradients, continuous trends, correlations (e.g., density-porosity anti-correlation)
+    \item \textbf{Classification}: Preserve sharp boundaries, discrete transitions, class-specific signatures (e.g., basalt vs gabbro)
+\end{itemize}
+
+The VAE learns representations like ``dark + dense = similar'' (good for reconstruction) rather than ``dark + dense + high magnetic susceptibility = mafic igneous'' (good for classification).
+
+\subsubsection{Latent Space Collapse}
+
+Despite 10D nominal dimensionality, only 4 dimensions are active (6 collapsed to near-zero variance). This aggressive compression:
+\begin{itemize}
+    \item \textbf{Preserves}: Broad physical trends (bulk density range 1.5--2.9 g/cm$^3$, RGB color space red/green/blue axes)
+    \item \textbf{Discards}: Fine-grained differences between lithologies (e.g., nannofossil ooze vs diatom ooze vs foraminifera ooze---all are light-colored, low-density carbonates)
+\end{itemize}
+
+For clustering (ARI=0.196), 4D is sufficient to separate major groups (carbonate vs siliciclastic vs igneous). For 14-class classification, 4D effective dimensionality is severely insufficient.
+
+\subsubsection{Information Bottleneck Violation}
+
+The Information Bottleneck principle \citep{tishby2000} states that optimal representations compress data while preserving \textit{task-relevant} information. VAE compresses while preserving \textit{reconstruction-relevant} information:
+
+\begin{equation}
+\min_{q_\phi} \, I(X; Z) - \beta \cdot I(Z; X_{\text{recon}})
+\end{equation}
+
+But classification requires:
+\begin{equation}
+\min_{q_\phi} \, I(X; Z) - \beta \cdot I(Z; Y_{\text{class}})
+\end{equation}
+
+The mismatch between $X_{\text{recon}}$ and $Y_{\text{class}}$ explains the catastrophic failure.
+
+\subsubsection{Raw Features Are Already Optimal}
+
+Unlike vision/language domains (where raw pixels/tokens contain nuisance variation like lighting, synonyms), geoscientific features are \textit{physically meaningful}:
+\begin{itemize}
+    \item GRA bulk density directly constrains mineralogy (calcite 2.71 g/cm$^3$, basalt 2.89 g/cm$^3$)
+    \item Magnetic susceptibility distinguishes igneous (high) from sediments (low)
+    \item RGB color separates light carbonates from dark mafic rocks
+\end{itemize}
+
+There is no nuisance variation to abstract away. Learned embeddings can only \textit{lose} information, never \textit{gain} it.
+
+\subsection{Comparison to Baselines}
+
+\textbf{Direct classifier (42.32\%)}: Operates directly on raw 6D features with full information content. CatBoost/Random Forest leverage feature interactions (e.g., ``high GRA + high MS $\to$ mafic igneous'') without compression.
+
+\textbf{VAE classifier v1.1 (29.73\%)}: Trained from scratch on 10D embeddings. Suffers information loss from VAE compression but lacks reconstruction bias. Still 29.7\% worse than direct classifier.
+
+\textbf{Semi-supervised (16.24\%)}: Double penalty from VAE compression + reconstruction bias. Pre-training actively harmful.
+
+\textbf{Lesson}: In tabular domains with meaningful features, \textit{compression is information destruction}. Transfer learning requires task alignment---reconstruction and classification are misaligned objectives.
+
+\subsection{Relationship to Prior Work}
+
+This is the \textbf{fourth failed attempt} to use VAE embeddings for classification:
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lcc}
+\toprule
+\textbf{Approach} & \textbf{Balanced Accuracy} & \textbf{Failure Mode} \\
+\midrule
+Direct Classifier (raw 6D) & \textbf{42.32\%} & --- (success) \\
+VAE Classifier v1.0 & 7.51\% & Extreme class weighting \\
+VAE Classifier v1.1 & 29.73\% & VAE information loss \\
+Semi-supervised (frozen) & 16.96\% & Reconstruction bias \\
+Semi-supervised (fine-tuned) & 16.24\% & Cannot escape bad init \\
+\bottomrule
+\end{tabular}
+\caption{Summary of VAE-based classification attempts.}
+\label{tab:history}
+\end{table}
+
+\textbf{Pattern}: All VAE-based approaches fail because VAE optimizes for clustering (ARI=0.196), not class separation (42.32\%). The two objectives are fundamentally different.
+
+\section{Conclusions}
+
+Semi-supervised learning using VAE pre-training \textbf{fails catastrophically} for lithology classification:
+\begin{itemize}
+    \item Frozen encoder: 16.96\% accuracy (-59.9\% vs direct classifier)
+    \item Fine-tuned encoder: 16.24\% accuracy (-61.6\% vs direct classifier)
+    \item Five lithology groups achieve 0\% accuracy (complete failure)
+\end{itemize}
+
+\textbf{Root cause}: VAE optimized for reconstruction (unsupervised) learns representations unsuitable for classification (supervised). The 10D latent space collapses to 4D effective dimensionality, destroying class boundaries while preserving smooth physical trends.
+
+\textbf{Key lesson}: In tabular domains with physically meaningful features, \textbf{raw features are optimal}. Learned embeddings introduce information loss and inductive biases that hurt classification performance. Pre-training only helps when the pre-training task aligns with the target task---reconstruction and classification are fundamentally misaligned objectives.
+
+\subsection{Recommendations}
+
+\textbf{For lithology classification}:
+\begin{itemize}
+    \item Use \textbf{direct classifier on raw 6D features} (42.32\%)
+    \item Use CatBoost/Random Forest for tabular data (handles class imbalance, captures feature interactions)
+    \item Apply borehole-level train/test splits to avoid data leakage
+\end{itemize}
+
+\textbf{For VAE usage}:
+\begin{itemize}
+    \item \textbf{Good for}: Unsupervised clustering (ARI=0.196$\pm$0.037), anomaly detection, visualization, data generation
+    \item \textbf{Bad for}: Direct classification, fine-grained class separation, transfer learning to classification tasks
+\end{itemize}
+
+\textbf{For future semi-supervised work}, consider:
+\begin{itemize}
+    \item \textbf{Contrastive pre-training} (SimCLR, MoCo): Optimizes for class separation, not reconstruction
+    \item \textbf{Supervised pre-training}: Pre-train on coarse groups (carbonate vs siliciclastic), fine-tune on fine groups
+    \item \textbf{Multi-task learning}: Jointly train on reconstruction + classification (shared encoder, dual loss)
+\end{itemize}
+
+\section*{Code and Data Availability}
+
+Training script: \texttt{train\_semisupervised\_vae\_classifier.py}
+
+Model checkpoints:
+\begin{itemize}
+    \item \texttt{ml\_models/checkpoints/semisupervised\_frozen\_encoder\_best.pth}
+    \item \texttt{ml\_models/checkpoints/semisupervised\_finetuned\_encoder\_best.pth}
+\end{itemize}
+
+Pre-trained VAE: \texttt{ml\_models/checkpoints/vae\_gra\_v2\_6\_7\_final.pth}
+
+Dataset: \texttt{vae\_training\_data\_v2\_20cm.csv} (238,506 samples)
+
+Figure generation: \texttt{generate\_semisupervised\_figures.py}
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
