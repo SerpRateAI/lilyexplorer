@@ -1,0 +1,26 @@
+{
+  "dataset_size": 238359,
+  "num_classes": 12,
+  "min_samples_per_class": 100,
+  "train_samples": 169125,
+  "test_samples": 69234,
+  "train_entropy": 1.2721428397752976,
+  "test_entropy": 1.4546216748584615,
+  "direct_catboost": 0.25599119666692266,
+  "frozen_encoder": 0.2205139023838909,
+  "finetuned_encoder": 0.17597088912675304,
+  "lithology_groups": [
+    "Biogenic Silica",
+    "Carbonate",
+    "Clay/Mud",
+    "Conglomerate/Breccia",
+    "Evaporite",
+    "Intermediate/Felsic Igneous",
+    "Mafic Igneous",
+    "Metamorphic",
+    "Other",
+    "Sand",
+    "Silt",
+    "Volcaniclastic"
+  ]
+}

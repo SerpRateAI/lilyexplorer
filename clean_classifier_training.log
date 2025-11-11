@@ -1,0 +1,224 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+====================================================================================================
+CLEAN LITHOLOGY CLASSIFICATION EXPERIMENT
+====================================================================================================
+
+STEP 1: Loading and filtering dataset...
+----------------------------------------------------------------------------------------------------
+Initial samples: 238,506
+After hierarchy mapping: 238,506
+
+Original class distribution:
+  Carbonate                               :  100,531 samples
+  Clay/Mud                                :   96,930 samples
+  Sand                                    :   13,253 samples
+  Biogenic Silica                         :    7,414 samples
+  Silt                                    :    6,951 samples
+  Mafic Igneous                           :    5,955 samples
+  Volcaniclastic                          :    4,187 samples
+  Conglomerate/Breccia                    :    2,197 samples
+  Other                                   :      319 samples
+  Intermediate/Felsic Igneous             :      284 samples
+  Evaporite                               :      176 samples
+  Metamorphic                             :      162 samples
+  Ultramafic                              :       81 samples
+  Diamict                                 :       66 samples
+
+Filtering to groups with ≥100 samples...
+Groups removed: 2
+  - Ultramafic, Diamict
+Samples remaining: 238,359 (99.9%)
+Classes remaining: 12
+
+Final class distribution:
+  Biogenic Silica                         :    7,414 samples
+  Carbonate                               :  100,531 samples
+  Clay/Mud                                :   96,930 samples
+  Conglomerate/Breccia                    :    2,197 samples
+  Evaporite                               :      176 samples
+  Intermediate/Felsic Igneous             :      284 samples
+  Mafic Igneous                           :    5,955 samples
+  Metamorphic                             :      162 samples
+  Other                                   :      319 samples
+  Sand                                    :   13,253 samples
+  Silt                                    :    6,951 samples
+  Volcaniclastic                          :    4,187 samples
+
+
+STEP 2: Creating entropy-balanced borehole split...
+----------------------------------------------------------------------------------------------------
+Train: 169,125 samples from 207 boreholes
+Test:  69,234 samples from 89 boreholes
+
+Lithology diversity (entropy):
+  Train: 1.272
+  Test:  1.455
+  Difference: 0.182
+
+Final dataset:
+  Features: 6D (GRA, MS, NGR, R, G, B)
+  Classes: 12
+  Train samples: 169,125
+  Test samples: 69,234
+
+
+STEP 3: Training direct classifier (CatBoost on raw 6D features)...
+----------------------------------------------------------------------------------------------------
+0:	learn: 0.7064737	test: 0.5906987	best: 0.5906987 (0)	total: 106ms	remaining: 53.1s
+50:	learn: 0.7601289	test: 0.6377476	best: 0.6377476 (50)	total: 2.72s	remaining: 23.9s
+100:	learn: 0.7813442	test: 0.6544093	best: 0.6544093 (100)	total: 5.39s	remaining: 21.3s
+150:	learn: 0.7948497	test: 0.6658076	best: 0.6658076 (150)	total: 8s	remaining: 18.5s
+200:	learn: 0.8035954	test: 0.6716511	best: 0.6716511 (200)	total: 10.6s	remaining: 15.7s
+250:	learn: 0.8105538	test: 0.6760069	best: 0.6761627 (249)	total: 13.1s	remaining: 13s
+300:	learn: 0.8154512	test: 0.6797047	best: 0.6797047 (300)	total: 15.7s	remaining: 10.4s
+350:	learn: 0.8200401	test: 0.6823143	best: 0.6823305 (349)	total: 18.2s	remaining: 7.72s
+400:	learn: 0.8239395	test: 0.6850984	best: 0.6850984 (400)	total: 20.7s	remaining: 5.12s
+450:	learn: 0.8274040	test: 0.6862001	best: 0.6862432 (428)	total: 23.3s	remaining: 2.53s
+499:	learn: 0.8310096	test: 0.6871660	best: 0.6872160 (497)	total: 25.7s	remaining: 0us
+
+bestTest = 0.6872159646
+bestIteration = 497
+
+Shrink model to first 498 iterations.
+
+====================================================================================================
+DIRECT CLASSIFIER RESULTS: 0.2560 balanced accuracy
+====================================================================================================
+
+Per-class accuracy:
+  Biogenic Silica                         : 24.67% (   1,512 samples)
+  Carbonate                               : 89.78% (  26,276 samples)
+  Clay/Mud                                : 78.29% (  27,186 samples)
+  Conglomerate/Breccia                    :  1.60% (     875 samples)
+  Evaporite                               :  0.00% (     107 samples)
+  Intermediate/Felsic Igneous             :  0.00% (      14 samples)
+  Mafic Igneous                           : 51.58% (   2,377 samples)
+  Metamorphic                             :  0.00% (      18 samples)
+  Other                                   :  0.00% (     297 samples)
+  Sand                                    : 23.67% (   6,561 samples)
+  Silt                                    :  4.07% (   2,237 samples)
+  Volcaniclastic                          : 33.54% (   1,774 samples)
+
+
+STEP 4: Training semi-supervised classifiers (VAE v2.6.7 pre-training)...
+----------------------------------------------------------------------------------------------------
+Loading VAE v2.6.7 encoder...
+✓ VAE v2.6.7 encoder loaded
+Class weights: min=0.002, max=7.415, ratio=3228.5×
+Device: cpu
+
+====================================================================================================
+TRAINING: FROZEN ENCODER
+====================================================================================================
+Freeze encoder: True
+Learning rate: 0.001
+Total parameters: 1,840
+Trainable parameters: 748
+Epoch   1: Loss=2.3239, Balanced Acc=0.1816
+Epoch   5: Loss=1.8956, Balanced Acc=0.1756
+Epoch  10: Loss=1.7817, Balanced Acc=0.1846
+Epoch  15: Loss=1.7179, Balanced Acc=0.2032
+Epoch  20: Loss=1.6824, Balanced Acc=0.2005
+Epoch  25: Loss=1.6435, Balanced Acc=0.2086
+Epoch  30: Loss=1.6249, Balanced Acc=0.2116
+Epoch  35: Loss=1.6094, Balanced Acc=0.2126
+Epoch  40: Loss=1.5958, Balanced Acc=0.2133
+Epoch  45: Loss=1.5774, Balanced Acc=0.2076
+Epoch  50: Loss=1.5707, Balanced Acc=0.2177
+Epoch  55: Loss=1.5558, Balanced Acc=0.2129
+Epoch  60: Loss=1.5308, Balanced Acc=0.2128
+Epoch  65: Loss=1.5238, Balanced Acc=0.2227
+Epoch  70: Loss=1.5163, Balanced Acc=0.2176
+Epoch  75: Loss=1.5051, Balanced Acc=0.2102
+Early stopping at epoch 77
+
+Best balanced accuracy: 0.2258
+
+Per-class accuracy:
+  Biogenic Silica                         : 62.10% (   1,512 samples)
+  Carbonate                               : 63.32% (  26,276 samples)
+  Clay/Mud                                : 14.76% (  27,186 samples)
+  Conglomerate/Breccia                    :  5.49% (     875 samples)
+  Evaporite                               :  1.87% (     107 samples)
+  Intermediate/Felsic Igneous             :  0.00% (      14 samples)
+  Mafic Igneous                           : 40.47% (   2,377 samples)
+  Metamorphic                             :  0.00% (      18 samples)
+  Other                                   :  0.00% (     297 samples)
+  Sand                                    : 27.39% (   6,561 samples)
+  Silt                                    : 14.26% (   2,237 samples)
+  Volcaniclastic                          : 34.95% (   1,774 samples)
+
+Overall balanced accuracy: 0.2205
+✓ Model saved to: /home/utig5/johna/bhai/ml_models/checkpoints/clean_semisupervised_frozen_encoder_best.pth
+
+====================================================================================================
+TRAINING: FINETUNED ENCODER
+====================================================================================================
+Freeze encoder: False
+Learning rate: 0.0001
+Total parameters: 1,840
+Trainable parameters: 748
+Epoch   1: Loss=2.4689, Balanced Acc=0.0919
+Epoch   5: Loss=2.3293, Balanced Acc=0.1666
+Epoch  10: Loss=2.2128, Balanced Acc=0.1783
+Epoch  15: Loss=2.1277, Balanced Acc=0.1837
+Epoch  20: Loss=2.0700, Balanced Acc=0.1825
+Epoch  25: Loss=2.0163, Balanced Acc=0.1774
+Epoch  30: Loss=1.9816, Balanced Acc=0.1751
+Early stopping at epoch 32
+
+Best balanced accuracy: 0.1845
+
+Per-class accuracy:
+  Biogenic Silica                         : 48.74% (   1,512 samples)
+  Carbonate                               : 67.90% (  26,276 samples)
+  Clay/Mud                                : 13.52% (  27,186 samples)
+  Conglomerate/Breccia                    :  1.03% (     875 samples)
+  Evaporite                               :  0.00% (     107 samples)
+  Intermediate/Felsic Igneous             :  0.00% (      14 samples)
+  Mafic Igneous                           : 20.66% (   2,377 samples)
+  Metamorphic                             :  0.00% (      18 samples)
+  Other                                   :  0.00% (     297 samples)
+  Sand                                    : 26.46% (   6,561 samples)
+  Silt                                    :  4.56% (   2,237 samples)
+  Volcaniclastic                          : 28.30% (   1,774 samples)
+
+Overall balanced accuracy: 0.1760
+✓ Model saved to: /home/utig5/johna/bhai/ml_models/checkpoints/clean_semisupervised_finetuned_encoder_best.pth
+
+
+====================================================================================================
+FINAL COMPARISON (CLEAN DATA, ENTROPY-BALANCED SPLIT)
+====================================================================================================
+
+| Approach | Balanced Acc | Notes |
+|----------|--------------|-------|
+| Direct classifier (raw 6D, CatBoost) | 25.60% | Baseline |
+| Semi-supervised (frozen encoder) | 22.05% | VAE v2.6.7 pre-training |
+| Semi-supervised (fine-tuned encoder) | 17.60% | VAE v2.6.7 pre-training |
+
+Analysis:
+  Fine-tuned vs frozen: -20.2%
+  Frozen vs direct: -13.9%
+  Fine-tuned vs direct: -31.3%
+
+⚠ Fine-tuning does not improve significantly over frozen encoder.
+
+Key findings:
+  - Dataset: 238,359 samples, 12 classes (≥100 samples each)
+  - Split: Entropy-balanced borehole split (seed=42), train entropy=1.272, test entropy=1.455
+  - Direct classifier (CatBoost): 25.60%
+  - Best semi-supervised: 22.05%
+
+✓ Results saved to: clean_classifier_comparison_results.json
+
+====================================================================================================
+CLEAN LITHOLOGY CLASSIFICATION EXPERIMENT COMPLETE
+====================================================================================================
