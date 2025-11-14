@@ -1,0 +1,64 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+====================================================================================================
+VAE v2.6.7 FILTERED RECONSTRUCTION QUALITY - PREDICTED VS TRUE PLOTS
+====================================================================================================
+
+Loading filtered data...
+Total samples: 238,359
+Features: ['Bulk density (GRA)', 'Magnetic susceptibility (instr. units)', 'NGR total counts (cps)', 'R', 'G', 'B']
+
+Loading VAE v2.6.7 FILTERED model...
+✓ VAE model loaded (device: cuda)
+
+Scaling features (distribution-aware)...
+✓ Features scaled
+
+Computing VAE reconstructions...
+✓ Reconstructions computed: (238359, 6)
+
+Inverse transforming to original feature space...
+✓ Inverse transform complete
+
+====================================================================================================
+RECONSTRUCTION METRICS (ORIGINAL FEATURE SPACE)
+====================================================================================================
+
+Feature                       MAE         RMSE           R²
+----------------------------------------------------------------------------------------------------
+GRA (g/cm³)                0.0773       0.1007        0.833
+MS (SI)                   46.8351     186.1502        0.471
+NGR (cps)                  6.6204       9.5475        0.762
+R                          5.8809       9.5288        0.958
+G                          5.5391       8.7027        0.964
+B                          6.2773       9.6519        0.946
+
+Average R²: 0.822
+
+Creating predicted vs true scatter plots...
+✓ Plots saved: vae_v2_6_7_filtered_reconstruction_quality.png
+
+====================================================================================================
+SUMMARY
+====================================================================================================
+
+Overall Reconstruction Quality: Good (avg R² = 0.822)
+
+Per-feature performance:
+  GRA (g/cm³)          R²=0.833
+  MS (SI)              R²=0.471
+  NGR (cps)            R²=0.762
+  R                    R²=0.958
+  G                    R²=0.964
+  B                    R²=0.946
+
+The VAE successfully reconstructs physical properties from 10D latent space
+(with 6/10 dimensions collapsed → 4D effective)
+
+====================================================================================================
