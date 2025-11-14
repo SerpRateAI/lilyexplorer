@@ -181,16 +181,28 @@ print(f"  Lithology entropy: {full_entropy:.3f}")
 print()
 
 # Assign each borehole a "dominant lithology" for stratification
-borehole_lithology = df.groupby('Borehole_ID')['Principal'].agg(lambda x: x.value_counts().index[0])
+# Optimized: compute dominant lithology efficiently
+print("Computing dominant lithology per borehole...")
+borehole_lithology = df.groupby('Borehole_ID')['Principal'].apply(lambda x: x.value_counts().idxmax())
+print(f"  Done! Found {len(borehole_lithology)} boreholes")
 unique_boreholes = borehole_lithology.index.values
-borehole_labels = borehole_lithology.values
+borehole_labels_raw = borehole_lithology.values
+
+# Group rare dominant lithologies (< n_folds samples) into "Other" for stratification
+label_counts = pd.Series(borehole_labels_raw).value_counts()
+n_folds = 5
+min_samples_per_class = n_folds * 2  # Need at least 10 samples for safe 5-fold split + train/val
+common_labels = label_counts[label_counts >= min_samples_per_class].index.tolist()
+
+borehole_labels = np.array([lbl if lbl in common_labels else 'Other' for lbl in borehole_labels_raw])
 
 print(f"Total boreholes: {len(unique_boreholes)}")
-print(f"Unique dominant lithologies: {len(set(borehole_labels))}")
+print(f"Unique dominant lithologies: {len(set(borehole_labels_raw))}")
+print(f"Lithologies with ≥{min_samples_per_class} boreholes: {len(common_labels)}")
+print(f"Boreholes grouped as 'Other': {(borehole_labels == 'Other').sum()}")
 print()
 
 # Stratified k-fold CV by dominant lithology
-n_folds = 5
 skf = StratifiedKFold(n_splits=n_folds, shuffle=True, random_state=42)
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -233,8 +245,12 @@ for fold_idx, (train_idx, test_idx) in enumerate(skf.split(unique_boreholes, bor
     print(f"  Test Δentropy:  {test_entropy_diff:.3f}")
     print()
 
-    # Further split train into train/val (stratified)
-    train_borehole_labels = borehole_lithology[train_boreholes].values
+    # Further split train into train/val (stratified, with grouping for rare lithologies)
+    train_borehole_labels_raw = borehole_lithology[train_boreholes].values
+    train_label_counts = pd.Series(train_borehole_labels_raw).value_counts()
+    train_common_labels = train_label_counts[train_label_counts >= 7].index.tolist()  # Need ≥7 for 7-fold
+    train_borehole_labels = np.array([lbl if lbl in train_common_labels else 'Other' for lbl in train_borehole_labels_raw])
+
     train_val_splitter = StratifiedKFold(n_splits=7, shuffle=True, random_state=42)  # ~15% val
 
     for i, (sub_train_idx, sub_val_idx) in enumerate(train_val_splitter.split(train_boreholes, train_borehole_labels)):

@@ -1,0 +1,82 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+====================================================================================================
+TRAINING FINAL v2.6.7 FILTERED MODEL ON ALL DATA
+====================================================================================================
+β schedule: 1e-10 → 0.75 over 50 epochs
+Dataset: FILTERED (≥100 samples per class)
+Cross-validation: ARI = (results from filtered CV)
+
+Total samples: 238,359
+Total boreholes: 296
+Unique lithologies: 134
+
+Device: cuda
+
+Model parameters: 2,010
+
+Starting training on ALL data (no validation split)...
+β schedule: 1e-10 → 0.75 over 50 epochs
+
+Epoch   1: Loss=0.8752, Recon=0.8752, KL=52.3934, β=0.000000
+Epoch   5: Loss=0.5561, Recon=0.1445, KL=6.8600, β=0.060000
+Epoch  10: Loss=0.9716, Recon=0.2876, KL=5.0666, β=0.135000
+Epoch  15: Loss=1.3065, Recon=0.4227, KL=4.2087, β=0.210000
+Epoch  20: Loss=1.5922, Recon=0.5490, KL=3.6605, β=0.285000
+Epoch  25: Loss=1.8434, Recon=0.6732, KL=3.2507, β=0.360000
+Epoch  30: Loss=2.0683, Recon=0.7889, KL=2.9411, β=0.435000
+Epoch  35: Loss=2.2732, Recon=0.8990, KL=2.6946, β=0.510000
+Epoch  40: Loss=2.4619, Recon=1.0074, KL=2.4864, β=0.585000
+Epoch  45: Loss=2.6377, Recon=1.1112, KL=2.3129, β=0.660000
+Epoch  50: Loss=2.8001, Recon=1.2133, KL=2.1589, β=0.735000
+Epoch  55: Loss=2.8263, Recon=1.2357, KL=2.1207, β=0.750000
+Epoch  60: Loss=2.8229, Recon=1.2362, KL=2.1157, β=0.750000
+Epoch  65: Loss=2.8199, Recon=1.2335, KL=2.1152, β=0.750000
+Epoch  70: Loss=2.8245, Recon=1.2377, KL=2.1157, β=0.750000
+Epoch  75: Loss=2.8140, Recon=1.2349, KL=2.1055, β=0.750000
+Epoch  80: Loss=2.8156, Recon=1.2387, KL=2.1025, β=0.750000
+Epoch  85: Loss=2.8199, Recon=1.2404, KL=2.1060, β=0.750000
+Epoch  90: Loss=2.8162, Recon=1.2453, KL=2.0946, β=0.750000
+Epoch  95: Loss=2.8110, Recon=1.2429, KL=2.0908, β=0.750000
+Epoch 100: Loss=2.8070, Recon=1.2472, KL=2.0798, β=0.750000
+
+Training complete!
+Total training time: 608.5s (10.1 min)
+
+✓ Model saved to: /home/utig5/johna/bhai/ml_models/checkpoints/vae_gra_v2_6_7_filtered_final.pth
+
+====================================================================================================
+FINAL MODEL ANALYSIS
+====================================================================================================
+Latent space dimensionality:
+  Collapsed dims: 6/10
+  Effective dims: 4
+
+Per-dimension std devs:
+  Dim 0: 0.4557 ✓
+  Dim 1: 0.9527 ✓
+  Dim 2: 0.3502 ✓
+  Dim 3: 0.8005 ✓
+  Dim 4: 0.0148 ✗
+  Dim 5: 0.0057 ✗
+  Dim 6: 0.0140 ✗
+  Dim 7: 0.0065 ✗
+  Dim 8: 0.0164 ✗
+  Dim 9: 0.0190 ✗
+
+====================================================================================================
+v2.6.7 FINAL MODEL - PRODUCTION READY
+====================================================================================================
+Checkpoint: /home/utig5/johna/bhai/ml_models/checkpoints/vae_gra_v2_6_7_filtered_final.pth
+Training samples: 238,359
+Cross-validated performance: ARI = 0.196 ± 0.037
+Latent dims: 4/10 active
+
+This is the gold standard unsupervised lithology model.
+====================================================================================================
