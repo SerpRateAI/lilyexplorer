@@ -173,7 +173,7 @@ def create_architecture_diagram():
     arrows = [
         ((0.5 + 1.2, 5), (2.5, 5)),           # Input → Enc1
         ((2.5 + 1.5, 5), (4.8, 5)),           # Enc1 → Enc2
-        ((4.8 + 1.5, 6.5), (7, 6.6)),         # Enc2 → mu
+        ((4.8 + 1.5, 6), (7, 6.6)),           # Enc2 → mu (fixed: top of Enc2 at y=6)
         ((4.8 + 1.5, 4.2), (7, 3.6)),         # Enc2 → logvar
         ((7 + 1.2, 6.6), (9, 5.5)),           # mu → Reparam
         ((7 + 1.2, 3.6), (9, 4.5)),           # logvar → Reparam
