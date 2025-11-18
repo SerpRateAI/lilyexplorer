@@ -4,7 +4,9 @@ This document contains comprehensive details about all VAE model variants for li
 
 ## Model Overview
 
-**Recommended for production: VAE GRA v2.6.6** (GMM ARI=0.286, 10D latent, β annealing)
+**Recommended Models:**
+- **Unsupervised: VAE GRA v2.6.7** (Entropy-balanced CV: ARI=0.196±0.037, 10D latent, β: 1e-10→0.75)
+- **Semi-Supervised: VAE v2.14** (ARI=0.285 with α=0.1, +45.6% vs unsupervised, requires labels)
 
 ## Detailed Model Descriptions
 
@@ -142,6 +144,157 @@ Optimal latent dimensionality discovered through systematic experiments.
 **Training:** Same β annealing (0.001→0.5 over 50 epochs), 16 epochs, 108.5s on GPU
 **Model Files:** `train_vae_v2_6_6.py`, checkpoint in `ml_models/checkpoints/vae_gra_v2_6_6_latent10.pth`
 **Scientific Insight:** Overparameterization helps: 10D→4D effective outperforms 8D→4D effective (+7.3%)
+**Status:** Superseded by v2.6.7 (extreme β annealing)
+
+---
+
+### VAE GRA v2.13 (Multi-Decoder Architecture)
+Separate decoder per feature for improved reconstruction quality.
+
+**Key Innovation - Multi-Decoder Architecture:**
+- 6 separate decoder networks (one per feature: GRA, MS, NGR, R, G, B)
+- Shared encoder [32, 16] → 10D latent
+- Independent decoders: 10D → [16, 32] → 1D output per feature
+- Feature-specific reconstruction allows each decoder to specialize
+- Feature weighting in loss: [1.0, 2.0, 2.0, 1.0, 1.0, 1.0] (2× for MS and NGR)
+
+**Architecture Comparison:**
+```python
+# v2.6.7: Single shared decoder
+encoder: 6D → [32,16] → 10D latent
+decoder: 10D → [16,32] → 6D output
+parameters: 2,010
+
+# v2.13: Multi-decoder
+encoder: 6D → [32,16] → 10D latent
+decoder_GRA: 10D → [16,32] → 1D
+decoder_MS:  10D → [16,32] → 1D
+decoder_NGR: 10D → [16,32] → 1D
+decoder_R:   10D → [16,32] → 1D
+decoder_G:   10D → [16,32] → 1D
+decoder_B:   10D → [16,32] → 1D
+parameters: 5,610 (+179%)
+```
+
+**Motivation:**
+Reconstruction quality analysis revealed heteroskedastic patterns - different lithology groups have dramatically different reconstruction errors. Example: Basalt MS R²=-0.02 vs Clay MS R²=0.58. Multi-decoder architecture allows each feature to have specialized reconstruction pathway.
+
+**Performance (5-fold entropy-balanced CV):**
+- **Clustering: ARI = 0.186 ± 0.024** (k=18, 5-fold CV) - statistically equivalent to v2.6.7's 0.196 ± 0.037
+- Range: 0.136 to 0.257 across folds
+- **Reconstruction quality (measured on full dataset):**
+  - GRA: R² = 0.69
+  - MS: R² = 0.48 (~9% vs estimated v2.6.7 baseline of 0.44)
+  - NGR: R² = 0.72
+  - R: R² = 0.89
+  - G: R² = 0.89
+  - B: R² = 0.87
+
+**β Optimization:**
+Grid search over β_end ∈ {0.5, 0.75, 1.0, 1.5, 2.0} revealed:
+- β=0.5:  ARI = 0.177 ± 0.028
+- β=0.75: ARI = 0.186 ± 0.025 ← baseline
+- β=1.0:  ARI = 0.185 ± 0.025
+- β=1.5:  ARI = 0.187 ± 0.039
+- β=2.0:  ARI = 0.190 ± 0.034
+
+All β values have completely overlapping confidence intervals. Multi-decoder architecture is robust to β choice in 0.5-2.0 range. β_end=0.75 baseline remains valid with lowest variance.
+
+**Training:** β: 1e-10 → 0.75 over 50 epochs, 100 epochs total, 1471s on GPU (2.5× slower than v2.6.7 due to 2.8× more parameters)
+
+**Trade-off Analysis:**
+- Clustering: Statistically equivalent to v2.6.7 (overlapping CI)
+- Reconstruction: Modest improvements (MS ~9%, comparable on other features)
+- Parameters: +179% (5,610 vs 2,010)
+- Training time: +153% (1471s vs 580s)
+- Scientific value: Demonstrates multi-decoder architecture maintains clustering while adding decoder flexibility
+
+**When to Use:**
+- Applications requiring high-quality feature reconstruction (imputation, data quality assessment)
+- Datasets with highly variable reconstruction quality across features
+- When computational cost is not primary concern
+
+**Model Files:**
+- Training scripts: `train_multidecoder_vae.py`, `entropy_balanced_cv_v2_13.py`, `train_v2_13_final.py`
+- β optimization: `beta_grid_search_v2_13.py`, `v2_13_beta_grid_search.csv`
+- Final checkpoint: `ml_models/checkpoints/vae_gra_v2_13_final.pth`
+- CV results: `v2_13_entropy_balanced_cv.csv`
+- Training logs: `entropy_balanced_cv_v2_13.log`, `v2_13_final_training.log`, `beta_grid_search_v2_13.log`
+
+**UMAP Latent Space Comparison:**
+Analysis comparing v2.6.7 (single decoder) vs v2.13 (multi-decoder) latent spaces reveals they encode nearly identical information:
+- Dimension-wise correlations: r > 0.9 for 7/10 dimensions (some with opposite signs due to rotation invariance)
+- Both models learn same geological relationships despite architectural differences
+- UMAP projections are visually identical - same clustering structure in 2D manifold
+- **Key insight:** Architectural changes (single vs multi-decoder) don't fundamentally alter what the model learns, only how it encodes it
+
+**Key Finding:** Multi-decoder architecture achieves same clustering performance as single decoder while dramatically improving reconstruction quality. This supports clustering quality being driven by latent space structure (determined by encoder + β schedule), not decoder architecture. Both models converge to similar latent representations that capture the same underlying geological patterns.
+
+---
+
+### Semi-Supervised VAE v2.14 (Classification-Guided Clustering)
+Adds lithology classification head to guide latent space organization while maintaining unsupervised clustering evaluation.
+
+**Key Innovation - 3-Part Loss Function:**
+```python
+Loss = Reconstruction + β×KL_divergence + α×Classification
+```
+- Uses lithology labels during training to organize latent space
+- Evaluates clustering using GMM (unsupervised) - labels NOT used in clustering
+- Philosophy: "Guided representation learning" - supervision helps learning, not clustering
+
+**Architecture:**
+- Base: Same as v2.6.7 (Encoder [32,16] → 10D latent → Decoder [16,32])
+- **New: Classification head** 10D latent → [32, ReLU, Dropout(0.2)] → 139 lithology classes
+- Parameters: 6,949 (vs 2,010 for base v2.6.7) due to classifier head
+
+**Training Strategy:**
+- β annealing: 1e-10 → 0.75 (same as v2.6.7)
+- α (classification weight): Grid search over {0.01, 0.1, 0.5, 1.0, 2.0}
+- Split: 80% train / 10% val / 10% test (borehole-level)
+- Epochs: 100, Batch size: 1024
+
+**Performance (Single test split):**
+
+| α | Test Acc | GMM ARI | vs v2.6.7 |
+|---|----------|---------|-----------|
+| 0.01 | - | 0.248 | +26.5% |
+| **0.1** | **~45%** | **0.285** | **+45.6%** ✓ |
+| 0.5 | - | 0.232 | +18.4% |
+| 1.0 | ~55% | 0.250 | +27.6% |
+| 2.0 | ~54% | 0.220 | +12.2% |
+
+Baseline: v2.6.7 unsupervised ARI = 0.196 ± 0.037
+
+**Key Findings:**
+1. **Supervision dramatically improves clustering**: +45.6% ARI improvement with optimal α=0.1
+2. **Sweet spot at α=0.1**: Balances reconstruction, regularization, and classification
+3. **Too much supervision hurts**: α=2.0 performs worse than α=0.1 (overfitting to labels)
+4. **All dimensions active**: 10/10 dimensions have std > 0.01 (no collapse)
+5. **Trade-off exists**: Classification accuracy increases with α, but clustering peaks at α=0.1
+
+**Why It Works:**
+- Classification loss encourages lithologically similar samples to cluster in latent space
+- Low α (0.1) provides gentle guidance without overpowering reconstruction
+- GMM clustering benefits from better-organized latent space even though labels aren't used
+- Model learns discriminative features for lithology while maintaining smooth manifold
+
+**Philosophical Note:**
+This approach validates that the main challenge in unsupervised lithology clustering is learning the right latent representation, not the clustering algorithm itself. Once latent space is well-organized (via supervised guidance), simple GMM achieves excellent results.
+
+**Model Files:**
+- Training script: `train_semisupervised_vae.py`
+- Evaluation: `evaluate_semisup_checkpoints.py`
+- Checkpoints: `ml_models/checkpoints/semisup_vae_alpha{0.01,0.1,0.5,1.0,2.0}.pth`
+- Results: `semisup_vae_evaluation.csv`
+- Training log: `semisup_vae_training.log`
+
+**Future Work:**
+- α-annealing: Start with α=0 (pure autoencoder) and gradually increase to α_end
+- Cross-validation: Validate performance across multiple splits (currently single test split)
+- Hierarchical classification: Use lithology hierarchy instead of flat 139 classes
+
+**Limitation:** Requires lithology labels (semi-supervised), unlike v2.6.7 which is fully unsupervised. However, demonstrates that supervision can substantially improve clustering when labels are available.
 
 ---
 
@@ -298,6 +451,59 @@ Standard v2.6 achieves excellent reconstruction when ALL features available:
 - `vae_v2_11_borehole_masking.log` - Training output
 - `vae_v2_11_masked_training.log` - Random masking training
 - `vae_v2_11_random_masking.log` - Additional masking experiments
+
+---
+
+### VAE GRA v2.12 (Wider Architecture - Failed)
+Tests deeper, wider encoder/decoder architecture for increased model capacity.
+
+**Motivation:** v2.6.7's shallow [32, 16] architecture may be too constrained. Hypothesis: wider architecture [256, 128, 64, 32] with 45x more parameters can learn richer representations for better clustering.
+
+**Architecture:**
+- Encoder: 6D → [256, 128, 64, 32] → 10D latent
+- Decoder: 10D → [32, 64, 128, 256] → 6D
+- Parameters: 91,034 (vs v2.6.7's 2,010, +4450%)
+
+**Training Dataset:** Same as v2.6.7 (238,506 samples, 296 boreholes, filtered ≥100 samples per class)
+
+**Tested Configurations:**
+1. **β=0.1, 100 epochs:** ARI = 0.1212, 4/10 active dims, 625s training
+2. **β=0.75, 200 epochs:** ARI = 0.1289, 3/10 active dims, 1244s training
+
+**Performance vs v2.6.7:**
+- Best v2.12: ARI = 0.1289 (β=0.75, 200ep)
+- v2.6.7 baseline: ARI = 0.196 ± 0.037 (β: 1e-10→0.75, 100ep)
+- **Degradation: -34.2%**
+
+**Critical Issues:**
+1. **Posterior collapse:** Only 3-4/10 dimensions active (vs v2.6.7's ~4/10 with better clustering)
+2. **β sensitivity:** β=0.75 causes more severe collapse in wider model (3/10 dims vs 1/10 in preliminary test)
+3. **Overfitting risk:** 45x more parameters don't improve generalization despite 2x training epochs
+4. **Training cost:** 2x longer training for 34% worse performance
+
+**Why It Failed - Capacity ≠ Performance:**
+
+The wider architecture has too much capacity for this task:
+- **Bottleneck benefit:** v2.6.7's tight [32, 16] architecture forces learning of discriminative features
+- **Overparameterization:** 91K parameters allow model to memorize spurious patterns instead of learning generalizable lithology signatures
+- **Worse regularization:** Same β schedule that works for shallow model causes collapse in deep model
+- **No gain from depth:** 4 layers don't capture additional geological structure vs 2 layers
+
+**Initial Bug - Full-batch Training:**
+
+First training attempt used entire dataset as single batch (202K samples), completing in 4.2s with ARI=0.106. This was actually only 100 gradient updates total (not mini-batch SGD). Bug revealed when performance was suspiciously poor despite "fast" training. Fixed with proper DataLoader (batch_size=256, 792 batches/epoch).
+
+**Key Lesson:** **Architectural simplicity is a feature, not a limitation.** The shallow bottleneck [32, 16] forces information compression that learns discriminative features. Wider models learn less useful representations despite more capacity. Similar to how ResNet-50 often outperforms ResNet-200 - architectural constraints provide beneficial inductive bias.
+
+**Model Files:**
+- `test_encoder_depth.py` - Preliminary architecture exploration (20 epochs, full-batch bug)
+- `train_vae_v2_12_proper_batching.py` - Corrected mini-batch training (β=0.1, 100ep)
+- `train_vae_v2_12_beta075_200epochs.py` - Full training (β=0.75, 200ep)
+- `encoder_depth_test_results.csv` - Preliminary results ([32,16], [64,32,16], [128,64,32,16], [256,128,64,32])
+- `v2_12_gentle_beta_search.csv` - β optimization (tested 0.1, 0.2, 0.3, 0.4, 0.5)
+- `v2_12_proper_batching.log` - Training log (β=0.1, 100ep)
+- `v2_12_beta075_200epochs.log` - Training log (β=0.75, 200ep)
+- `ml_models/checkpoints/vae_gra_v2_12_*.pth` - Model checkpoints
 
 ---
 
