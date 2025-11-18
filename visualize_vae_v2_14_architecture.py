@@ -181,35 +181,35 @@ def create_architecture_diagram():
     # CLASSIFICATION HEAD (branches downward from latent)
     # ========================================================================
 
-    class_y = 5.5  # Below the main path
+    class_y = 6.0  # Below the main path
 
     # Arrow from latent z down to classification head
-    draw_arrow(latent_x + 1.1, main_y - 1.25, latent_x + 1.1, class_y + 1.1,
+    draw_arrow(latent_x + 1.1, main_y - 1.25, latent_x + 1.1, class_y + 0.8,
                '10D', color='#7B1FA2', linewidth=3)
 
     # Classification layer 1: Linear(10 -> 32) + ReLU (trapezoid expanding)
-    class_x1 = 13.0
-    draw_trapezoid(class_x1 - 1.5, class_y - 0.8, 3.0, 1.6, color_classifier,
+    class_x1 = 14.0
+    draw_trapezoid(class_x1, class_y - 0.8, 3.0, 1.6, color_classifier,
                    'Linear(10→32)\n+ ReLU', fontsize=16, direction='widen')
-    draw_arrow(latent_x + 1.1, class_y + 1.1, class_x1 - 1.5, class_y + 0.0,
+    draw_arrow(latent_x + 1.1, class_y + 0.8, class_x1, class_y + 0.0,
                '', color='#7B1FA2', linewidth=2)
 
     # Dropout layer
-    class_x2 = 15.5
+    class_x2 = 18.0
     draw_box(class_x2, class_y - 0.8, 2.5, 1.6, color_classifier, 'Dropout\n(p=0.2)',
              fontsize=16)
-    draw_arrow(class_x1 + 1.5, class_y + 0.0, class_x2, class_y + 0.0,
+    draw_arrow(class_x1 + 3.0, class_y + 0.0, class_x2, class_y + 0.0,
                '32D', color='#7B1FA2', linewidth=2)
 
     # Classification output: Linear(32 -> 139)
-    class_x3 = 19.0
+    class_x3 = 21.5
     draw_box(class_x3, class_y - 0.8, 3.0, 1.6, color_classifier, 'Linear(32→139)\nLogits',
              fontsize=16)
     draw_arrow(class_x2 + 2.5, class_y + 0.0, class_x3, class_y + 0.0,
                '32D', color='#7B1FA2', linewidth=2)
 
     # Final classification predictions
-    class_x4 = 23.5
+    class_x4 = 25.5
     draw_box(class_x4, class_y - 0.8, 2.5, 1.6, color_classifier, 'Lithology\nPredictions',
              '139 classes', fontsize=16)
     draw_arrow(class_x3 + 3.0, class_y + 0.0, class_x4, class_y + 0.0,
