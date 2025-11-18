@@ -184,35 +184,35 @@ def create_architecture_diagram():
     class_y = 5.5  # Below the main path
 
     # Arrow from latent z down to classification head
-    draw_arrow(latent_x + 1.1, main_y - 1.25, latent_x + 1.1, class_y + 2.0,
+    draw_arrow(latent_x + 1.1, main_y - 1.25, latent_x + 1.1, class_y + 1.1,
                '10D', color='#7B1FA2', linewidth=3)
 
-    # Classification layer 1: Linear(10 -> 32) + ReLU
+    # Classification layer 1: Linear(10 -> 32) + ReLU (trapezoid expanding)
     class_x1 = 13.0
-    draw_box(class_x1, class_y, 3.0, 1.6, color_classifier, 'Linear(10→32)\n+ ReLU',
-             fontsize=16)
-    draw_arrow(latent_x + 1.1, class_y + 2.0, class_x1 + 1.5, class_y + 1.6,
+    draw_trapezoid(class_x1 - 1.5, class_y - 0.8, 3.0, 1.6, color_classifier,
+                   'Linear(10→32)\n+ ReLU', fontsize=16, direction='widen')
+    draw_arrow(latent_x + 1.1, class_y + 1.1, class_x1 - 1.5, class_y + 0.0,
                '', color='#7B1FA2', linewidth=2)
 
     # Dropout layer
-    class_x2 = 17.0
-    draw_box(class_x2, class_y, 2.5, 1.6, color_classifier, 'Dropout\n(p=0.2)',
+    class_x2 = 15.5
+    draw_box(class_x2, class_y - 0.8, 2.5, 1.6, color_classifier, 'Dropout\n(p=0.2)',
              fontsize=16)
-    draw_arrow(class_x1 + 3.0, class_y + 0.8, class_x2, class_y + 0.8,
+    draw_arrow(class_x1 + 1.5, class_y + 0.0, class_x2, class_y + 0.0,
                '32D', color='#7B1FA2', linewidth=2)
 
     # Classification output: Linear(32 -> 139)
-    class_x3 = 20.5
-    draw_box(class_x3, class_y, 3.0, 1.6, color_classifier, 'Linear(32→139)\nLogits',
+    class_x3 = 19.0
+    draw_box(class_x3, class_y - 0.8, 3.0, 1.6, color_classifier, 'Linear(32→139)\nLogits',
              fontsize=16)
-    draw_arrow(class_x2 + 2.5, class_y + 0.8, class_x3, class_y + 0.8,
+    draw_arrow(class_x2 + 2.5, class_y + 0.0, class_x3, class_y + 0.0,
                '32D', color='#7B1FA2', linewidth=2)
 
     # Final classification predictions
-    class_x4 = 24.5
-    draw_box(class_x4, class_y, 2.5, 1.6, color_classifier, 'Lithology\nPredictions',
+    class_x4 = 23.5
+    draw_box(class_x4, class_y - 0.8, 2.5, 1.6, color_classifier, 'Lithology\nPredictions',
              '139 classes', fontsize=16)
-    draw_arrow(class_x3 + 3.0, class_y + 0.8, class_x4, class_y + 0.8,
+    draw_arrow(class_x3 + 3.0, class_y + 0.0, class_x4, class_y + 0.0,
                '', color='#7B1FA2', linewidth=2)
 
     # ========================================================================
@@ -223,18 +223,23 @@ def create_architecture_diagram():
 
     # Reconstruction loss
     draw_box(1.0, loss_y, 3.5, 1.2, color_loss, 'L_recon = MSE', fontsize=14)
-    draw_arrow(0.5, main_y - 1.25, 2.75, loss_y + 1.2, '', color='#555', linewidth=1)
-    draw_arrow(final_x + 0.5, main_y - 1.25, 2.75, loss_y + 1.2, '', color='#555', linewidth=1)
+    # Arrow from input (goes down around left side)
+    draw_arrow(1.0, main_y - 1.25, 1.0, loss_y + 1.2, '', color='#555', linewidth=1)
+    # Arrow from output (goes down around right side)
+    draw_arrow(final_x + 1.1, main_y - 1.25, final_x + 1.1, 3.5, '', color='#555', linewidth=1)
+    draw_arrow(final_x + 1.1, 3.5, 4.5, 3.5, '', color='#555', linewidth=1)
+    draw_arrow(4.5, 3.5, 4.5, loss_y + 1.2, '', color='#555', linewidth=1)
 
     # KL divergence loss
     draw_box(5.5, loss_y, 3.5, 1.2, color_loss, 'L_KL = β×KL',
              'β: 1e-10→0.75', fontsize=14)
-    draw_arrow(latent_x + 1.1, main_y - 1.25, 7.25, loss_y + 1.2, '', color='#555', linewidth=1)
+    # Arrow from latent (goes down left side of decoder)
+    draw_arrow(latent_x - 1.1, main_y, latent_x - 1.1, loss_y + 1.2, '', color='#555', linewidth=1)
 
     # Classification loss
     draw_box(10.0, loss_y, 4.0, 1.2, color_loss, 'L_class = α×CE',
              'α = 0.1 (fixed)', fontsize=14)
-    draw_arrow(class_x4 + 1.25, class_y, 12.0, loss_y + 1.2, '', color='#7B1FA2', linewidth=1)
+    draw_arrow(class_x4 + 1.25, class_y + 0.0, class_x4 + 1.25, loss_y + 1.2, '', color='#7B1FA2', linewidth=1)
 
     # Total loss
     draw_box(15.5, loss_y, 7.0, 1.2, color_loss,
@@ -249,52 +254,10 @@ def create_architecture_diagram():
     # ========================================================================
 
     # Add title
-    ax.text(17, 16.2, 'Semi-Supervised VAE v2.14 Architecture (α=0.1)',
+    ax.text(14, 16.2, 'Semi-Supervised VAE v2.14 Architecture (α=0.1)',
             ha='center', fontsize=28, weight='bold')
-    ax.text(17, 15.5, 'Guided Representation Learning with Classification Head',
+    ax.text(14, 15.5, 'Guided Representation Learning with Classification Head',
             ha='center', fontsize=20, style='italic', color='#555')
-
-    # Performance box (top right)
-    perf_x, perf_y = 29.5, 13.0
-    draw_box(perf_x, perf_y, 4.5, 2.5, '#E8F5E9', 'Performance',
-             fontsize=18)
-    ax.text(perf_x + 2.25, perf_y + 1.6, 'GMM ARI: 0.285', ha='center', va='center',
-            fontsize=16, weight='bold', color='#2E7D32')
-    ax.text(perf_x + 2.25, perf_y + 1.1, '+45.6% vs v2.6.7', ha='center', va='center',
-            fontsize=14, color='#2E7D32')
-    ax.text(perf_x + 2.25, perf_y + 0.5, 'Params: 6,949', ha='center', va='center',
-            fontsize=13)
-    ax.text(perf_x + 2.25, perf_y + 0.0, '(vs 2,010 for v2.6.7)', ha='center', va='center',
-            fontsize=11, style='italic')
-
-    # Key innovation box
-    innov_x, innov_y = 29.5, 9.5
-    draw_box(innov_x, innov_y, 4.5, 2.5, '#FFF3E0', 'Key Innovation',
-             fontsize=16)
-    ax.text(innov_x + 2.25, innov_y + 1.4, 'Lithology labels guide', ha='center', va='center',
-            fontsize=12)
-    ax.text(innov_x + 2.25, innov_y + 0.9, 'latent space organization', ha='center', va='center',
-            fontsize=12)
-    ax.text(innov_x + 2.25, innov_y + 0.4, 'during training, then', ha='center', va='center',
-            fontsize=12)
-    ax.text(innov_x + 2.25, innov_y - 0.1, 'evaluate with unsupervised', ha='center', va='center',
-            fontsize=12)
-    ax.text(innov_x + 2.25, innov_y - 0.6, 'GMM clustering', ha='center', va='center',
-            fontsize=12)
-
-    # Legend
-    legend_elements = [
-        mpatches.Patch(color=color_input, label='Input/Preprocessed'),
-        mpatches.Patch(color=color_scaler, label='Scaling Transforms'),
-        mpatches.Patch(color=color_encoder, label='Encoder (Shared)'),
-        mpatches.Patch(color=color_latent, label='Latent Space'),
-        mpatches.Patch(color=color_decoder, label='Decoder (Shared)'),
-        mpatches.Patch(color=color_classifier, label='Classification Head (NEW)'),
-        mpatches.Patch(color=color_output, label='Reconstructed Output'),
-        mpatches.Patch(color=color_loss, label='Loss Functions')
-    ]
-    ax.legend(handles=legend_elements, loc='lower left', fontsize=14,
-             framealpha=0.95, ncol=2)
 
     plt.tight_layout()
     plt.savefig('vae_v2_14_semisupervised_architecture_diagram.png', dpi=300, bbox_inches='tight')
