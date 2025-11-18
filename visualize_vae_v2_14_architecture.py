@@ -223,23 +223,26 @@ def create_architecture_diagram():
 
     # Reconstruction loss
     draw_box(1.0, loss_y, 3.5, 1.2, color_loss, 'L_recon = MSE', fontsize=14)
-    # Arrow from input (goes down around left side)
-    draw_arrow(1.0, main_y - 1.25, 1.0, loss_y + 1.2, '', color='#555', linewidth=1)
-    # Arrow from output (goes down around right side)
-    draw_arrow(final_x + 1.1, main_y - 1.25, final_x + 1.1, 3.5, '', color='#555', linewidth=1)
-    draw_arrow(final_x + 1.1, 3.5, 4.5, 3.5, '', color='#555', linewidth=1)
-    draw_arrow(4.5, 3.5, 4.5, loss_y + 1.2, '', color='#555', linewidth=1)
+    # Arrow from input (goes down left side, well clear of scaler)
+    draw_arrow(0.2, main_y - 1.25, 0.2, loss_y + 1.2, '', color='#555', linewidth=1)
+    draw_arrow(0.2, loss_y + 1.2, 1.0, loss_y + 1.2, '', color='#555', linewidth=1)
+    # Arrow from output (goes down right side, well clear of inverse scaler)
+    draw_arrow(final_x + 2.2, main_y - 1.25, final_x + 2.2, loss_y + 1.2, '', color='#555', linewidth=1)
+    draw_arrow(final_x + 2.2, loss_y + 1.2, 4.5, loss_y + 1.2, '', color='#555', linewidth=1)
 
     # KL divergence loss
     draw_box(5.5, loss_y, 3.5, 1.2, color_loss, 'L_KL = β×KL',
              'β: 1e-10→0.75', fontsize=14)
-    # Arrow from latent (goes down left side of decoder)
-    draw_arrow(latent_x - 1.1, main_y, latent_x - 1.1, loss_y + 1.2, '', color='#555', linewidth=1)
+    # Arrow from latent (goes straight down from latent, left of decoder)
+    draw_arrow(latent_x - 0.8, main_y - 1.25, latent_x - 0.8, loss_y + 1.2, '', color='#555', linewidth=1)
+    draw_arrow(latent_x - 0.8, loss_y + 1.2, 5.5, loss_y + 1.2, '', color='#555', linewidth=1)
 
     # Classification loss
     draw_box(10.0, loss_y, 4.0, 1.2, color_loss, 'L_class = α×CE',
              'α = 0.1 (fixed)', fontsize=14)
-    draw_arrow(class_x4 + 1.25, class_y + 0.0, class_x4 + 1.25, loss_y + 1.2, '', color='#7B1FA2', linewidth=1)
+    # Arrow from classification predictions (goes straight down)
+    draw_arrow(class_x4 + 1.25, class_y - 0.8, class_x4 + 1.25, loss_y + 1.2, '', color='#7B1FA2', linewidth=1)
+    draw_arrow(class_x4 + 1.25, loss_y + 1.2, 14.0, loss_y + 1.2, '', color='#7B1FA2', linewidth=1)
 
     # Total loss
     draw_box(15.5, loss_y, 7.0, 1.2, color_loss,
