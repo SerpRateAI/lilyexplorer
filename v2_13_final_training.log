@@ -1,0 +1,55 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+====================================================================================================
+TRAINING FINAL v2.13 MODEL ON ALL DATA
+====================================================================================================
+Architecture: Multi-decoder VAE with feature weighting
+β schedule: 1e-10 → 0.75 over 50 epochs
+Cross-validation: ARI = 0.187 ± 0.045
+
+Total samples: 238,506
+Total boreholes: 296
+Unique lithologies: 139
+
+Device: cuda
+
+Parameters: 5,610
+
+Starting training on ALL data...
+β schedule: 1e-10 → 0.75 over 50 epochs
+Feature weights: tensor([1., 2., 2., 1., 1., 1.], device='cuda:0')
+
+Epoch   1: Loss=0.9518, Recon=0.9518, KL=52.6363, β=0.000000
+Epoch   5: Loss=0.5982, Recon=0.1433, KL=7.5818, β=0.060000
+Epoch  10: Loss=1.0527, Recon=0.2919, KL=5.6359, β=0.135000
+Epoch  15: Loss=1.4243, Recon=0.4300, KL=4.7348, β=0.210000
+Epoch  20: Loss=1.7439, Recon=0.5619, KL=4.1476, β=0.285000
+Epoch  25: Loss=2.0339, Recon=0.6898, KL=3.7334, β=0.360000
+Epoch  30: Loss=2.2935, Recon=0.8152, KL=3.3982, β=0.435000
+Epoch  35: Loss=2.5312, Recon=0.9340, KL=3.1316, β=0.510000
+Epoch  40: Loss=2.7546, Recon=1.0425, KL=2.9267, β=0.585000
+Epoch  45: Loss=2.9644, Recon=1.1476, KL=2.7528, β=0.660000
+Epoch  50: Loss=3.1622, Recon=1.2519, KL=2.5991, β=0.735000
+Epoch  55: Loss=3.1976, Recon=1.2732, KL=2.5658, β=0.750000
+Epoch  60: Loss=3.1972, Recon=1.2743, KL=2.5639, β=0.750000
+Epoch  65: Loss=3.1925, Recon=1.2719, KL=2.5608, β=0.750000
+Epoch  70: Loss=3.1930, Recon=1.2714, KL=2.5621, β=0.750000
+Epoch  75: Loss=3.1942, Recon=1.2712, KL=2.5640, β=0.750000
+Epoch  80: Loss=3.1895, Recon=1.2715, KL=2.5573, β=0.750000
+Epoch  85: Loss=3.1946, Recon=1.2713, KL=2.5644, β=0.750000
+Epoch  90: Loss=3.1902, Recon=1.2674, KL=2.5637, β=0.750000
+Epoch  95: Loss=3.1877, Recon=1.2671, KL=2.5608, β=0.750000
+Epoch 100: Loss=3.1871, Recon=1.2687, KL=2.5578, β=0.750000
+
+Training complete!
+Training time: 1471.4s
+
+====================================================================================================
+Model saved to: /home/utig5/johna/bhai/ml_models/checkpoints/vae_gra_v2_13_final.pth
+====================================================================================================

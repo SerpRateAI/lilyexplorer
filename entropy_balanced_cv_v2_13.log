@@ -1,0 +1,79 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/home/other/johna/.local/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+================================================================================
+VAE v2.13 - Multi-Decoder with Feature Weighting
+5-Fold Entropy-Balanced Cross-Validation
+================================================================================
+Dataset: 238,506 samples, 296 boreholes
+Device: cuda
+
+
+Fold 1/5
+----------------------------------------
+  Train: 197,946 samples, 236 boreholes
+  Test:  40,560 samples, 60 boreholes
+  Test entropy: 2.8528
+  Training fold 1...
+    Early stopping at epoch 16
+  Fold 1 ARI: 0.1733
+
+Fold 2/5
+----------------------------------------
+  Train: 196,539 samples, 237 boreholes
+  Test:  41,967 samples, 59 boreholes
+  Test entropy: 2.9863
+  Training fold 2...
+    Early stopping at epoch 16
+  Fold 2 ARI: 0.1947
+
+Fold 3/5
+----------------------------------------
+  Train: 191,629 samples, 237 boreholes
+  Test:  46,877 samples, 59 boreholes
+  Test entropy: 2.7715
+  Training fold 3...
+    Early stopping at epoch 16
+  Fold 3 ARI: 0.1725
+
+Fold 4/5
+----------------------------------------
+  Train: 181,220 samples, 237 boreholes
+  Test:  57,286 samples, 59 boreholes
+  Test entropy: 2.9370
+  Training fold 4...
+    Early stopping at epoch 16
+  Fold 4 ARI: 0.2566
+
+Fold 5/5
+----------------------------------------
+  Train: 186,690 samples, 237 boreholes
+  Test:  51,816 samples, 59 boreholes
+  Test entropy: 3.0855
+  Training fold 5...
+    Early stopping at epoch 16
+  Fold 5 ARI: 0.1357
+
+================================================================================
+CROSS-VALIDATION RESULTS
+================================================================================
+ fold      ari  entropy  n_train  n_test
+    1 0.173344 2.852823   197946   40560
+    2 0.194689 2.986286   196539   41967
+    3 0.172484 2.771532   191629   46877
+    4 0.256552 2.937035   181220   57286
+    5 0.135673 3.085473   186690   51816
+
+Mean ARI: 0.1865 ± 0.0445
+Min ARI:  0.1357
+Max ARI:  0.2566
+
+================================================================================
+CROSS-VALIDATION COMPLETE
+================================================================================
+Results saved to: v2_13_entropy_balanced_cv.csv
