@@ -1,291 +1,317 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
-Visualize Semi-Supervised VAE v2.14 Architecture Diagram
-
-Shows the complete data flow including the classification head that branches
-from the latent space for guided representation learning.
+Visualize Semi-Supervised VAE v2.14 Architecture
+Shows the classification head branching from latent space
 """
 
+import torch
+import torch.nn as nn
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
+from matplotlib.patches import FancyBboxPatch, FancyArrowPatch, Polygon
 import numpy as np
 
-# Set up the figure
-fig, ax = plt.subplots(figsize=(20, 14))
-ax.set_xlim(0, 20)
-ax.set_ylim(0, 14)
-ax.axis('off')
+# Set font to monospace (DejaVu Sans Mono is typically available on Linux)
+plt.rcParams['font.family'] = 'monospace'
 
-# Colors
-color_input = '#E8F4F8'
-color_transform = '#FFE6CC'
-color_encoder = '#D4E6F1'
-color_latent = '#D5F4E6'
-color_decoder = '#F9E79F'
-color_classifier = '#F8BBD0'  # Pink for classification head
-color_output = '#E8F4F8'
-color_loss = '#FADBD8'
+class SemiSupervisedVAE(nn.Module):
+    """VAE v2.14 semi-supervised architecture"""
 
-# Helper function to draw boxes
-def draw_box(ax, x, y, width, height, label, color, fontsize=10, bold=False):
-    box = FancyBboxPatch(
-        (x - width/2, y - height/2), width, height,
-        boxstyle="round,pad=0.1",
-        edgecolor='black',
-        facecolor=color,
-        linewidth=2
-    )
-    ax.add_patch(box)
-    weight = 'bold' if bold else 'normal'
-    ax.text(x, y, label, ha='center', va='center', fontsize=fontsize, weight=weight)
+    def __init__(self, input_dim=6, latent_dim=10, n_classes=139,
+                 encoder_dims=[32, 16], decoder_dims=[16, 32], classifier_hidden=32):
+        super().__init__()
+        self.input_dim = input_dim
+        self.latent_dim = latent_dim
+        self.n_classes = n_classes
 
-# Helper function to draw arrows
-def draw_arrow(ax, x1, y1, x2, y2, label='', color='black', style='->'):
-    arrow = FancyArrowPatch(
-        (x1, y1), (x2, y2),
-        arrowstyle=style,
-        color=color,
-        linewidth=2,
-        mutation_scale=20
-    )
-    ax.add_patch(arrow)
-    if label:
-        mid_x, mid_y = (x1 + x2) / 2, (y1 + y2) / 2
-        ax.text(mid_x, mid_y + 0.2, label, ha='center', va='bottom',
-                fontsize=8, bbox=dict(boxstyle='round,pad=0.3',
-                facecolor='white', edgecolor='none', alpha=0.8))
+        # Encoder (same as v2.6.7)
+        layers = []
+        prev_dim = input_dim
+        for h_dim in encoder_dims:
+            layers.extend([nn.Linear(prev_dim, h_dim), nn.ReLU()])
+            prev_dim = h_dim
+        self.encoder = nn.Sequential(*layers)
 
-# Title
-ax.text(10, 13.5, 'Semi-Supervised VAE v2.14 Architecture (α=0.1)',
-        ha='center', va='top', fontsize=18, weight='bold')
-ax.text(10, 13, 'Guided Representation Learning with Classification Head',
-        ha='center', va='top', fontsize=12, style='italic', color='#666')
+        self.fc_mu = nn.Linear(encoder_dims[-1], latent_dim)
+        self.fc_logvar = nn.Linear(encoder_dims[-1], latent_dim)
 
-# ============================================================================
-# INPUT LAYER
-# ============================================================================
-y_input = 11
-draw_box(ax, 2, y_input, 2.5, 1, 'Raw Input\n6D Features', color_input, fontsize=10, bold=True)
+        # Decoder (same as v2.6.7)
+        decoder_layers = []
+        prev_dim = latent_dim
+        for h_dim in decoder_dims:
+            decoder_layers.extend([nn.Linear(prev_dim, h_dim), nn.ReLU()])
+            prev_dim = h_dim
+        decoder_layers.append(nn.Linear(decoder_dims[-1], input_dim))
+        self.decoder = nn.Sequential(*decoder_layers)
 
-# Feature list
-features = ['GRA', 'MS', 'NGR', 'R', 'G', 'B']
-for i, feat in enumerate(features):
-    ax.text(2, y_input - 0.6 - i*0.15, f'• {feat}', ha='center', va='top', fontsize=7)
+        # Classification head (NEW)
+        self.classifier = nn.Sequential(
+            nn.Linear(latent_dim, classifier_hidden),
+            nn.ReLU(),
+            nn.Dropout(0.2),
+            nn.Linear(classifier_hidden, n_classes)
+        )
 
-# ============================================================================
-# DISTRIBUTION-AWARE SCALING
-# ============================================================================
-draw_arrow(ax, 2, y_input - 0.5, 2, 9.5, 'Input')
+def create_architecture_diagram():
+    """Create a detailed architecture diagram for semi-supervised VAE"""
 
-y_scale = 9
-draw_box(ax, 2, y_scale, 2.5, 1.2, 'Distribution-Aware\nScaling', color_transform, fontsize=9, bold=True)
+    fig, ax = plt.subplots(figsize=(36, 16))
+    ax.set_xlim(-1, 35)
+    ax.set_ylim(0, 17)
+    ax.axis('off')
 
-# Transformations
-transforms = [
-    'GRA: Standard',
-    'MS: Sign×log(|x|+1)',
-    'NGR: Sign×log(|x|+1)',
-    'RGB: log(x+1)'
-]
-for i, t in enumerate(transforms):
-    ax.text(2, y_scale - 0.7 - i*0.12, t, ha='center', va='top', fontsize=6)
+    # Color scheme
+    color_input = '#E8F4F8'
+    color_scaler = '#D4E6F1'
+    color_encoder = '#B3D9E6'
+    color_latent = '#FFD700'
+    color_decoder = '#FFB3BA'
+    color_output = '#BAFFC9'
+    color_classifier = '#E1BEE7'  # Light purple for classification head
+    color_loss = '#FFCCBC'
 
-# ============================================================================
-# ENCODER
-# ============================================================================
-draw_arrow(ax, 2, y_scale - 0.6, 2, 7.5, 'Scaled\n6D')
+    # Helper function to draw box
+    def draw_box(x, y, width, height, color, label, details='', fontsize=20):
+        box = FancyBboxPatch((x, y), width, height,
+                             boxstyle="round,pad=0.05",
+                             edgecolor='black', facecolor=color, linewidth=2)
+        ax.add_patch(box)
+        ax.text(x + width/2, y + height/2 + 0.2, label,
+                ha='center', va='center', fontsize=fontsize, weight='bold')
+        if details:
+            ax.text(x + width/2, y + height/2 - 0.3, details,
+                    ha='center', va='center', fontsize=fontsize-4, style='italic')
 
-y_enc1 = 7
-draw_box(ax, 2, y_enc1, 2, 0.8, 'Linear(6→32)\nReLU', color_encoder, fontsize=9)
+    # Helper function to draw trapezoid (encoder: narrows, decoder: widens)
+    def draw_trapezoid(x, y, width, height, color, label, details='', fontsize=20, direction='narrow'):
+        """
+        direction: 'narrow' for encoder (wider left, narrower right)
+                   'widen' for decoder (narrower left, wider right)
+        """
+        center_y = y + height/2
+        if direction == 'narrow':
+            # Encoder: wider on left, narrower on right
+            left_top = height * 0.8
+            left_bottom = height * 0.8
+            right_top = height * 0.5
+            right_bottom = height * 0.5
+        else:  # widen
+            # Decoder: narrower on left, wider on right
+            left_top = height * 0.5
+            left_bottom = height * 0.5
+            right_top = height * 0.8
+            right_bottom = height * 0.8
 
-draw_arrow(ax, 2, y_enc1 - 0.4, 2, 5.7, '32D')
+        vertices = [
+            (x, center_y - left_bottom/2),           # bottom left
+            (x, center_y + left_top/2),              # top left
+            (x + width, center_y + right_top/2),     # top right
+            (x + width, center_y - right_bottom/2),  # bottom right
+        ]
+        trapezoid = Polygon(vertices, closed=True, edgecolor='black',
+                           facecolor=color, linewidth=2)
+        ax.add_patch(trapezoid)
+        ax.text(x + width/2, center_y + 0.1, label,
+                ha='center', va='center', fontsize=fontsize, weight='bold')
+        if details:
+            ax.text(x + width/2, center_y - 0.4, details,
+                    ha='center', va='center', fontsize=fontsize-4, style='italic')
 
-y_enc2 = 5.2
-draw_box(ax, 2, y_enc2, 2, 0.8, 'Linear(32→16)\nReLU', color_encoder, fontsize=9)
+    # Helper function to draw arrow
+    def draw_arrow(x1, y1, x2, y2, label='', color='black', linewidth=2):
+        arrow = FancyArrowPatch((x1, y1), (x2, y2),
+                               arrowstyle='->', mutation_scale=20,
+                               color=color, linewidth=linewidth)
+        ax.add_patch(arrow)
+        if label:
+            mid_x, mid_y = (x1 + x2) / 2, (y1 + y2) / 2
+            ax.text(mid_x, mid_y + 0.3, label, ha='center', fontsize=14,
+                   bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.8))
 
-draw_arrow(ax, 2, y_enc2 - 0.4, 2, 4, '16D')
+    # Main VAE path (vertical center at y=10)
+    main_y = 10.0
 
-# ============================================================================
-# LATENT SPACE (with reparameterization)
-# ============================================================================
-y_latent = 3
-draw_box(ax, 2, y_latent + 0.5, 1.5, 0.6, 'fc_mu\n16→10', color_latent, fontsize=8)
-draw_box(ax, 2, y_latent - 0.5, 1.5, 0.6, 'fc_logvar\n16→10', color_latent, fontsize=8)
+    # 1. Raw Input
+    draw_box(0.0, main_y - 1.25, 2.0, 2.5, color_input, 'Raw Input\n6D Features',
+             'GRA, MS, NGR,\nR, G, B', fontsize=16)
 
-draw_arrow(ax, 2.8, y_latent, 4.5, y_latent, 'μ (10D)')
-draw_arrow(ax, 2.8, y_latent - 0.5, 4.5, y_latent - 0.3, 'σ (10D)')
+    # 2. Scaler (forward)
+    draw_box(2.5, main_y - 1.5, 2.4, 3.0, color_scaler, 'Distribution-\nAware Scaler',
+             'Sign×log\n+ Median-IQR', fontsize=16)
+    draw_arrow(2.0, main_y, 2.5, main_y)
 
-# Reparameterization trick
-y_reparam = y_latent - 0.15
-draw_box(ax, 5.5, y_reparam, 2, 0.9, 'Reparameterization\nz = μ + σ⊙ε\nε ~ N(0,I)',
-         color_latent, fontsize=8, bold=True)
+    # 3. Scaled Input
+    draw_box(5.5, main_y - 1.25, 2.0, 2.5, color_input, 'Scaled\nInput',
+             '6D\n(normalized)', fontsize=16)
+    draw_arrow(4.9, main_y, 5.5, main_y)
 
-# ============================================================================
-# LATENT REPRESENTATION (central node)
-# ============================================================================
-draw_arrow(ax, 6.5, y_reparam, 8.5, y_reparam, 'z\n10D', color='#2E86AB')
+    # 4. Combined Encoder (6 -> 32 -> 16 -> 10)
+    draw_trapezoid(8.5, main_y - 1.75, 4.5, 3.5, color_encoder, 'Encoder\n6 → [32,16] → 10',
+                   '(fc_mu, fc_logvar)', fontsize=18, direction='narrow')
+    draw_arrow(7.5, main_y, 8.5, main_y)
 
-y_z = y_reparam
-draw_box(ax, 9.5, y_z, 2.2, 1, 'Latent Space\n10D', color_latent, fontsize=10, bold=True)
-ax.text(9.5, y_z - 0.6, 'All dims active', ha='center', va='top', fontsize=7, style='italic')
+    # 5. Latent z (reparameterization)
+    latent_x = 14.0
+    draw_box(latent_x, main_y - 1.25, 2.2, 2.5, color_latent, 'Latent z',
+             '10D\n(μ + σε)', fontsize=18)
+    draw_arrow(13.0, main_y, latent_x, main_y)
 
-# ============================================================================
-# DECODER PATH (continues down)
-# ============================================================================
-draw_arrow(ax, 9.5, y_z - 0.5, 9.5, 1.7, '10D', color='#2E86AB')
+    # ========================================================================
+    # MAIN PATH: Decoder → Inverse Scaler → Output
+    # ========================================================================
 
-y_dec1 = 1.2
-draw_box(ax, 9.5, y_dec1, 2, 0.8, 'Linear(10→16)\nReLU', color_decoder, fontsize=9)
+    # 6. Decoder (10 -> 16 -> 32 -> 6)
+    decoder_x = 17.0
+    draw_trapezoid(decoder_x, main_y - 1.75, 4.5, 3.5, color_decoder, 'Decoder\n10 → [16,32] → 6',
+                   'ReLU+ReLU+Linear', fontsize=18, direction='widen')
+    draw_arrow(latent_x + 2.2, main_y, decoder_x, main_y)
 
-draw_arrow(ax, 9.5, y_dec1 - 0.4, 9.5, 0.4, '16D')
+    # 7. Inverse scaler
+    inv_scaler_x = 22.5
+    draw_box(inv_scaler_x, main_y - 1.5, 2.4, 3.0, color_scaler, 'Inverse\nScaler',
+             'Denormalize\nto original\nscale', fontsize=16)
+    draw_arrow(decoder_x + 4.5, main_y, inv_scaler_x, main_y)
 
-# ============================================================================
-# DECODER CONTINUES
-# ============================================================================
-y_dec2 = 11
-x_dec2 = 14
-draw_arrow(ax, 9.5, y_dec1 - 0.4, 9.5, y_dec2 + 0.6, '', color='#2E86AB')
-draw_arrow(ax, 9.5, y_dec2 + 0.6, x_dec2, y_dec2 + 0.6, '16D', color='#2E86AB')
+    # 8. Final reconstructed output
+    final_x = 26.0
+    draw_box(final_x, main_y - 1.25, 2.2, 2.5, color_output, 'Reconstructed\nOutput',
+             'GRA\', MS\',\nNGR\', R\',\nG\', B\'', fontsize=16)
+    draw_arrow(inv_scaler_x + 2.4, main_y, final_x, main_y)
 
-draw_box(ax, x_dec2, y_dec2, 2, 0.8, 'Linear(16→32)\nReLU', color_decoder, fontsize=9)
+    # ========================================================================
+    # CLASSIFICATION HEAD (branches downward from latent)
+    # ========================================================================
 
-draw_arrow(ax, x_dec2, y_dec2 - 0.4, x_dec2, 9.5, '32D')
+    class_y = 5.5  # Below the main path
 
-y_dec3 = 9
-draw_box(ax, x_dec2, y_dec3, 2, 0.8, 'fc_out\nLinear(32→6)', color_decoder, fontsize=9)
+    # Arrow from latent z down to classification head
+    draw_arrow(latent_x + 1.1, main_y - 1.25, latent_x + 1.1, class_y + 2.0,
+               '10D', color='#7B1FA2', linewidth=3)
 
-draw_arrow(ax, x_dec2, y_dec3 - 0.4, x_dec2, 7.5, '6D')
+    # Classification layer 1: Linear(10 -> 32) + ReLU
+    class_x1 = 13.0
+    draw_box(class_x1, class_y, 3.0, 1.6, color_classifier, 'Linear(10→32)\n+ ReLU',
+             fontsize=16)
+    draw_arrow(latent_x + 1.1, class_y + 2.0, class_x1 + 1.5, class_y + 1.6,
+               '', color='#7B1FA2', linewidth=2)
 
-# ============================================================================
-# OUTPUT
-# ============================================================================
-y_output = 7
-draw_box(ax, x_dec2, y_output, 2.5, 1, 'Reconstructed\n6D Features', color_output, fontsize=10, bold=True)
+    # Dropout layer
+    class_x2 = 17.0
+    draw_box(class_x2, class_y, 2.5, 1.6, color_classifier, 'Dropout\n(p=0.2)',
+             fontsize=16)
+    draw_arrow(class_x1 + 3.0, class_y + 0.8, class_x2, class_y + 0.8,
+               '32D', color='#7B1FA2', linewidth=2)
 
-# Feature list
-for i, feat in enumerate(features):
-    ax.text(x_dec2, y_output - 0.6 - i*0.15, f'• {feat}', ha='center', va='top', fontsize=7)
+    # Classification output: Linear(32 -> 139)
+    class_x3 = 20.5
+    draw_box(class_x3, class_y, 3.0, 1.6, color_classifier, 'Linear(32→139)\nLogits',
+             fontsize=16)
+    draw_arrow(class_x2 + 2.5, class_y + 0.8, class_x3, class_y + 0.8,
+               '32D', color='#7B1FA2', linewidth=2)
 
-# ============================================================================
-# CLASSIFICATION HEAD (branches from latent space)
-# ============================================================================
-# Arrow from latent to classifier (going right)
-draw_arrow(ax, 10.7, y_z, 13.5, y_z, '10D', color='#C2185B')
+    # Final classification predictions
+    class_x4 = 24.5
+    draw_box(class_x4, class_y, 2.5, 1.6, color_classifier, 'Lithology\nPredictions',
+             '139 classes', fontsize=16)
+    draw_arrow(class_x3 + 3.0, class_y + 0.8, class_x4, class_y + 0.8,
+               '', color='#7B1FA2', linewidth=2)
 
-x_class = 15
-y_class = y_z
-draw_box(ax, x_class, y_class, 2.2, 0.8, 'Linear(10→32)\nReLU',
-         color_classifier, fontsize=9, bold=True)
+    # ========================================================================
+    # LOSS FUNCTIONS (bottom)
+    # ========================================================================
 
-draw_arrow(ax, x_class, y_class - 0.4, x_class, y_class - 1.2, '32D', color='#C2185B')
+    loss_y = 1.8
 
-y_dropout = y_class - 1.6
-draw_box(ax, x_class, y_dropout, 2.2, 0.6, 'Dropout(0.2)',
-         color_classifier, fontsize=9)
+    # Reconstruction loss
+    draw_box(1.0, loss_y, 3.5, 1.2, color_loss, 'L_recon = MSE', fontsize=14)
+    draw_arrow(0.5, main_y - 1.25, 2.75, loss_y + 1.2, '', color='#555', linewidth=1)
+    draw_arrow(final_x + 0.5, main_y - 1.25, 2.75, loss_y + 1.2, '', color='#555', linewidth=1)
 
-draw_arrow(ax, x_class, y_dropout - 0.3, x_class, y_dropout - 0.9, '32D', color='#C2185B')
+    # KL divergence loss
+    draw_box(5.5, loss_y, 3.5, 1.2, color_loss, 'L_KL = β×KL',
+             'β: 1e-10→0.75', fontsize=14)
+    draw_arrow(latent_x + 1.1, main_y - 1.25, 7.25, loss_y + 1.2, '', color='#555', linewidth=1)
 
-y_logits = y_dropout - 1.3
-draw_box(ax, x_class, y_logits, 2.2, 0.8, 'Linear(32→139)\nLogits',
-         color_classifier, fontsize=9, bold=True)
+    # Classification loss
+    draw_box(10.0, loss_y, 4.0, 1.2, color_loss, 'L_class = α×CE',
+             'α = 0.1 (fixed)', fontsize=14)
+    draw_arrow(class_x4 + 1.25, class_y, 12.0, loss_y + 1.2, '', color='#7B1FA2', linewidth=1)
 
-# Classification output
-draw_arrow(ax, x_class, y_logits - 0.4, x_class, y_logits - 1.2, 'Logits\n139 classes', color='#C2185B')
+    # Total loss
+    draw_box(15.5, loss_y, 7.0, 1.2, color_loss,
+             'L_total = L_recon + β×L_KL + α×L_class',
+             fontsize=16)
+    draw_arrow(4.5, loss_y + 0.6, 15.5, loss_y + 0.6, '', color='black', linewidth=2)
+    draw_arrow(9.0, loss_y + 0.6, 15.5, loss_y + 0.6, '', color='black', linewidth=2)
+    draw_arrow(14.0, loss_y + 0.6, 15.5, loss_y + 0.6, '', color='black', linewidth=2)
 
-y_class_out = y_logits - 1.6
-draw_box(ax, x_class, y_class_out, 2.2, 0.7, 'Lithology\nPredictions',
-         color_classifier, fontsize=9, bold=True)
+    # ========================================================================
+    # ANNOTATIONS
+    # ========================================================================
 
-# ============================================================================
-# LOSS FUNCTIONS (bottom)
-# ============================================================================
-y_loss = 0.3
-x_loss_start = 4
+    # Add title
+    ax.text(17, 16.2, 'Semi-Supervised VAE v2.14 Architecture (α=0.1)',
+            ha='center', fontsize=28, weight='bold')
+    ax.text(17, 15.5, 'Guided Representation Learning with Classification Head',
+            ha='center', fontsize=20, style='italic', color='#555')
 
-# Reconstruction Loss
-draw_arrow(ax, 2, y_output - 0.5, x_loss_start, y_loss, '', color='#555', style='->')
-draw_arrow(ax, x_dec2, y_output - 0.5, x_loss_start + 2, y_loss, '', color='#555', style='->')
-draw_box(ax, x_loss_start + 1, y_loss, 2.5, 0.5, 'L_recon = MSE', color_loss, fontsize=8)
+    # Performance box (top right)
+    perf_x, perf_y = 29.5, 13.0
+    draw_box(perf_x, perf_y, 4.5, 2.5, '#E8F5E9', 'Performance',
+             fontsize=18)
+    ax.text(perf_x + 2.25, perf_y + 1.6, 'GMM ARI: 0.285', ha='center', va='center',
+            fontsize=16, weight='bold', color='#2E7D32')
+    ax.text(perf_x + 2.25, perf_y + 1.1, '+45.6% vs v2.6.7', ha='center', va='center',
+            fontsize=14, color='#2E7D32')
+    ax.text(perf_x + 2.25, perf_y + 0.5, 'Params: 6,949', ha='center', va='center',
+            fontsize=13)
+    ax.text(perf_x + 2.25, perf_y + 0.0, '(vs 2,010 for v2.6.7)', ha='center', va='center',
+            fontsize=11, style='italic')
 
-# KL Divergence Loss
-draw_arrow(ax, 5.5, y_reparam - 0.45, x_loss_start + 4, y_loss, '', color='#555', style='->')
-draw_box(ax, x_loss_start + 4, y_loss, 2.5, 0.5, 'L_KL = β×KL', color_loss, fontsize=8)
-ax.text(x_loss_start + 4, y_loss - 0.35, 'β: 1e-10→0.75', ha='center', va='top', fontsize=6)
+    # Key innovation box
+    innov_x, innov_y = 29.5, 9.5
+    draw_box(innov_x, innov_y, 4.5, 2.5, '#FFF3E0', 'Key Innovation',
+             fontsize=16)
+    ax.text(innov_x + 2.25, innov_y + 1.4, 'Lithology labels guide', ha='center', va='center',
+            fontsize=12)
+    ax.text(innov_x + 2.25, innov_y + 0.9, 'latent space organization', ha='center', va='center',
+            fontsize=12)
+    ax.text(innov_x + 2.25, innov_y + 0.4, 'during training, then', ha='center', va='center',
+            fontsize=12)
+    ax.text(innov_x + 2.25, innov_y - 0.1, 'evaluate with unsupervised', ha='center', va='center',
+            fontsize=12)
+    ax.text(innov_x + 2.25, innov_y - 0.6, 'GMM clustering', ha='center', va='center',
+            fontsize=12)
 
-# Classification Loss
-draw_arrow(ax, x_class, y_class_out - 0.35, x_loss_start + 7, y_loss, '', color='#C2185B', style='->')
-draw_box(ax, x_loss_start + 7, y_loss, 2.5, 0.5, 'L_class = α×CE', color_loss, fontsize=8)
-ax.text(x_loss_start + 7, y_loss - 0.35, 'α = 0.1', ha='center', va='top', fontsize=6, weight='bold')
+    # Legend
+    legend_elements = [
+        mpatches.Patch(color=color_input, label='Input/Preprocessed'),
+        mpatches.Patch(color=color_scaler, label='Scaling Transforms'),
+        mpatches.Patch(color=color_encoder, label='Encoder (Shared)'),
+        mpatches.Patch(color=color_latent, label='Latent Space'),
+        mpatches.Patch(color=color_decoder, label='Decoder (Shared)'),
+        mpatches.Patch(color=color_classifier, label='Classification Head (NEW)'),
+        mpatches.Patch(color=color_output, label='Reconstructed Output'),
+        mpatches.Patch(color=color_loss, label='Loss Functions')
+    ]
+    ax.legend(handles=legend_elements, loc='lower left', fontsize=14,
+             framealpha=0.95, ncol=2)
 
-# Total Loss
-draw_box(ax, x_loss_start + 10, y_loss, 3, 0.6,
-         'L_total = L_recon + β×L_KL + α×L_class',
-         color_loss, fontsize=9, bold=True)
+    plt.tight_layout()
+    plt.savefig('vae_v2_14_semisupervised_architecture_diagram.png', dpi=300, bbox_inches='tight')
+    print("✓ Diagram saved as 'vae_v2_14_semisupervised_architecture_diagram.png'")
+    plt.close()
 
-# ============================================================================
-# ANNOTATIONS
-# ============================================================================
-# Parameter count
-ax.text(18.5, 12.5, 'Parameters: 6,949', ha='right', va='top',
-        fontsize=10, bbox=dict(boxstyle='round,pad=0.5',
-        facecolor='lightgray', alpha=0.8))
-ax.text(18.5, 12, 'vs v2.6.7: 2,010', ha='right', va='top', fontsize=9)
-ax.text(18.5, 11.6, '+3.5× (classification head)', ha='right', va='top', fontsize=8)
-
-# Performance
-perf_box = FancyBboxPatch(
-    (18.5 - 2.5, 10 - 1), 2.5, 1,
-    boxstyle="round,pad=0.15",
-    edgecolor='#2E7D32',
-    facecolor='#E8F5E9',
-    linewidth=2.5
-)
-ax.add_patch(perf_box)
-ax.text(17.25, 9.7, 'Performance', ha='center', va='top', fontsize=10, weight='bold', color='#2E7D32')
-ax.text(17.25, 9.4, 'GMM ARI: 0.285', ha='center', va='top', fontsize=9)
-ax.text(17.25, 9.15, '+45.6% vs v2.6.7', ha='center', va='top', fontsize=9, weight='bold', color='#2E7D32')
-ax.text(17.25, 8.85, 'Reconstruction R²:', ha='center', va='top', fontsize=8)
-ax.text(17.25, 8.6, 'GRA: 0.949, RGB: 0.92', ha='center', va='top', fontsize=7)
-
-# Architecture highlights
-ax.text(0.5, 5, 'Encoder', ha='left', va='center', fontsize=12, weight='bold',
-        rotation=90, color='#1565C0')
-ax.text(18.5, y_z, 'Classification\nHead (NEW)', ha='right', va='center',
-        fontsize=11, weight='bold', color='#C2185B',
-        bbox=dict(boxstyle='round,pad=0.4', facecolor='#FCE4EC',
-                 edgecolor='#C2185B', linewidth=2))
-
-# Key innovation
-ax.text(10, 5.5, 'Key Innovation:', ha='center', va='top', fontsize=10, weight='bold')
-ax.text(10, 5.2, 'Lithology labels guide latent space', ha='center', va='top', fontsize=9)
-ax.text(10, 4.95, 'organization during training,', ha='center', va='top', fontsize=9)
-ax.text(10, 4.7, 'improving clustering with GMM', ha='center', va='top', fontsize=9)
-
-# Legend
-legend_y = 12
-legend_x = 0.5
-ax.text(legend_x, legend_y, 'Data Flow:', ha='left', va='top', fontsize=9, weight='bold')
-ax.plot([legend_x, legend_x + 0.8], [legend_y - 0.2, legend_y - 0.2],
-        'k-', linewidth=2, marker='>')
-ax.text(legend_x + 1, legend_y - 0.2, 'Standard VAE path', ha='left', va='center', fontsize=7)
-ax.plot([legend_x, legend_x + 0.8], [legend_y - 0.45, legend_y - 0.45],
-        color='#C2185B', linewidth=2, marker='>')
-ax.text(legend_x + 1, legend_y - 0.45, 'Classification path', ha='left', va='center', fontsize=7)
-
-plt.tight_layout()
-plt.savefig('vae_v2_14_semisupervised_architecture_diagram.png', dpi=300, bbox_inches='tight',
-            facecolor='white', edgecolor='none')
-print("✓ Saved: vae_v2_14_semisupervised_architecture_diagram.png")
-plt.close()
-
-print("\nArchitecture Diagram Generated Successfully!")
-print("="*60)
-print("Shows:")
-print("  • Encoder: 6D → [32, 16] → 10D latent")
-print("  • Decoder: 10D → [16, 32] → 6D (symmetric)")
-print("  • Classification head: 10D → [32, ReLU, Dropout(0.2)] → 139")
-print("  • Three-part loss: Reconstruction + β×KL + α×Classification")
-print("  • Parameters: 6,949 (vs 2,010 for v2.6.7)")
-print("  • Performance: ARI=0.285 (+45.6% improvement)")
+if __name__ == "__main__":
+    create_architecture_diagram()
+    print("\n" + "="*70)
+    print("Semi-Supervised VAE v2.14 Architecture Diagram Complete!")
+    print("="*70)
+    print("Shows:")
+    print("  • Encoder: 6D → [32, 16] → 10D latent (same as v2.6.7)")
+    print("  • Decoder: 10D → [16, 32] → 6D (same as v2.6.7)")
+    print("  • Classification head: 10D → [32, ReLU, Dropout(0.2)] → 139 classes")
+    print("  • Three-part loss: L_recon + β×L_KL + α×L_class")
+    print("  • β annealing: 1e-10 → 0.75 (over 50 epochs)")
+    print("  • α = 0.1 (fixed, optimal from grid search)")
+    print("  • Performance: ARI=0.285 (+45.6% vs v2.6.7)")
+    print("  • Parameters: 6,949 (vs 2,010 for v2.6.7)")
