@@ -1,0 +1,210 @@
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/computation/expressions.py:21: UserWarning: Pandas requires version '2.8.4' or newer of 'numexpr' (version '2.8.1' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+/home/other/johna/.local/lib/python3.10/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.2' currently installed).
+  from pandas.core import (
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+================================================================================
+SEMI-SUPERVISED VAE WITH CLASSIFICATION HEAD
+================================================================================
+
+Goal: Use lithology labels to guide latent space organization
+      Then evaluate unsupervised clustering (GMM) on that space
+
+3-part loss: Reconstruction + β×KL + α×Classification
+================================================================================
+
+================================================================================
+TRAINING: α=0.01 (classification weight)
+================================================================================
+Loading data...
+  Samples: 238,506
+  Classes: 139
+  Class distribution: min=1, max=49778, mean=1715.9
+  Train: 194,268 samples, 236 boreholes
+  Val:   16,223 samples, 29 boreholes
+  Test:  28,015 samples, 31 boreholes
+
+Model parameters: 6,949
+Device: cuda
+
+Training with β: 1e-10→0.75, α=0.01
+Epoch   1: Loss=0.5878, Recon=0.5413, KL=0.7604, Class=3.5093, TrainAcc=24.2%, ValAcc=26.5%, β=0.015000
+Epoch  10: Loss=0.1457, Recon=0.0350, KL=0.6124, Class=1.8869, TrainAcc=44.5%, ValAcc=35.4%, β=0.150000
+Epoch  20: Loss=0.2150, Recon=0.0616, KL=0.4515, Class=1.7945, TrainAcc=46.3%, ValAcc=34.7%, β=0.300000
+Epoch  30: Loss=0.2731, Recon=0.0872, KL=0.3745, Class=1.7415, TrainAcc=47.2%, ValAcc=37.9%, β=0.450000
+Epoch  40: Loss=0.3222, Recon=0.1112, KL=0.3235, Class=1.6930, TrainAcc=48.2%, ValAcc=38.4%, β=0.600000
+Epoch  50: Loss=0.3652, Recon=0.1338, KL=0.2865, Class=1.6498, TrainAcc=49.3%, ValAcc=37.7%, β=0.750000
+Epoch  60: Loss=0.3618, Recon=0.1337, KL=0.2825, Class=1.6319, TrainAcc=49.4%, ValAcc=37.0%, β=0.750000
+Epoch  70: Loss=0.3594, Recon=0.1320, KL=0.2817, Class=1.6119, TrainAcc=50.2%, ValAcc=38.7%, β=0.750000
+Epoch  80: Loss=0.3580, Recon=0.1315, KL=0.2807, Class=1.5925, TrainAcc=50.8%, ValAcc=38.1%, β=0.750000
+Epoch  90: Loss=0.3573, Recon=0.1310, KL=0.2808, Class=1.5675, TrainAcc=51.5%, ValAcc=38.0%, β=0.750000
+Epoch 100: Loss=0.3571, Recon=0.1309, KL=0.2809, Class=1.5531, TrainAcc=52.0%, ValAcc=37.8%, β=0.750000
+
+Training time: 203.6s
+Best model: epoch 5
+
+⚠️  Training failed for α=0.01: Weights only load failed. This file can still be loaded, to do so you have two options, [1mdo those steps only if you trust the source of the checkpoint[0m. 
+	(1) In PyTorch 2.6, we changed the default value of the `weights_only` argument in `torch.load` from `False` to `True`. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+	(2) Alternatively, to load with `weights_only=True` please check the recommended steps in the following error message.
+	WeightsUnpickler error: Unsupported global: GLOBAL sklearn.preprocessing._label.LabelEncoder was not an allowed global by default. Please use `torch.serialization.add_safe_globals([sklearn.preprocessing._label.LabelEncoder])` or the `torch.serialization.safe_globals([sklearn.preprocessing._label.LabelEncoder])` context manager to allowlist this global if you trust this class/function.
+
+Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.
+
+================================================================================
+TRAINING: α=0.1 (classification weight)
+================================================================================
+Loading data...
+  Samples: 238,506
+  Classes: 139
+  Class distribution: min=1, max=49778, mean=1715.9
+  Train: 194,174 samples, 236 boreholes
+  Val:   23,522 samples, 29 boreholes
+  Test:  20,810 samples, 31 boreholes
+
+Model parameters: 6,949
+Device: cuda
+
+Training with β: 1e-10→0.75, α=0.1
+Epoch   1: Loss=0.9182, Recon=0.5425, KL=0.8752, Class=3.6261, TrainAcc=19.8%, ValAcc=39.1%, β=0.015000
+Epoch  10: Loss=0.3089, Recon=0.0358, KL=0.6217, Class=1.7980, TrainAcc=45.8%, ValAcc=42.0%, β=0.150000
+Epoch  20: Loss=0.3688, Recon=0.0623, KL=0.4621, Class=1.6790, TrainAcc=48.4%, ValAcc=43.6%, β=0.300000
+Epoch  30: Loss=0.4206, Recon=0.0879, KL=0.3833, Class=1.6020, TrainAcc=50.3%, ValAcc=44.4%, β=0.450000
+Epoch  40: Loss=0.4671, Recon=0.1124, KL=0.3313, Class=1.5585, TrainAcc=51.2%, ValAcc=46.2%, β=0.600000
+Epoch  50: Loss=0.5086, Recon=0.1352, KL=0.2942, Class=1.5283, TrainAcc=52.1%, ValAcc=45.9%, β=0.750000
+Epoch  60: Loss=0.5045, Recon=0.1358, KL=0.2909, Class=1.5047, TrainAcc=52.6%, ValAcc=46.1%, β=0.750000
+Epoch  70: Loss=0.5017, Recon=0.1359, KL=0.2897, Class=1.4856, TrainAcc=53.3%, ValAcc=46.1%, β=0.750000
+Epoch  80: Loss=0.4991, Recon=0.1359, KL=0.2885, Class=1.4683, TrainAcc=53.7%, ValAcc=47.0%, β=0.750000
+Epoch  90: Loss=0.4971, Recon=0.1359, KL=0.2878, Class=1.4540, TrainAcc=54.1%, ValAcc=48.3%, β=0.750000
+Epoch 100: Loss=0.4953, Recon=0.1357, KL=0.2871, Class=1.4425, TrainAcc=54.5%, ValAcc=49.2%, β=0.750000
+
+Training time: 210.3s
+Best model: epoch 4
+
+⚠️  Training failed for α=0.1: Weights only load failed. This file can still be loaded, to do so you have two options, [1mdo those steps only if you trust the source of the checkpoint[0m. 
+	(1) In PyTorch 2.6, we changed the default value of the `weights_only` argument in `torch.load` from `False` to `True`. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+	(2) Alternatively, to load with `weights_only=True` please check the recommended steps in the following error message.
+	WeightsUnpickler error: Unsupported global: GLOBAL sklearn.preprocessing._label.LabelEncoder was not an allowed global by default. Please use `torch.serialization.add_safe_globals([sklearn.preprocessing._label.LabelEncoder])` or the `torch.serialization.safe_globals([sklearn.preprocessing._label.LabelEncoder])` context manager to allowlist this global if you trust this class/function.
+
+Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.
+
+================================================================================
+TRAINING: α=0.5 (classification weight)
+================================================================================
+Loading data...
+  Samples: 238,506
+  Classes: 139
+  Class distribution: min=1, max=49778, mean=1715.9
+  Train: 191,177 samples, 236 boreholes
+  Val:   23,262 samples, 29 boreholes
+  Test:  24,067 samples, 31 boreholes
+
+Model parameters: 6,949
+Device: cuda
+
+Training with β: 1e-10→0.75, α=0.5
+Epoch   1: Loss=2.2829, Recon=0.5649, KL=1.1589, Class=3.4012, TrainAcc=25.9%, ValAcc=39.5%, β=0.015000
+Epoch  10: Loss=1.0191, Recon=0.0404, KL=0.7166, Class=1.7424, TrainAcc=47.0%, ValAcc=45.5%, β=0.150000
+Epoch  20: Loss=1.0227, Recon=0.0668, KL=0.4948, Class=1.6151, TrainAcc=50.3%, ValAcc=48.7%, β=0.300000
+Epoch  30: Loss=1.0469, Recon=0.0926, KL=0.4031, Class=1.5458, TrainAcc=51.7%, ValAcc=48.6%, β=0.450000
+Epoch  40: Loss=1.0768, Recon=0.1162, KL=0.3482, Class=1.5032, TrainAcc=53.0%, ValAcc=48.4%, β=0.600000
+Epoch  50: Loss=1.1079, Recon=0.1391, KL=0.3089, Class=1.4741, TrainAcc=53.9%, ValAcc=48.1%, β=0.750000
+Epoch  60: Loss=1.0967, Recon=0.1403, KL=0.3046, Class=1.4560, TrainAcc=54.5%, ValAcc=49.1%, β=0.750000
+Epoch  70: Loss=1.0873, Recon=0.1400, KL=0.3028, Class=1.4404, TrainAcc=54.8%, ValAcc=49.2%, β=0.750000
+Epoch  80: Loss=1.0802, Recon=0.1397, KL=0.3014, Class=1.4288, TrainAcc=55.1%, ValAcc=48.7%, β=0.750000
+Epoch  90: Loss=1.0742, Recon=0.1398, KL=0.3003, Class=1.4184, TrainAcc=55.4%, ValAcc=48.3%, β=0.750000
+Epoch 100: Loss=1.0679, Recon=0.1399, KL=0.2989, Class=1.4078, TrainAcc=55.5%, ValAcc=49.7%, β=0.750000
+
+Training time: 211.5s
+Best model: epoch 13
+
+⚠️  Training failed for α=0.5: Weights only load failed. This file can still be loaded, to do so you have two options, [1mdo those steps only if you trust the source of the checkpoint[0m. 
+	(1) In PyTorch 2.6, we changed the default value of the `weights_only` argument in `torch.load` from `False` to `True`. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+	(2) Alternatively, to load with `weights_only=True` please check the recommended steps in the following error message.
+	WeightsUnpickler error: Unsupported global: GLOBAL sklearn.preprocessing._label.LabelEncoder was not an allowed global by default. Please use `torch.serialization.add_safe_globals([sklearn.preprocessing._label.LabelEncoder])` or the `torch.serialization.safe_globals([sklearn.preprocessing._label.LabelEncoder])` context manager to allowlist this global if you trust this class/function.
+
+Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.
+
+================================================================================
+TRAINING: α=1.0 (classification weight)
+================================================================================
+Loading data...
+  Samples: 238,506
+  Classes: 139
+  Class distribution: min=1, max=49778, mean=1715.9
+  Train: 188,064 samples, 236 boreholes
+  Val:   24,567 samples, 29 boreholes
+  Test:  25,875 samples, 31 boreholes
+
+Model parameters: 6,949
+Device: cuda
+
+Training with β: 1e-10→0.75, α=1.0
+Epoch   1: Loss=4.1865, Recon=0.6590, KL=0.7418, Class=3.5164, TrainAcc=19.7%, ValAcc=29.9%, β=0.015000
+Epoch  10: Loss=1.9086, Recon=0.0503, KL=0.8354, Class=1.7330, TrainAcc=47.4%, ValAcc=37.7%, β=0.150000
+Epoch  20: Loss=1.8371, Recon=0.0753, KL=0.5324, Class=1.6020, TrainAcc=50.4%, ValAcc=43.8%, β=0.300000
+Epoch  30: Loss=1.8260, Recon=0.1001, KL=0.4277, Class=1.5335, TrainAcc=52.5%, ValAcc=45.7%, β=0.450000
+Epoch  40: Loss=1.8392, Recon=0.1233, KL=0.3675, Class=1.4954, TrainAcc=53.4%, ValAcc=46.1%, β=0.600000
+Epoch  50: Loss=1.8611, Recon=0.1448, KL=0.3263, Class=1.4716, TrainAcc=54.0%, ValAcc=46.9%, β=0.750000
+Epoch  60: Loss=1.8405, Recon=0.1462, KL=0.3192, Class=1.4549, TrainAcc=54.3%, ValAcc=47.7%, β=0.750000
+Epoch  70: Loss=1.8265, Recon=0.1463, KL=0.3156, Class=1.4435, TrainAcc=54.8%, ValAcc=48.9%, β=0.750000
+Epoch  80: Loss=1.8131, Recon=0.1462, KL=0.3128, Class=1.4323, TrainAcc=54.9%, ValAcc=48.1%, β=0.750000
+Epoch  90: Loss=1.8003, Recon=0.1469, KL=0.3096, Class=1.4212, TrainAcc=55.2%, ValAcc=49.5%, β=0.750000
+Epoch 100: Loss=1.7895, Recon=0.1469, KL=0.3072, Class=1.4122, TrainAcc=55.4%, ValAcc=48.4%, β=0.750000
+
+Training time: 228.4s
+Best model: epoch 16
+
+⚠️  Training failed for α=1.0: Weights only load failed. This file can still be loaded, to do so you have two options, [1mdo those steps only if you trust the source of the checkpoint[0m. 
+	(1) In PyTorch 2.6, we changed the default value of the `weights_only` argument in `torch.load` from `False` to `True`. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+	(2) Alternatively, to load with `weights_only=True` please check the recommended steps in the following error message.
+	WeightsUnpickler error: Unsupported global: GLOBAL sklearn.preprocessing._label.LabelEncoder was not an allowed global by default. Please use `torch.serialization.add_safe_globals([sklearn.preprocessing._label.LabelEncoder])` or the `torch.serialization.safe_globals([sklearn.preprocessing._label.LabelEncoder])` context manager to allowlist this global if you trust this class/function.
+
+Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.
+
+================================================================================
+TRAINING: α=2.0 (classification weight)
+================================================================================
+Loading data...
+  Samples: 238,506
+  Classes: 139
+  Class distribution: min=1, max=49778, mean=1715.9
+  Train: 196,956 samples, 236 boreholes
+  Val:   23,129 samples, 29 boreholes
+  Test:  18,421 samples, 31 boreholes
+
+Model parameters: 6,949
+Device: cuda
+
+Training with β: 1e-10→0.75, α=2.0
+Epoch   1: Loss=7.7490, Recon=0.6734, KL=0.6882, Class=3.5327, TrainAcc=22.9%, ValAcc=49.7%, β=0.015000
+Epoch  10: Loss=3.6517, Recon=0.0514, KL=0.9273, Class=1.7306, TrainAcc=46.3%, ValAcc=50.5%, β=0.150000
+Epoch  20: Loss=3.4803, Recon=0.0802, KL=0.5652, Class=1.6153, TrainAcc=49.6%, ValAcc=50.6%, β=0.300000
+Epoch  30: Loss=3.4337, Recon=0.1057, KL=0.4445, Class=1.5640, TrainAcc=50.9%, ValAcc=50.0%, β=0.450000
+Epoch  40: Loss=3.4046, Recon=0.1292, KL=0.3774, Class=1.5245, TrainAcc=51.8%, ValAcc=50.0%, β=0.600000
+Epoch  50: Loss=3.3937, Recon=0.1521, KL=0.3306, Class=1.4968, TrainAcc=52.5%, ValAcc=52.1%, β=0.750000
+Epoch  60: Loss=3.3479, Recon=0.1534, KL=0.3219, Class=1.4766, TrainAcc=53.0%, ValAcc=52.6%, β=0.750000
+Epoch  70: Loss=3.3088, Recon=0.1531, KL=0.3173, Class=1.4588, TrainAcc=53.2%, ValAcc=53.5%, β=0.750000
+Epoch  80: Loss=3.2793, Recon=0.1535, KL=0.3135, Class=1.4453, TrainAcc=53.8%, ValAcc=53.6%, β=0.750000
+Epoch  90: Loss=3.2547, Recon=0.1542, KL=0.3111, Class=1.4336, TrainAcc=54.0%, ValAcc=53.6%, β=0.750000
+Epoch 100: Loss=3.2249, Recon=0.1544, KL=0.3085, Class=1.4196, TrainAcc=54.5%, ValAcc=53.6%, β=0.750000
+
+Training time: 234.9s
+Best model: epoch 2
+
+⚠️  Training failed for α=2.0: Weights only load failed. This file can still be loaded, to do so you have two options, [1mdo those steps only if you trust the source of the checkpoint[0m. 
+	(1) In PyTorch 2.6, we changed the default value of the `weights_only` argument in `torch.load` from `False` to `True`. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+	(2) Alternatively, to load with `weights_only=True` please check the recommended steps in the following error message.
+	WeightsUnpickler error: Unsupported global: GLOBAL sklearn.preprocessing._label.LabelEncoder was not an allowed global by default. Please use `torch.serialization.add_safe_globals([sklearn.preprocessing._label.LabelEncoder])` or the `torch.serialization.safe_globals([sklearn.preprocessing._label.LabelEncoder])` context manager to allowlist this global if you trust this class/function.
+
+Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.
+
+================================================================================
+RESULTS SUMMARY
+================================================================================
+     α   Test Acc    GMM ARI  Active Dims   Time (s)
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utig5/johna/bhai/train_semisupervised_vae.py", line 500, in <module>
+    best = max(results, key=lambda x: x['ari'])
+ValueError: max() arg is an empty sequence
