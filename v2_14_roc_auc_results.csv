@@ -1,0 +1,140 @@
+Lithology,Class_Index,Test_Count,AUC
+diatomite,41,759,0.9873451242237973
+volcaniclastic rock,137,43,0.9641209544381797
+nannofossil chalk,96,1122,0.9555836727154322
+volcanic rock,136,142,0.9555039325211063
+lapillistone,78,61,0.9299357242864674
+tephra,131,64,0.9286493469008918
+sand,110,946,0.9252092677504
+interbedded sandstone and mudstone,72,321,0.9127847156030736
+diatom ooze,39,320,0.9057258698028143
+tuff,132,9,0.8964756657899166
+very fine sand,134,224,0.8962613965361671
+hyaloclastite,68,254,0.8942684598264796
+silty sand,129,145,0.883592125421425
+coarse sandstone,34,5,0.8762145909162843
+lava,79,39,0.8720425859501405
+silt,123,227,0.867667944847989
+interbedded silt and clay,73,1053,0.8601881676714758
+calcarenite,12,86,0.8425805462735496
+foraminifera chalk,52,7,0.8376381141862365
+gypsum rock,66,2,0.8353490369834524
+clayey silt,28,818,0.8264104994825096
+lapilli tuff,77,68,0.8244866092237213
+silty mud,127,149,0.8242686658362334
+silty mudstone,128,15,0.8221845344428615
+sandstone,112,518,0.8196378675106946
+ash/tuff,4,127,0.8139375308924497
+limestone,80,141,0.8134645784912918
+mud,90,363,0.7985119885725945
+packstone,101,4816,0.787116322028562
+carbonate ooze,16,11,0.783334737932608
+sandy clay,113,51,0.7792084177007079
+siltstone,124,594,0.7768668646567097
+silty clay,125,2931,0.7708247933934401
+chert,19,9,0.7686862063854535
+wackestone,138,3220,0.7677172027793282
+clay,24,9228,0.7664369162219673
+rudstone,109,177,0.7622597433937568
+foraminifera ooze,56,141,0.7603743327290884
+fine sand,48,487,0.7600741493171854
+silty sandstone,130,116,0.7495982925087022
+grainstone,61,762,0.7464214727092318
+interbedded sand and mud,70,174,0.7426167998063423
+dolostone,44,105,0.742540351513229
+claystone,30,1214,0.7371588375944954
+mudstone,95,1903,0.7357478860930889
+calcareous ooze,13,290,0.7235881433543718
+sandy mud,115,44,0.7219192650586052
+sandy claystone,114,3,0.7189329716288008
+biosiliceous ooze,6,10,0.7172379488107081
+foraminifera sand,57,6,0.7088683909085428
+nannofossil ooze,99,5172,0.6990970577327068
+nannofossil clay,97,1509,0.6987170023614699
+sandy silt,118,120,0.696164264019221
+chalk,18,20,0.6885685693608937
+sand-silt-clay,111,36,0.6693557104002333
+calcilutite,14,30,0.6692318132464713
+breccia,9,131,0.6528461235056942
+medium to coarse sand,85,82,0.6436613867905142
+floatstone,51,23,0.6280860813514988
+medium to coarse sandstone,86,485,0.6109399979877669
+sandy siltstone,120,16,0.5935365881235584
+clayey siltstone,29,25,0.5848931309795762
+breccia/conglomerate,10,155,0.5830094696734093
+boninite,7,596,0.5742522134794725
+ooze,100,8,0.5680477051774814
+ash,3,15,0.5665211918383346
+silty claystone,126,77,0.4830153655587862
+conglomerate,35,122,0.4819728242531984
+fine sandstone,49,186,0.45772542518177445
+basalt,5,880,0.36933985654319845
+very fine sandstone,135,5,0.33644111862184345
+clayey mud,25,24,0.2784440448726648
+clayey sand,26,5,0.27668934958062985
+dolerite,43,77,0.21833627073544648
+lapilli ash,75,1,0.20383389470352875
+cataclasite,17,18,0.19453867028493893
+muddy siltstone,94,1,0.06618893686280714
+agglomerate,0,22,0.06449793986545388
+pebbly mud,102,65,0.05671128726388728
+gabbro,59,2,0.03540103083461438
+coarse sand,32,10,0.024199602062042157
+andesite,1,0,
+anhydrite rock,2,0,
+boundstone,8,0,
+breccia/conglomerate/gravel,11,0,
+carbonate,15,0,
+clast-poor muddy diamict,20,0,
+clast-poor sandy diamict,21,0,
+clast-rich muddy diamict,22,0,
+clast-rich sandy diamict,23,0,
+clayey sandstone,27,0,
+coal,31,0,
+coarse sand and gravel,33,0,
+dacite,36,0,
+debris flow,37,0,
+diabase,38,0,
+diatom silt,40,0,
+diorite,42,0,
+dunite,45,0,
+felsic patch,46,0,
+felsic vein,47,0,
+fine tuff,50,0,
+foraminifera clay,53,0,
+foraminifera limestone,54,0,
+foraminifera mud,55,0,
+foraminifera sandstone,58,0,
+gabbronorite,60,0,
+granofels,62,0,
+gravel,63,0,
+gravelly sand,64,0,
+gravelly sandstone,65,0,
+harzburgite,67,0,
+interbedded mud/mudstone and diamict,69,0,
+interbedded sand/sandstone and mud/mudstone,71,0,
+interbedded siltstone and mudstone,74,0,
+lapilli tephra,76,0,
+marble,81,0,
+marl,82,0,
+marlstone,83,0,
+medium sand,84,0,
+metabasite,87,0,
+metaclaystone,88,0,
+metavolcanic rock,89,0,
+muddy sand,91,0,
+muddy sand/sandstone to silty mud/mudstone,92,0,
+muddy silt,93,0,
+nannofossil mud,98,0,
+pebbly mudstone,103,0,
+pebbly sandstone,104,0,
+porcellanite,105,0,
+radiolarian mud,106,0,
+radiolarian ooze,107,0,
+rhyodacite,108,0,
+sandy mud/mudstone to muddy sand/sandstone,116,0,
+sandy mudstone,117,0,
+sandy silt to silty sand,119,0,
+schist,121,0,
+serpentinite,122,0,
+ultramafic rock,133,0,

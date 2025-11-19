@@ -58,14 +58,14 @@ class SemiSupervisedVAE(nn.Module):
         self.fc_mu = nn.Linear(encoder_dims[-1], latent_dim)
         self.fc_logvar = nn.Linear(encoder_dims[-1], latent_dim)
 
-        # Decoder
+        # Decoder: 10D → [16, 32] → 6D (symmetric)
         decoder_layers = []
         prev_dim = latent_dim
-        for h_dim in decoder_dims:
+        for h_dim in reversed(encoder_dims):
             decoder_layers.extend([nn.Linear(prev_dim, h_dim), nn.ReLU()])
             prev_dim = h_dim
-        decoder_layers.append(nn.Linear(decoder_dims[-1], input_dim))
         self.decoder = nn.Sequential(*decoder_layers)
+        self.fc_out = nn.Linear(encoder_dims[0], input_dim)
 
         # Classification head
         self.classifier = nn.Sequential(
@@ -85,7 +85,8 @@ class SemiSupervisedVAE(nn.Module):
         return mu + eps * std
 
     def decode(self, z):
-        return self.decoder(z)
+        h = self.decoder(z)
+        return self.fc_out(h)
 
     def forward(self, x):
         mu, logvar = self.encode(x)
