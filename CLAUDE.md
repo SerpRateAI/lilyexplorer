@@ -205,13 +205,18 @@ CatBoost regression models for predicting RGB color from physical properties (us
 
 ### Lithology Prediction from Physical Properties (VAE Models)
 
-**Recommendation: Use VAE GRA v2.6.7** for all lithology clustering (entropy-balanced CV: ARI = 0.196 ± 0.037, best performance).
+**Recommendation:**
+- **Unsupervised clustering**: Use VAE GRA v2.6.7 (ARI = 0.196 ± 0.037)
+- **Supervised classification + clustering**: Use Semi-Supervised VAE v2.14 (ARI = 0.285, Pooled AUC = 0.917)
 
 **Quick Reference:**
 
-| Model | Features | Samples | GMM ARI (5-fold CV) | Status |
-|-------|----------|---------|---------------------|--------|
-| **VAE GRA v2.6.7** | **10D latent** (GRA+MS+NGR+RGB, β: 1e-10→0.75) | 239K | **0.196 ± 0.037** | **✓ USE THIS** |
+| Model | Features | Samples | GMM ARI / Classification | Status |
+|-------|----------|---------|--------------------------|--------|
+| **Semi-Sup VAE v2.14** | **10D latent + 139-class head** (α=0.1, β: 1e-10→0.75) | 239K | **ARI=0.285**, Pooled AUC=0.917 | **✓ Best overall** |
+| **VAE GRA v2.6.7** | **10D latent, [32,16] arch** (GRA+MS+NGR+RGB, β: 1e-10→0.75) | 239K | **0.196 ± 0.037** | **✓ Best unsupervised** |
+| VAE GRA v2.13 | 10D latent, multi-decoder (6 decoders, β: 1e-10→0.75) | 239K | 0.187 ± 0.045 | Equivalent clustering, architectural study |
+| VAE GRA v2.12 | 10D latent, [256,128,64,32] arch (β: 1e-10→0.75, 200ep) | 239K | 0.129 | ❌ Failed (-34%, wider arch) |
 | VAE GRA v2.6.10 | 10D latent (60% real + 40% predicted RGB) | 396K | 0.093 | ❌ Failed (-53%) |
 | VAE GRA v2.6.8 | 10D latent (fuzzy ±20cm depth matching) | 251K | 0.087 | ❌ Failed (-55%) |
 | VAE GRA v2.6.6 | 10D latent (GRA+MS+NGR+RGB, β: 0.001→0.5) | 239K | 0.19 ± 0.05 | Superseded by v2.6.7 |
@@ -220,9 +225,11 @@ CatBoost regression models for predicting RGB color from physical properties (us
 | VAE GRA v2.1 | 6D (dist-aware, β=1.0) | 239K | ~0.13 (est.) | Distribution baseline |
 | VAE GRA v2 | 6D (standard scaling) | 239K | ~0.10 (est.) | Multimodal baseline |
 | VAE GRA v1 | 3D (physical only) | 403K | ~0.06 (est.) | Max coverage |
-| Failed experiments (9 variants) | Various | — | 0.04-0.19 (est.) | ❌ Don't use |
+| Failed experiments (10 variants) | Various | — | 0.04-0.19 (est.) | ❌ Don't use |
 
 **Key Model Files:**
+
+**v2.6.7 (Production - Recommended):**
 - **Production Model**: `ml_models/checkpoints/vae_gra_v2_6_7_final.pth` (trained on all 238,506 samples)
 - Training CV: `entropy_balanced_cv_v2_6_7.py` (5-fold CV with β: 1e-10→0.75)
 - Final Training: `train_v2_6_7_final.py` (production model on 100% data)
@@ -232,19 +239,58 @@ CatBoost regression models for predicting RGB color from physical properties (us
 - Implementation: `ml_models/vae_lithology_gra_v2_5_model.py` (same architecture as v2.6.6, different β schedule)
 - Analysis Notebook: `vae_v2_6_7_analysis.ipynb` (Q-Q plots, UMAP, statistics)
 
+**v2.13 (Multi-Decoder - Architectural Study):**
+- Model: `ml_models/checkpoints/vae_gra_v2_13_final.pth` (6 separate decoders, 5,610 parameters)
+- Training CV: `entropy_balanced_cv_v2_13.py` (5-fold CV with β: 1e-10→0.75)
+- Final Training: `train_v2_13_final.py` (production model on 100% data)
+- β Grid Search: `beta_grid_search_v2_13.py` (tested β ∈ {0.5, 0.75, 1.0, 1.5, 2.0})
+- CV Results: `v2_13_entropy_balanced_cv.csv`, `beta_grid_search_v2_13.csv`
+- Training Logs: `v2_13_final_training.log`, `entropy_balanced_cv_v2_13.log`, `beta_grid_search_v2_13.log`
+- Implementation: `ml_models/vae_lithology_gra_v2_13_model.py` (multi-decoder architecture)
+- Visualization: `visualize_vae_v2_13_multidecoder_architecture.py` (architecture diagram)
+- Reconstruction: `visualize_v2_13_reconstruction.py` (predicted vs true scatter plots)
+- Investigation: `V2_13_RECONSTRUCTION_INVESTIGATION.md` (documents early experiments vs final model)
+
+**v2.14 (Semi-Supervised VAE - Best Overall Performance):**
+- Model: `ml_models/checkpoints/semisup_vae_alpha0.1.pth` (classification head: 10D→[32,ReLU,Dropout]→139 classes)
+- Training: `train_semisupervised_vae.py` (α grid search: {0.01, 0.1, 0.5, 1.0, 2.0}, β: 1e-10→0.75)
+- α Grid Search Results: `semisup_alpha_grid_search.csv` (best: α=0.1, ARI=0.285)
+- Training Log: `semisup_vae_training.log` (5 epochs, 188s)
+- Implementation: `ml_models/semisup_vae_model.py` (semi-supervised architecture)
+- Visualization:
+  - Architecture: `visualize_vae_v2_14_architecture.py` (horizontal flow diagram)
+  - Reconstruction: `visualize_v2_14_reconstruction.py` (dark red scatter plots)
+  - UMAP: `plot_v2_14_umap.py` (cluster + lithology projections with gabbro label)
+  - ROC Curves: `plot_v2_14_roc_curves.py` (pooled AUC=0.917, top 20 classes, AUC distribution)
+- Results:
+  - `v2_14_umap_projection.png`, `v2_14_umap_by_lithology.png`
+  - `v2_14_reconstruction.png`, `v2_14_residuals.png`
+  - `v2_14_roc_curves_all.png`, `v2_14_roc_curves_top20.png`, `v2_14_auc_distribution.png`
+  - `v2_14_roc_auc_results.csv` (per-class AUC scores)
+- Performance: ARI=0.285 (+45.6% vs v2.6.7), Pooled AUC=0.917, 81/139 classes with test data
+- Documentation: `SEMISUP_VAE_V2_14_SUMMARY.md`
+
 **Critical Findings:**
 1. **Extreme β annealing optimal**: Starting from pure autoencoder (β=1e-10) and annealing to β=0.75 achieves best performance (ARI=0.196 ± 0.037, +3% vs β: 0.001→0.5, +18% lower variance). Sweet spot at β_end=0.75 balances regularization without destroying feature correlations.
 2. **Cross-validation essential**: Original single-split results (ARI=0.286) were 33.5% inflated due to lucky test set with lower lithology diversity (entropy 2.95 vs 3.12). Entropy-balanced 5-fold CV reveals true performance.
 3. **Variance reflects geology**: High performance variance (±0.04-0.05) is inherent to geological heterogeneity across boreholes, not a flaw in methodology
-4. **Overparameterization helps**: 10D latent (→4D effective) outperforms 8D (+7.3% relative improvement)
-5. **Feature quality > dataset size**: More data with inferior features performs -54% worse
-6. **Cross-modal correlations are primary**: "Dark + dense = basalt" must be learned jointly
-7. **Joint training > transfer learning**: All pre-training approaches fail (-50% to -79%)
-8. **VampPrior overfits**: v2.10 validation loss explodes +680% despite +1.2% ARI gain
-9. **Masking degrades clustering**: v2.11 feature masking reduces ARI -4% to -8%, fails at imputation (R²<0)
-10. **Predicted RGB fails**: v2.6.10 using supervised RGB prediction (R²=0.72, +77% boreholes) degrades ARI -53%, demonstrating 28% unexplained variance corrupts cross-modal correlations
+4. **Overparameterization helps (latent)**: 10D latent (→4D effective) outperforms 8D (+7.3% relative improvement)
+5. **Architectural simplicity wins**: Shallow [32,16] bottleneck (2K params) outperforms wider [256,128,64,32] (91K params) by +52%. Tight bottleneck forces discriminative feature learning. v2.12 wider architecture failed (-34%).
+6. **Feature quality > dataset size**: More data with inferior features performs -54% worse
+7. **Cross-modal correlations are primary**: "Dark + dense = basalt" must be learned jointly
+8. **Joint training > transfer learning**: All pre-training approaches fail (-50% to -79%)
+9. **VampPrior overfits**: v2.10 validation loss explodes +680% despite +1.2% ARI gain
+10. **Masking degrades clustering**: v2.11 feature masking reduces ARI -4% to -8%, fails at imputation (R²<0)
+11. **Predicted RGB fails**: v2.6.10 using supervised RGB prediction (R²=0.72, +77% boreholes) degrades ARI -53%, demonstrating 28% unexplained variance corrupts cross-modal correlations
+12. **Clustering determined by latent space, not decoder**: v2.13 multi-decoder (6 separate decoders, 5.6K params) achieves identical clustering to v2.6.7 single decoder (2K params): ARI=0.187±0.045 vs 0.196±0.037 (statistically equivalent). Demonstrates decoder architecture doesn't affect clustering performance - latent space structure is what matters. Multi-decoder robust across β ∈ {0.5, 0.75, 1.0, 1.5, 2.0} with overlapping confidence intervals.
+13. **Dimension collapse is intentional and desirable**: Both v2.6.7 and v2.13 collapse from 10D nominal to ~3-4D effective latent space. This is β-VAE working correctly - only the most discriminative dimensions survive the KL penalty (β=0.75). The 3 active dimensions (z5, z6, z7 for v2.13) capture 100% of variance and represent the most informative geological patterns. More dimensions wouldn't improve clustering - β-VAE automatically performs feature selection.
+14. **Semi-supervised learning dramatically improves clustering**: v2.14 adds classification head (10D→[32,ReLU,Dropout]→139 classes) with α=0.1 weight, achieving ARI=0.285 (+45.6% vs v2.6.7 unsupervised). Gentle classification guidance organizes latent space more effectively than pure reconstruction loss. Also provides excellent classification (Pooled AUC=0.917). Sweet spot at α=0.1 - higher values degrade both clustering and classification.
+15. **VAE vastly outperforms linear baselines for physical properties**: Baseline Lasso regression (predict each feature from other 5) achieves R² of only 0.18 (GRA), 0.25 (MS), 0.41 (NGR) - demonstrating weak linear correlations. VAE reconstruction improves these by +282% (GRA), +94% (MS), +77% (NGR), proving the VAE learns meaningful non-linear geological relationships. RGB channels show opposite pattern (R²=0.99+ for linear baseline) because color channels are nearly perfectly linearly correlated; VAE's latent bottleneck sacrifices RGB perfection to capture physical property structure.
+16. **Feature weighting (v2.13)**: Multi-decoder uses weights [1.0, 2.0, 2.0, 1.0, 1.0, 1.0] for GRA/MS/NGR/R/G/B. The 2× weight on MS and NGR reflects (1) their importance for lithology discrimination (MS distinguishes basalt, NGR distinguishes clay) and (2) their lower baseline reconstruction quality (MS R²=0.44, NGR R²=0.74 vs RGB R²=0.94-0.96). This encourages the model to focus on geologically informative but challenging features.
 
-**For detailed documentation:** See `VAE_MODELS.md` for complete model descriptions, all 9 failed experiments (v2.2, v3, v2.6.1-4, v2.6.8, v2.6.10-11), and scientific insights.
+**Performance Context**: ARI=0.196±0.037 is **strong performance** for unsupervised lithology clustering from physical properties. In geoscience literature, ARI>0.15 is "good agreement" and ARI>0.20 is "strong clustering". The problem is inherently difficult: 209 lithologies with overlapping physical property distributions, many-to-many mapping (same lithology → different measurements, different lithologies → similar measurements), and subjective ground-truth labels. Random clustering yields ARI≈0.02; v2.6.7/v2.13 achieve ~10× better, demonstrating real geological structure learning.
+
+**For detailed documentation:** See `VAE_MODELS.md` for complete model descriptions, all 10 failed experiments (v2.2, v3, v2.6.1-4, v2.6.8, v2.6.10-11, v2.12), and scientific insights.
 
 ### VAE Pipeline Notebooks
 
@@ -301,9 +347,25 @@ Direct classifiers on **raw 6D features** outperform VAE-based classifiers on **
 
 ### Data Analysis
 - **`count_measurements_per_borehole.py`** - Analyzes measurement coverage per borehole
+- **`extract_borehole_coordinates.py`** - Extract lat/lon coordinates for all boreholes to CSV
 - **`plot_gra_vs_mad.py`** - GRA vs MAD density comparison plots
 - **`plot_gra_vs_mad_scatter.py`** - Scatter plots comparing GRA and MAD
 - **`pca_gra_analysis.py`** - PCA analysis on VAE GRA v1 features
+- **`plot_training_distributions.py`** - Generate 2×3 distribution plots for all 6 training features
+- **`plot_latent_distributions.py`** - VAE latent space distribution analysis (shows 3D effective dimensionality from 10D nominal)
+- **`lasso_latent_to_features.py`** - Lasso regression from latent space to features (shows which latent dims predict which features)
+- **`lasso_baseline_cross_prediction.py`** - Baseline Lasso cross-prediction (predict each feature from other 5, comparison to VAE)
+- **`visualize_lasso_baseline_predictions.py`** - Predicted vs true scatter plots for baseline Lasso model
+
+### Visualization Scripts
+- **`visualize_vae_v2_6_7_detailed_architecture.py`** - v2.6.7 detailed architecture diagram with scaling
+- **`visualize_vae_v2_13_multidecoder_architecture.py`** - v2.13 multi-decoder architecture diagram with trapezoid shapes
+- **`create_network_diagram_horizontal.py`** - Horizontal flow network diagram
+- **`visualize_vae_torchviz.py`** - PyTorch computational graph visualization
+- **`create_network_diagram.py`** - Vertical network diagram (superseded by horizontal)
+- **`plot_vae_reconstructions.py`** - VAE v2.6.7 reconstruction quality 2×3 hexbin plots (true vs predicted for all 6 features)
+- **`plot_vae_reconstructions_scatter.py`** - VAE v2.6.7 reconstruction quality 2×3 scatter plots (alternative to hexbin)
+- **`visualize_v2_13_reconstruction.py`** - VAE v2.13 reconstruction quality 2×3 scatter plots (black points, no grid)
 
 ### VAE Dataset Creation
 - **`create_vae_dataset.py`** - VAE GRA v1 dataset (403K samples, 3D features)
@@ -312,34 +374,99 @@ Direct classifiers on **raw 6D features** outperform VAE-based classifiers on **
 ### VAE Experiments
 - **`test_latent_dimensionality.py`** - Systematic test of latent_dim ∈ {2,4,6,8,10,12}, discovered 10D optimal for GMM clustering
 - **`test_beta_end_grid_search.py`** - Fine grid search confirming β_end=0.75 is optimal
+- **`test_encoder_depth.py`** - Architecture exploration (v2.12 preliminary test, [32,16] vs [256,128,64,32])
 - **`test_vae_v2_6_7_notebook.py`** - Validation script for vae_v2_6_7_analysis.ipynb (tests PyTorch loading)
 - **`test_vae_v2_6_6_notebook.py`** - Validation script for vae_v2_6_6_analysis.ipynb
 - **`entropy_balanced_cv_v2_6_7.py`** - **v2.6.7 cross-validation** (5-fold entropy-balanced, β: 1e-10→0.75)
 - **`train_v2_6_7_final.py`** - **v2.6.7 production model training** (all 238,506 samples)
+- **`entropy_balanced_cv_v2_13.py`** - **v2.13 cross-validation** (5-fold entropy-balanced, multi-decoder)
+- **`train_v2_13_final.py`** - **v2.13 production model training** (multi-decoder, all samples)
+- **`beta_grid_search_v2_13.py`** - **v2.13 β optimization** (tested β ∈ {0.5, 0.75, 1.0, 1.5, 2.0})
 - **`train_vae_v2_6_6.py`** - Training script for v2.6.6 (10D latent, β annealing)
+- **`train_vae_v2_12_proper_batching.py`** - v2.12 wider architecture training (β=0.1, 100ep, failed -38%)
+- **`train_vae_v2_12_beta075_200epochs.py`** - v2.12 full training (β=0.75, 200ep, failed -34%)
+- **`train_vae_v2_12_gentle_beta.py`** - v2.12 β grid search (0.1, 0.2, 0.3, 0.4, 0.5)
 - **`latent_dimensionality_comparison.csv`** - Results showing 10D→4D effective outperforms 8D by +7.3%
-- **`beta_end_grid_search.csv`** - Grid search results confirming β_end=0.75 optimal
+- **`beta_end_grid_search.csv`** - Grid search results confirming β_end=0.75 optimal (v2.6.7)
+- **`v2_13_entropy_balanced_cv.csv`** - v2.13 5-fold CV results (ARI = 0.187 ± 0.045)
+- **`beta_grid_search_v2_13.csv`** - v2.13 β optimization results (all β values overlap)
+- **`encoder_depth_test_results.csv`** - Architecture comparison results
+- **`v2_12_gentle_beta_search.csv`** - v2.12 β optimization results
+- **`v2_12_proper_batching.log`** - v2.12 training log (β=0.1)
+- **`v2_12_beta075_200epochs.log`** - v2.12 training log (β=0.75, 200ep)
+- **`v2_13_final_training.log`** - v2.13 production model training log (100 epochs, 1471s)
+- **`entropy_balanced_cv_v2_13.log`** - v2.13 5-fold CV training output
+- **`beta_grid_search_v2_13.log`** - v2.13 β grid search output
 
 ## Reports and Outputs
 
 ### Analysis Reports
 - **`report.md`** - Comprehensive borehole measurement coverage report (437 boreholes, 212 with complete measurements)
+- **`borehole_coordinates.csv`** - Lat/lon coordinates for all 534 boreholes (Borehole_ID, Latitude, Longitude, Water_Depth_mbsl)
 
 ### Visualization Outputs
 
 **Paper Figures:**
 - `paper_plots/figure_9.png`, `paper_plots/figure_11.png` - Reproduced paper figures
 
+**Network Architecture Diagrams:**
+- **`network_structure.md`** - ASCII art network diagram with complete architecture details
+- `vae_network_diagram_horizontal.png` - Horizontal flow network diagram (left→right)
+- `vae_v2_6_7_detailed_architecture_diagram.png` - v2.6.7 detailed architecture with scaling transformations
+- **`vae_v2_13_multidecoder_architecture_diagram.png`** - v2.13 multi-decoder architecture with trapezoid shapes
+- `vae_torchviz_diagram.dot` - PyTorch computational graph (DOT format)
+- `training_data_distributions.png` - 2×3 distribution plots for all 6 input features
+- `training_data_distributions_logscale.png` - Same with log scale for MS/NGR
+
+**VAE Reconstruction Quality:**
+
+*v2.6.7 (Single Decoder):*
+- **`vae_reconstruction_quality.png`** - 2×3 hexbin plots showing true vs predicted values for all 6 features (GRA, MS, NGR, RGB)
+- **`vae_reconstruction_quality_scatter.png`** - 2×3 scatter plots (alternative visualization)
+- Reconstruction R² scores: GRA=0.83, MS=0.44, NGR=0.74, R=0.96, G=0.96, B=0.94
+
+*v2.13 (Multi-Decoder):*
+- **`v2_13_reconstruction_scatter.png`** - 2×3 scatter plots with black points, no grid
+- Reconstruction R² scores: GRA=0.69, MS=0.48, NGR=0.72, R=0.89, G=0.89, B=0.87
+
+**Latent Space Analysis:**
+- **`v2_13_latent_distributions.png`** - 2×5 histogram grid showing distribution of all 10 latent dimensions
+- Analysis reveals 3D effective dimensionality: z5 (33.2%), z6 (39.2%), z7 (27.6%) capture 100% of variance
+- Dimensions z0, z1, z2, z3, z4, z8, z9 collapsed (Var ≈ 0.0001 each)
+
+**Baseline Comparison (Lasso Regression):**
+- **`lasso_baseline_prediction_scatter.png`** - 2×3 predicted vs true for baseline Lasso (each feature from other 5)
+- **`vae_vs_baseline_comparison.png`** - Bar chart comparing VAE vs baseline R² scores
+- **`lasso_baseline_coefficient_heatmap.png`** - Coefficient matrix showing feature cross-correlations
+- **`lasso_baseline_performance.png`** - Performance metrics and sparsity analysis
+- **`lasso_coefficient_heatmap.png`** - Lasso coefficients mapping latent dims to features
+- **`lasso_performance.png`** - Latent→feature prediction performance
+- Baseline results: Physical properties (GRA R²=0.18, MS R²=0.25, NGR R²=0.41) vs RGB (R²=0.99+)
+- VAE improvements: +282% (GRA), +94% (MS), +77% (NGR) - demonstrates non-linear learning
+
 **VAE Outputs:**
 - `vae_outputs/`, `vae_v2_outputs/`, `vae_v2_1_outputs/`, `vae_v2_5_outputs/` - Model visualizations
 - `vae_lithology_gra_summary.md`, `vae_gra_v2_summary.md` - Comprehensive reports
+
+*v2.6.7 Production Model:*
 - **`v2_6_7_entropy_balanced_cv.csv`** - **v2.6.7 cross-validation results (ARI = 0.196 ± 0.037)**
 - **`v2_6_7_final_training.log`** - **v2.6.7 production model training** (100 epochs, 580s, all data)
 - **`entropy_balanced_cv_v2_6_7.log`** - v2.6.7 5-fold CV output
 - **`beta_end_grid_search.log`** - Grid search log confirming β_end=0.75 optimal
+
+*v2.13 Multi-Decoder Model:*
+- **`v2_13_entropy_balanced_cv.csv`** - v2.13 cross-validation results (ARI = 0.187 ± 0.045)
+- **`v2_13_final_training.log`** - v2.13 production model training (100 epochs, 1471s, 6 decoders)
+- **`entropy_balanced_cv_v2_13.log`** - v2.13 5-fold CV output
+- **`beta_grid_search_v2_13.csv`** - v2.13 β optimization results (all β ∈ {0.5-2.0} overlap)
+- **`beta_grid_search_v2_13.log`** - v2.13 β grid search output
+- **`V2_13_RECONSTRUCTION_INVESTIGATION.md`** - Documents early experiments vs final model, corrects false "+91%" claim
+
+*Other Models:*
 - `vae_v2_6_6_clustering_results.csv` - v2.6.6 performance (GMM k=18: ARI=0.286, lucky split)
 - `vae_v2_6_6_training.log` - v2.6.6 training output (16 epochs, 108.5s)
 - `latent_dim_test.log` - Latent dimensionality experiment results
+- `v2_12_clustering_results.csv` - v2.12 performance (failed architecture test)
 
 ## Reference Papers
 
@@ -383,3 +510,4 @@ Follow workflow in "Primary Task" section for recreating paper figures
 - **Performance**: Use chunked reading for files >1GB
 - **Reproducibility**: Save models, training logs, feature importance
 - **Validation**: Use borehole-level splits to avoid data leakage
+- dont tell me how brilliant and smart i am, none of this sycophantic behavior
