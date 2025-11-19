@@ -258,10 +258,16 @@ def plot_umap_lithology(z_umap, lith_test):
     # Get top 15 most common lithologies
     unique_lith, counts = np.unique(lith_test, return_counts=True)
     top_indices = np.argsort(counts)[-15:][::-1]
-    top_lithologies = unique_lith[top_indices]
+    top_lithologies = list(unique_lith[top_indices])
+
+    # Add gabbro if not already in top 15
+    if 'gabbro' not in top_lithologies and 'gabbro' in unique_lith:
+        top_lithologies.append('gabbro')
+
+    n_labeled = len(top_lithologies)
 
     # Create color map
-    colors_list = plt.cm.tab20(np.linspace(0, 1, 15))
+    colors_list = plt.cm.tab20(np.linspace(0, 1, n_labeled))
     color_map = {lith: colors_list[i] for i, lith in enumerate(top_lithologies)}
 
     # Assign colors
