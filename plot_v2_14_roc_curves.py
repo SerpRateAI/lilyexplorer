@@ -178,23 +178,11 @@ for i in range(n_classes):
     fpr[i], tpr[i], _ = roc_curve(y_test_bin[:, i], probs[:, i])
     roc_auc[i] = auc(fpr[i], tpr[i])
 
-# Compute micro-average ROC curve
-fpr["micro"], tpr["micro"], _ = roc_curve(y_test_bin.ravel(), probs.ravel())
-roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
+# Compute pooled ROC curve (micro-average across all samples)
+fpr["pooled"], tpr["pooled"], _ = roc_curve(y_test_bin.ravel(), probs.ravel())
+roc_auc["pooled"] = auc(fpr["pooled"], tpr["pooled"])
 
-# Compute macro-average ROC curve
-all_fpr = np.unique(np.concatenate([fpr[i] for i in range(n_classes)]))
-mean_tpr = np.zeros_like(all_fpr)
-for i in range(n_classes):
-    mean_tpr += np.interp(all_fpr, fpr[i], tpr[i])
-mean_tpr /= n_classes
-
-fpr["macro"] = all_fpr
-tpr["macro"] = mean_tpr
-roc_auc["macro"] = auc(fpr["macro"], tpr["macro"])
-
-print(f"Micro-average AUC: {roc_auc['micro']:.4f}")
-print(f"Macro-average AUC: {roc_auc['macro']:.4f}")
+print(f"Pooled AUC: {roc_auc['pooled']:.4f}")
 
 # ============================================================================
 # PLOT 1: All ROC curves on one plot (semi-transparent)
@@ -206,15 +194,10 @@ fig, ax = plt.subplots(figsize=(12, 10))
 for i in range(n_classes):
     ax.plot(fpr[i], tpr[i], alpha=0.25, linewidth=0.5, color='gray')
 
-# Plot micro-average
-ax.plot(fpr["micro"], tpr["micro"],
-        label=f'Micro-average (AUC = {roc_auc["micro"]:.3f})',
+# Plot pooled AUC
+ax.plot(fpr["pooled"], tpr["pooled"],
+        label=f'Pooled AUC = {roc_auc["pooled"]:.3f}',
         color='deeppink', linestyle='--', linewidth=2)
-
-# Plot macro-average
-ax.plot(fpr["macro"], tpr["macro"],
-        label=f'Macro-average (AUC = {roc_auc["macro"]:.3f})',
-        color='navy', linestyle='--', linewidth=2)
 
 # Plot diagonal
 ax.plot([0, 1], [0, 1], 'k--', linewidth=1, alpha=0.5, label='Random classifier')
@@ -254,9 +237,9 @@ for idx, class_idx in enumerate(top_20_classes):
            label=f'{class_name[:25]} (n={count}, AUC={roc_auc[class_idx]:.3f})',
            color=colors[idx], linewidth=1.5, alpha=0.8)
 
-# Plot micro-average
-ax.plot(fpr["micro"], tpr["micro"],
-        label=f'Micro-average (AUC = {roc_auc["micro"]:.3f})',
+# Plot pooled AUC
+ax.plot(fpr["pooled"], tpr["pooled"],
+        label=f'Pooled AUC = {roc_auc["pooled"]:.3f}',
         color='black', linestyle='--', linewidth=2)
 
 # Plot diagonal
@@ -285,10 +268,8 @@ auc_values = [roc_auc[i] for i in range(n_classes)]
 
 fig, ax = plt.subplots(figsize=(10, 6))
 ax.hist(auc_values, bins=30, color='steelblue', alpha=0.7, edgecolor='black')
-ax.axvline(roc_auc["macro"], color='navy', linestyle='--', linewidth=2,
-          label=f'Macro-average: {roc_auc["macro"]:.3f}')
-ax.axvline(roc_auc["micro"], color='deeppink', linestyle='--', linewidth=2,
-          label=f'Micro-average: {roc_auc["micro"]:.3f}')
+ax.axvline(roc_auc["pooled"], color='deeppink', linestyle='--', linewidth=2,
+          label=f'Pooled AUC: {roc_auc["pooled"]:.3f}')
 ax.set_xlabel('AUC Score', fontsize=12, weight='bold')
 ax.set_ylabel('Number of Classes', fontsize=12, weight='bold')
 ax.set_title('Distribution of AUC Scores Across 139 Lithology Classes',
@@ -320,14 +301,16 @@ print("✓ Saved: v2_14_roc_auc_results.csv")
 print("\n" + "="*80)
 print("SUMMARY STATISTICS")
 print("="*80)
-print(f"Micro-average AUC: {roc_auc['micro']:.4f}")
-print(f"Macro-average AUC: {roc_auc['macro']:.4f}")
+print(f"Pooled AUC: {roc_auc['pooled']:.4f}")
 print(f"\nAUC Statistics across {n_classes} classes:")
-print(f"  Mean:   {np.mean(auc_values):.4f}")
-print(f"  Median: {np.median(auc_values):.4f}")
-print(f"  Std:    {np.std(auc_values):.4f}")
-print(f"  Min:    {np.min(auc_values):.4f}")
-print(f"  Max:    {np.max(auc_values):.4f}")
+# Filter out NaN values for statistics
+valid_auc_values = [v for v in auc_values if not np.isnan(v)]
+print(f"  Classes with test samples: {len(valid_auc_values)}/{n_classes}")
+print(f"  Mean:   {np.mean(valid_auc_values):.4f}")
+print(f"  Median: {np.median(valid_auc_values):.4f}")
+print(f"  Std:    {np.std(valid_auc_values):.4f}")
+print(f"  Min:    {np.min(valid_auc_values):.4f}")
+print(f"  Max:    {np.max(valid_auc_values):.4f}")
 
 print("\nTop 10 classes by AUC:")
 for idx, row in results_df.head(10).iterrows():
