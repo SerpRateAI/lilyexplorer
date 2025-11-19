@@ -204,7 +204,7 @@ fig, ax = plt.subplots(figsize=(12, 10))
 
 # Plot all individual class ROC curves (semi-transparent)
 for i in range(n_classes):
-    ax.plot(fpr[i], tpr[i], alpha=0.1, linewidth=0.5, color='gray')
+    ax.plot(fpr[i], tpr[i], alpha=0.25, linewidth=0.5, color='gray')
 
 # Plot micro-average
 ax.plot(fpr["micro"], tpr["micro"],
