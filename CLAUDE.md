@@ -268,7 +268,80 @@ CatBoost regression models for predicting RGB color from physical properties (us
   - `v2_14_roc_curves_all.png`, `v2_14_roc_curves_top20.png`, `v2_14_auc_distribution.png`
   - `v2_14_roc_auc_results.csv` (per-class AUC scores)
 - Performance: ARI=0.285 (+45.6% vs v2.6.7), Pooled AUC=0.917, 81/139 classes with test data
+- Reconstruction: R²=0.863 avg (GRA=0.788, MS=0.788, NGR=0.835, R=0.925, G=0.929, B=0.916)
 - Documentation: `SEMISUP_VAE_V2_14_SUMMARY.md`
+
+**v2.14.1 (Adaptive Weighting - Failed Experiment):**
+- Model: `ml_models/checkpoints/adaptive_vae_v2_14_1_final.pth` (sample-specific α weights based on class frequency)
+- Training: `train_adaptive_vae_v2_14_1.py` (adaptive α ∝ 1/√class_frequency)
+- Implementation: `ml_models/adaptive_semisup_vae_model.py`
+- Training Log: `adaptive_vae_v2_14_1_training.log`
+- Performance: ARI=0.075 (-73.7% vs v2.14, failed)
+- Issue: Adaptive weighting degraded performance, removed class hierarchy benefits
+
+**v2.14.2 (Random Masking - Missing Data Regularization SUCCESS):**
+- Model: `ml_models/checkpoints/vae_v2_14_2_best.pth` (random 30% feature masking during training)
+- Training: `train_vae_v2_14_2.py` (mask_prob=0.3, forces robust feature learning)
+- Implementation: Same architecture as v2.14, added `apply_mask()` method
+- Training Log: `vae_v2_14_2_training.log`
+- Performance:
+  - **Clustering: ARI=0.129** (+159% vs v2.14 when v2.14 trained with same settings)
+  - Reconstruction: R²=0.403 avg (worse than v2.14, expected tradeoff)
+  - Per-feature R²: GRA=-0.014, MS=0.326, NGR=0.057, R=0.700, G=0.699, B=0.660
+  - Imputation quality (on masked data): R=0.893, G=0.897, B=0.882
+- Evaluation: `evaluate_v2_14_2_reconstruction.py`
+- **Key insight**: Random masking acts as powerful regularizer, improving clustering at cost of reconstruction
+
+**v2.15 (Real Missing Data - Failed):**
+- Architecture: Same as v2.14.2 but trained on actual incomplete data (real NaN values)
+- Performance: ARI=0.075 (-54% vs v2.14.2)
+- Issue: Real missing data patterns correlate with lithology, creating confounds
+
+**Masking Hyperparameter Sweep (Complete):**
+- Sweep: 51 models (0% to 50% masking in 1% increments), 4 GPUs parallel
+- Training: `train_vae_masking_sweep.py` (50 epochs per model)
+- Orchestration: `run_masking_sweep.sh`, `monitor_sweep.sh`
+- Results: `masking_sweep_results.csv`, `masking_sweep_results.png`
+- Plotting: `plot_masking_sweep_results.py` (2×3 grid: R² vs masking % for each feature)
+- Visualization: `/home/utig5/johna/bhai/masking_sweep_results.png`
+- **Key finding**: Reconstruction-clustering tradeoff
+  - 0% masking: Best reconstruction (R²=0.86 avg), worst clustering
+  - 30% masking: Optimal clustering (ARI=0.129), moderate reconstruction (R²=0.40 avg)
+  - 50% masking: Poor reconstruction (R²=0.25 avg), untested clustering
+- **Conclusion**: Masking percentage controls regularization strength; optimal depends on task
+
+### Depth Prediction from VAE Embeddings
+
+CatBoost regression model for predicting stratigraphic depth (CSF-A) from Semi-Supervised VAE v2.14 latent embeddings:
+
+**Model Files:**
+- `ml_models/depth_predictor_v2_14.cbm` - CatBoost depth predictor (336 iterations, early stopped)
+
+**Training Scripts:**
+- `train_depth_predictor_v2_14.py` - Training and evaluation code (loads v2.14 embeddings, trains CatBoost)
+
+**Training Logs:**
+- `depth_predictor_training.log` - Training output and performance metrics
+
+**Results:**
+- `depth_predictor_v2_14_results.png` - Scatter plot (predicted vs true) and residual plot
+- `depth_predictor_feature_importance.csv` - Latent dimension importance scores
+
+**Performance:**
+- Test R² = 0.407 (explains 40.7% of depth variance)
+- Test MAE = 198.46 m (mean absolute error)
+- Test RMSE = 293.53 m (root mean squared error)
+- Borehole-level 80/20 split (236 train / 60 test boreholes)
+- Training: 336 iterations, ~4 seconds
+
+**Most Important Latent Dimensions:**
+1. z5: 18.69% (highest importance for depth)
+2. z3: 16.00%
+3. z6: 14.16%
+4. z9: 9.82%
+5. z4: 9.64%
+
+**Key Insight:** VAE embeddings contain stratigraphic information beyond lithology classification. Moderate R² (0.407) is reasonable given that boreholes sample vastly different geological settings (oceanic crust, continental margins, deep-sea sediments) where depth alone doesn't determine properties. Demonstrates latent space captures vertical structure in addition to lithological composition.
 
 **Critical Findings:**
 1. **Extreme β annealing optimal**: Starting from pure autoencoder (β=1e-10) and annealing to β=0.75 achieves best performance (ARI=0.196 ± 0.037, +3% vs β: 0.001→0.5, +18% lower variance). Sweet spot at β_end=0.75 balances regularization without destroying feature correlations.
@@ -287,6 +360,7 @@ CatBoost regression models for predicting RGB color from physical properties (us
 14. **Semi-supervised learning dramatically improves clustering**: v2.14 adds classification head (10D→[32,ReLU,Dropout]→139 classes) with α=0.1 weight, achieving ARI=0.285 (+45.6% vs v2.6.7 unsupervised). Gentle classification guidance organizes latent space more effectively than pure reconstruction loss. Also provides excellent classification (Pooled AUC=0.917). Sweet spot at α=0.1 - higher values degrade both clustering and classification.
 15. **VAE vastly outperforms linear baselines for physical properties**: Baseline Lasso regression (predict each feature from other 5) achieves R² of only 0.18 (GRA), 0.25 (MS), 0.41 (NGR) - demonstrating weak linear correlations. VAE reconstruction improves these by +282% (GRA), +94% (MS), +77% (NGR), proving the VAE learns meaningful non-linear geological relationships. RGB channels show opposite pattern (R²=0.99+ for linear baseline) because color channels are nearly perfectly linearly correlated; VAE's latent bottleneck sacrifices RGB perfection to capture physical property structure.
 16. **Feature weighting (v2.13)**: Multi-decoder uses weights [1.0, 2.0, 2.0, 1.0, 1.0, 1.0] for GRA/MS/NGR/R/G/B. The 2× weight on MS and NGR reflects (1) their importance for lithology discrimination (MS distinguishes basalt, NGR distinguishes clay) and (2) their lower baseline reconstruction quality (MS R²=0.44, NGR R²=0.74 vs RGB R²=0.94-0.96). This encourages the model to focus on geologically informative but challenging features.
+17. **Latent space captures stratigraphic information**: CatBoost depth predictor trained on v2.14 10D embeddings achieves R²=0.407, demonstrating the latent space encodes vertical stratigraphic structure beyond lithology labels. Most important dimensions for depth (z5, z3, z6) overlap with those important for lithology clustering, suggesting the VAE learns a unified geological representation capturing both composition and stratigraphic position. Moderate R² reflects inherent geological heterogeneity - boreholes sample vastly different settings (oceanic crust, continental margins, deep-sea sediments) where depth alone doesn't determine properties.
 
 **Performance Context**: ARI=0.196±0.037 is **strong performance** for unsupervised lithology clustering from physical properties. In geoscience literature, ARI>0.15 is "good agreement" and ARI>0.20 is "strong clustering". The problem is inherently difficult: 209 lithologies with overlapping physical property distributions, many-to-many mapping (same lithology → different measurements, different lithologies → similar measurements), and subjective ground-truth labels. Random clustering yields ARI≈0.02; v2.6.7/v2.13 achieve ~10× better, demonstrating real geological structure learning.
 
@@ -382,6 +456,8 @@ Direct classifiers on **raw 6D features** outperform VAE-based classifiers on **
 - **`entropy_balanced_cv_v2_13.py`** - **v2.13 cross-validation** (5-fold entropy-balanced, multi-decoder)
 - **`train_v2_13_final.py`** - **v2.13 production model training** (multi-decoder, all samples)
 - **`beta_grid_search_v2_13.py`** - **v2.13 β optimization** (tested β ∈ {0.5, 0.75, 1.0, 1.5, 2.0})
+- **`train_semisupervised_vae.py`** - **v2.14 semi-supervised training** (α grid search, classification head)
+- **`train_depth_predictor_v2_14.py`** - **Depth predictor from v2.14 embeddings** (CatBoost regression, R²=0.407)
 - **`train_vae_v2_6_6.py`** - Training script for v2.6.6 (10D latent, β annealing)
 - **`train_vae_v2_12_proper_batching.py`** - v2.12 wider architecture training (β=0.1, 100ep, failed -38%)
 - **`train_vae_v2_12_beta075_200epochs.py`** - v2.12 full training (β=0.75, 200ep, failed -34%)
@@ -511,3 +587,5 @@ Follow workflow in "Primary Task" section for recreating paper figures
 - **Reproducibility**: Save models, training logs, feature importance
 - **Validation**: Use borehole-level splits to avoid data leakage
 - dont tell me how brilliant and smart i am, none of this sycophantic behavior
+- whenever you make a plot always look at the plot and think to yourself, does this plot match the request? should i change it first?
+- you really need to start talking like you are data from star trek
