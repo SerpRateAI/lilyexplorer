@@ -16,3 +16,17 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Training data (large CSV files)
+*training_data*.csv
+vae_training_data*.csv
+adaptive_vae_training_data.csv
+
+# Model checkpoints (large .pth files)
+ml_models/checkpoints/*.pth
+
+# Training logs
+*.log
+
+# CatBoost info
+catboost_info/
